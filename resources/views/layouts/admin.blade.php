@@ -19,7 +19,7 @@
 
     <nav class="sb-topnav navbar navbar-expand navbar-dark" style="background-color: black;">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="index.html">Atendimento</a>
+        <a class="navbar-brand ps-3" href="index.html">S.G.K.M</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
@@ -54,14 +54,9 @@
                             Início
                         </a>
 
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="{{ route('consultor.index') }}">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-users-line"></i></i></div>
-                            Munícipes
-                        </a>
-
-                        <a class="nav-link" href="#">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-users-line"></i></i></div>
-                            Vereadores
+                            Consultores
                         </a>
 
                         <a class="nav-link" href="#">
