@@ -21,8 +21,8 @@
                     <div class="row">
                         <div class="col-md-6 col-sm-12">
                             <label class="form-label" for="name">Nome:</label>
-                            <input type="text" name="nome" id="nome" class="form-control"
-                                value="" placeholder="Nome do consultor(a)">
+                            <input type="text" name="nome" id="nome" class="form-control" value=""
+                                placeholder="Nome do consultor(a)">
                         </div>
                     </div>
                     <div class="row">
@@ -47,7 +47,6 @@
             </div>
 
             <div class="card-body">
-
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -65,7 +64,8 @@
                                 <td>{{ $consultor->contato }}</td>
                                 <td class="d-md-flex justify-content-center">
 
-                                    <a href="{{ route('consultor.index', ['consultor' => $consultor->id]) }}" class="btn btn-info btn-sm me-1 mb-1">
+                                    <a href="{{ route('consultor.index', ['consultor' => $consultor->id]) }}"
+                                        class="btn btn-info btn-sm me-1 mb-1">
                                         <i class="fa-solid fa-list-check"></i> Produtos</a>
 
                                     <a href="{{ route('consultor.edit', ['consultor' => $consultor->id]) }}"

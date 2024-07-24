@@ -79,6 +79,19 @@ class ConsultorController extends Controller
             //Retorno com mensagem de erro
             return back()->withInput()->with('error','Consultor(a) não atualizado! Tente novamente');
         }
+    }
 
+    //Excluir consultores
+    public function destroy(Consultor $consultor){
+         //Exclui regitro
+         try {       
+            $consultor->delete();
+            //Salvando log de sucesso
+            //Redireciona usuario com msg de successo
+            return redirect()->route('consultor.index')->with('success','Consultor excluído!');
+        }catch(Exception $e){
+            //Redireciona usuario com mensagem de erro
+            return redirect()->route('consultor.index')->with('error','Consultor não excluído!');
+        }
     }
 }

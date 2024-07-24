@@ -12,7 +12,7 @@ document.querySelectorAll('.btnDelete').forEach(function (button) {
         // SweetAlert
         Swal.fire({
             title: 'Tem certeza?',
-            text: 'Você não poderá reverter isso!',
+            text: 'Os produtos relacionados a este consultor(a) serão excluídos e você não poderá reverter isso!',
             icon: 'warning',
             showCancelButton: true,
             cancelButtonColor: '#0d6efd',
