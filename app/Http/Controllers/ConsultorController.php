@@ -47,4 +47,38 @@ class ConsultorController extends Controller
         }
     }
 
+    //Editar consultor
+    public function edit(Consultor $consultor){
+        return view('consultores.edit', ['consultor' => $consultor]);
+    }
+
+    //Atualizar consultor no banco de dados
+    public function update(ConsultorRequest $request, Consultor $consultor){
+        //Validação dos campos do formulario.
+        $request->validated();
+
+        //Marca ponto inicial da transação
+        DB::beginTransaction();
+
+        try{
+            //Atualiza no banco de dados
+            $consultor->update([
+                'nome' => $request->nome, 
+                'contato' => $request->contato
+            ]);
+
+            //Operação concluida com exito
+            DB::commit();
+
+            //Redirecionar usuario
+            return redirect()->route('consultor.index')->with('success', 'Consultor(a) atualizado!');
+
+        }catch(Exception $e){
+            //Operação não concluida
+            DB::rollBack();
+            //Retorno com mensagem de erro
+            return back()->withInput()->with('error','Consultor(a) não atualizado! Tente novamente');
+        }
+
+    }
 }
