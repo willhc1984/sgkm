@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ConsultorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+//Consultores
+Route::get('/index-consultores', [ConsultorController::class, 'index'])->name('consultor.index');
+Route::get('/create-consultores', [ConsultorController::class, 'create'])->name('consultor.create');
+Route::post('/store-consultores', [ConsultorController::class, 'store'])->name('consultor.store');
+Route::get('/edit-consultores/{consultor}', [ConsultorController::class, 'edit'])->name('consultor.edit');
+Route::put('/update-consultores/{consultor}', [ConsultorController::class, 'update'])->name('consultor.update');
+Route::delete('/destroy-consultores/{consultor}', [ConsultorController::class, 'destroy'])->name('consultor.destroy');
