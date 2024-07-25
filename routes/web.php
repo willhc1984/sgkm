@@ -29,7 +29,7 @@ Route::delete('/destroy-consultores/{consultor}', [ConsultorController::class, '
 
 //Produtos
 Route::get('/index-produtos/{consultor}', [ProdutoController::class, 'index'])->name('produto.index');
-Route::get('/create-produtos', [ProdutoController::class, 'create'])->name('produto.create');
+Route::get('/create-produtos/{consultor}', [ProdutoController::class, 'create'])->name('produto.create');
 Route::post('/store-produtos', [ProdutoController::class, 'store'])->name('produto.store');
 Route::get('/edit-produtos/{produto}', [ProdutoController::class, 'edit'])->name('produto.edit');
 Route::put('/update-produtos/{produto}', [ProdutoController::class, 'update'])->name('produto.update');

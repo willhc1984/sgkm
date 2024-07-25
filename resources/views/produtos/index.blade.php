@@ -42,7 +42,7 @@
             <div class="card-header space-between-elements">
                 <span>Listar</span>
                 <span>
-                    <a href="{{ route('produto.create') }}" class="btn btn-success btn-sm">
+                    <a href="{{ route('produto.create', ['consultor' => $consultor->id]) }}" class="btn btn-success btn-sm">
                         <i class="fa-solid fa-square-plus"></i> Alocar produto</a>
                 </span>
             </div>
