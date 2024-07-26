@@ -55,10 +55,11 @@
                             <th scope="col">Nome</th>
                             <th scope="col">Preço-Fornecedor</th>
                             <th scope="col">Preço-Loja</th>
-                            <th scope="col">Preço-Consultor</th>
+                            <th scope="col">Comissão em (%)</th>
+                            <th scope="col">Comissão em (R$)</th>
+                            <th scope="col">Preço-Final</th>
                             <th scope="col">Data da venda</th>
                             <th scope="col">Situação</th>
-                            <th scope="col">Quantidade</th>
                             <th scope="col">Ações</th>
                         </tr>
                     </thead>
@@ -67,12 +68,13 @@
                             <tr>
                                 <th scope="row">{{ $produto->id }}</th>
                                 <td>{{ $produto->nome }}</td>
-                                <td>{{ $produto->preco_fornecedor }}</td>
-                                <td>{{ $produto->preco_loja }}</td>
-                                <td>{{ $produto->preco_consultor }}</td>
-                                <td>{{ $produto->data_venda }}</td>
+                                <td>R$ {{ 'R$ ' . number_format($produto->preco_fornecedor, 2, ',', '.') }}</td>
+                                <td>R$ {{ 'R$ ' . number_format($produto->preco_loja, 2, ',', '.') }}</td>
+                                <td>{{ $produto->comissao_consultor }} %</td>
+                                <td>R$ {{ 'R$ ' . number_format($produto->valor_comissao, 2, ',', '.') }}</td>
+                                <td>R$ {{ 'R$ ' . number_format($produto->preco_final, 2, ',', '.') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($produto->data_venda)->format('d/m/Y') }}</td>
                                 <td>{{ $produto->situacao }}</td>
-                                <td>{{ $produto->qtde }}</td>
                                 <td class="d-md-flex justify-content-center">
 
                                     <a href="{{ route('produto.edit', ['produto' => $produto->id]) }}"

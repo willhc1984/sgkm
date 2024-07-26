@@ -24,8 +24,8 @@ class ProdutoRequest extends FormRequest
         return [
             'nome' => 'required',
             'preco_fornecedor' => 'required',
+            'preco_loja' => 'required',
             'comissao_consultor' => 'required',
-            'comissao_loja' => 'required',
         ];
     }
 
@@ -33,8 +33,8 @@ class ProdutoRequest extends FormRequest
         return [
             'nome.required' => 'Nome do produto é obrigatório!',
             'preco_fornecedor.required' => 'Preço do fornecedor é obrigatório!',
+            'preco_loja.required' => 'Preço da loja é obrigatório!',
             'comissao_consultor.required' => 'Defina a comissão do consultor!',
-            'comissao_loja.required' => 'Defina a comissão da loja!'
         ];
     }
 

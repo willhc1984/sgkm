@@ -8,6 +8,7 @@ use App\Models\Produto;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Termwind\Components\Raw;
 
 class ProdutoController extends Controller
 {
@@ -15,14 +16,28 @@ class ProdutoController extends Controller
     public function index(Consultor $consultor)
     {
         $produtos = Produto::with('consultor')
+            ->select(
+                'id',
+                'nome',
+                'preco_fornecedor',
+                'preco_loja',
+                'comissao_consultor',
+                'situacao',
+                'data_venda',
+                DB::raw('preco_loja + (preco_loja * (comissao_consultor / 100)) as preco_final'),
+                DB::raw('preco_loja * (comissao_consultor / 100) as valor_comissao')
+            )
             ->where('consultor_id', $consultor->id)
             ->orderBy('nome')->paginate(10);
+
+        //dd($produtos);
 
         return view('produtos.index', [
             'produtos' => $produtos,
             'consultor' => $consultor
         ]);
     }
+
 
     //Formulario para alocar produto ao consultor
     public function create(Consultor $consultor)
@@ -32,7 +47,7 @@ class ProdutoController extends Controller
     }
 
     //Cadastrar e alocar produto para consultor
-    public function store(ProdutoRequest $request, Consultor $consultor)
+    public function store(ProdutoRequest $request)
     {
 
         //dd($request);
@@ -45,9 +60,9 @@ class ProdutoController extends Controller
             //Aloca produto para consultor no banco de dados
             $produto = Produto::create([
                 'nome' => $request->nome,
-                'preco_fornecedor' => $request->preco_fornecedor,
+                'preco_fornecedor' => str_replace(',', '.', str_replace('.', '', $request->preco_fornecedor)),
+                'preco_loja' => str_replace(',', '.', str_replace('.', '', $request->preco_loja)),
                 'comissao_consultor' => $request->comissao_consultor,
-                'comissao_loja' => $request->comissao_loja,
                 'data_venda' => $request->data_venda,
                 'situacao' => $request->situacao,
                 'consultor_id' => $request->consultor_id
@@ -56,7 +71,7 @@ class ProdutoController extends Controller
             DB::commit();
             //Redireciona com msg de sucesso
             return redirect()->route('produto.index', ['consultor' => $request->consultor_id])
-                ->with('success', 'Produto alocado para : ' . $consultor->nome);
+                ->with('success', 'Produto alocado para : ' . $request->consultor);
         } catch (Exception $e) {
             //Transaçõ não concluida com exito
             DB::rollBack();

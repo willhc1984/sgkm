@@ -24,25 +24,26 @@
                     @csrf
                     @method('POST')
                     <input type="hidden" name="consultor_id" id="consultor_id" value="{{ $consultor->id }}">
+                    <input type="hidden" name="consultor" id="consultor" value="{{ $consultor->nome }}">
                     <div class="col-12">
-                        <label for="name" class="form-label">Nome:</label>
+                        <label for="name" class="form-label">Nome do produto:</label>
                         <input type="text" class="form-control" name="nome" id="nome" value="{{ old('nome') }}"
                             placeholder="Nome do produto">
                     </div>
                     <div class="col-12">
-                        <label for="price">Preço do Fornecedor:</label>
+                        <label for="preco_fornecedor">Preço do Fornecedor:</label>
                         <input type="text" class="form-control" name="preco_fornecedor" id="preco_fornecedor"
-                            value="{{ old('preco_fornecedor') }}" placeholder="Preço">
+                            value="{{ old('preco_fornecedor') }}" placeholder="R$">
                     </div>
                     <div class="col-12">
-                        <label for="price">Comissão do consultor (%)</label>
+                        <label for="preco_loja">Preço da loja:</label>
+                        <input type="text" class="form-control" name="preco_loja" id="preco_loja"
+                            value="{{ old('preco_loja') }}" placeholder="R$">
+                    </div>
+                    <div class="col-12">
+                        <label for="comissao_consultor">Comissão do consultor (%)</label>
                         <input type="number" class="form-control" name="comissao_consultor" id="comissao_consultor"
-                            value="{{ old('comissao_consultor') }}" placeholder="Comissão">
-                    </div>
-                    <div class="col-12">
-                        <label for="price">Comissão da loja (%)</label>
-                        <input type="number" class="form-control" name="comissao_loja" id="comissao_loja"
-                            value="{{ old('comissao_loja') }}" placeholder="Comissão">
+                            value="{{ old('comissao_consultor') }}" placeholder="Comissão do consultor (%)">
                     </div>
                     <div class="col-12">
                         <label for="data_venda">Data da venda</label>

@@ -11,8 +11,8 @@ class Produto extends Model
 
     protected $table = 'produtos';
 
-    protected $fillable = ['nome', 'preco_fornecedor', 'preco_loja', 'preco_consultor',
-        'situacao', 'data_venda', 'qtd', 'consultor_id'];
+    protected $fillable = ['nome', 'preco_fornecedor', 'preco_loja', 'comissao_consultor',
+        'situacao', 'data_venda', 'consultor_id'];
 
     public $timestamps = false;
 

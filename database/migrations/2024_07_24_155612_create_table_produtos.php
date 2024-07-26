@@ -16,10 +16,9 @@ return new class extends Migration
             $table->string('nome');
             $table->float('preco_fornecedor');
             $table->float('preco_loja');
-            $table->float('preco_consultor');
+            $table->float('comissao_consultor');
             $table->string('situacao');
             $table->timestamp('data_venda');
-            $table->integer('qtde');
             $table->foreignId('consultor_id')->constrained('consultores');
         });
     }

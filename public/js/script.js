@@ -1,3 +1,51 @@
+// Receber o seletor do campo preço do fornecedor
+let inputPriceForn = document.getElementById('preco_fornecedor');
+
+//Verificar se existe o seletor no HTML
+if (inputPriceForn) {
+    // Aguardar o usuário digitar valor no campo
+    inputPriceForn.addEventListener('input', function () {
+
+        // Obter o valor atual removendo qualquer caractere que não seja número
+        let valuePrice = this.value.replace(/[^\d]/g, '');
+
+        // Adicionar os separadores de milhares
+        var formattedPrice = (valuePrice.slice(0, -2).replace(/\B(?=(\d{3})+(?!\d))/g, '.')) + '' + valuePrice.slice(-2);
+
+        // Adicionar a vírgula e até dois dígitos se houver centavos
+        if (formattedPrice.length > 2) {
+            formattedPrice = formattedPrice.slice(0, -2) + ',' + formattedPrice.slice(-2);
+        }
+
+        // Atualizar o valor do campo
+        this.value = formattedPrice;
+    });
+}
+
+// Receber o seletor do campo preço da loja
+let inputPriceLoja = document.getElementById('preco_loja');
+
+//Verificar se existe o seletor no HTML
+if (inputPriceLoja) {
+    // Aguardar o usuário digitar valor no campo
+    inputPriceLoja.addEventListener('input', function () {
+
+        // Obter o valor atual removendo qualquer caractere que não seja número
+        let valuePrice = this.value.replace(/[^\d]/g, '');
+
+        // Adicionar os separadores de milhares
+        var formattedPrice = (valuePrice.slice(0, -2).replace(/\B(?=(\d{3})+(?!\d))/g, '.')) + '' + valuePrice.slice(-2);
+
+        // Adicionar a vírgula e até dois dígitos se houver centavos
+        if (formattedPrice.length > 2) {
+            formattedPrice = formattedPrice.slice(0, -2) + ',' + formattedPrice.slice(-2);
+        }
+
+        // Atualizar o valor do campo
+        this.value = formattedPrice;
+    });
+}
+
 // Receber o seletor apagar e percorrer a lista de registro
 document.querySelectorAll('.btnDelete').forEach(function (button) {
     // Aguardar o clique do usuário no botão apagar
@@ -12,7 +60,7 @@ document.querySelectorAll('.btnDelete').forEach(function (button) {
         // SweetAlert
         Swal.fire({
             title: 'Tem certeza?',
-            text: 'Os produtos relacionados a este consultor(a) serão excluídos e você não poderá reverter isso!',
+            text: 'Você não poderá reverter isso!',
             icon: 'warning',
             showCancelButton: true,
             cancelButtonColor: '#0d6efd',
