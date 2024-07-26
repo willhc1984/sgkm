@@ -50,7 +50,7 @@
             <div class="card-body">
                 <table class="table table-hover">
                     <thead>
-                        <tr>
+                        <tr class="text-center">
                             <th scope="col">#ID</th>
                             <th scope="col">Nome</th>
                             <th scope="col">Preço-Fornecedor</th>
@@ -66,15 +66,15 @@
                     <tbody>
                         @forelse($produtos as $produto)
                             <tr>
-                                <th scope="row">{{ $produto->id }}</th>
-                                <td>{{ $produto->nome }}</td>
-                                <td>R$ {{ 'R$ ' . number_format($produto->preco_fornecedor, 2, ',', '.') }}</td>
-                                <td>R$ {{ 'R$ ' . number_format($produto->preco_loja, 2, ',', '.') }}</td>
-                                <td>{{ $produto->comissao_consultor }} %</td>
-                                <td>R$ {{ 'R$ ' . number_format($produto->valor_comissao, 2, ',', '.') }}</td>
-                                <td>R$ {{ 'R$ ' . number_format($produto->preco_final, 2, ',', '.') }}</td>
-                                <td>{{ \Carbon\Carbon::parse($produto->data_venda)->format('d/m/Y') }}</td>
-                                <td>{{ $produto->situacao }}</td>
+                                <th class="text-center" scope="row">{{ $produto->id }}</th>
+                                <td class="text-center">{{ $produto->nome }}</td>
+                                <td class="text-center">R$ {{ 'R$ ' . number_format($produto->preco_fornecedor, 2, ',', '.') }}</td>
+                                <td class="text-center">R$ {{ 'R$ ' . number_format($produto->preco_loja, 2, ',', '.') }}</td>
+                                <td class="text-center">{{ $produto->comissao_consultor }} %</td>
+                                <td class="text-center">R$ {{ 'R$ ' . number_format($produto->valor_comissao, 2, ',', '.') }}</td>
+                                <td class="text-center">R$ {{ 'R$ ' . number_format($produto->preco_final, 2, ',', '.') }}</td>
+                                <td class="text-center">{{ \Carbon\Carbon::parse($produto->data_venda)->format('d/m/Y') }}</td>
+                                <td class="text-center">{{ $produto->situacao }}</td>
                                 <td class="d-md-flex justify-content-center">
 
                                     <a href="{{ route('produto.edit', ['produto' => $produto->id]) }}"
