@@ -36,9 +36,9 @@
                             value="{{ old('preco_fornecedor') }}" placeholder="R$">
                     </div>
                     <div class="col-12">
-                        <label for="preco_loja">Preço da loja:</label>
-                        <input type="text" class="form-control" name="preco_loja" id="preco_loja"
-                            value="{{ old('preco_loja') }}" placeholder="R$">
+                        <label for="preco_final">Preço Final:</label>
+                        <input type="text" class="form-control" name="preco_final" id="preco_final"
+                            value="{{ old('preco_final') }}" placeholder="R$">
                     </div>
                     <div class="col-12">
                         <label for="comissao_consultor">Comissão do consultor (%)</label>

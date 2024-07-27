@@ -23,12 +23,12 @@ if (inputPriceForn) {
 }
 
 // Receber o seletor do campo preço da loja
-let inputPriceLoja = document.getElementById('preco_loja');
+let inputPriceFinal = document.getElementById('preco_final');
 
 //Verificar se existe o seletor no HTML
-if (inputPriceLoja) {
+if (inputPriceFinal) {
     // Aguardar o usuário digitar valor no campo
-    inputPriceLoja.addEventListener('input', function () {
+    inputPriceFinal.addEventListener('input', function () {
 
         // Obter o valor atual removendo qualquer caractere que não seja número
         let valuePrice = this.value.replace(/[^\d]/g, '');

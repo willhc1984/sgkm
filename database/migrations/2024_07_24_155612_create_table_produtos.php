@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nome');
             $table->float('preco_fornecedor');
-            $table->float('preco_loja');
+            $table->float('preco_final');
             $table->float('comissao_consultor');
             $table->string('situacao');
             $table->timestamp('data_venda');

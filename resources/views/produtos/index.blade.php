@@ -54,10 +54,10 @@
                             <th scope="col">#ID</th>
                             <th scope="col">Nome</th>
                             <th scope="col">Preço-Fornecedor</th>
-                            <th scope="col">Preço-Loja</th>
-                            <th scope="col">Comissão em (%)</th>
-                            <th scope="col">Comissão em (R$)</th>
                             <th scope="col">Preço-Final</th>
+                            <th scope="col">Comissão em (%)</th>
+                            <th scope="col">Lucro Consultor</th>
+                            <th scope="col">Lucro Loja</th>
                             <th scope="col">Data da venda</th>
                             <th scope="col">Situação</th>
                             <th scope="col">Ações</th>
@@ -69,10 +69,10 @@
                                 <th class="text-center" scope="row">{{ $produto->id }}</th>
                                 <td class="text-center">{{ $produto->nome }}</td>
                                 <td class="text-center">R$ {{ 'R$ ' . number_format($produto->preco_fornecedor, 2, ',', '.') }}</td>
-                                <td class="text-center">R$ {{ 'R$ ' . number_format($produto->preco_loja, 2, ',', '.') }}</td>
-                                <td class="text-center">{{ $produto->comissao_consultor }} %</td>
-                                <td class="text-center">R$ {{ 'R$ ' . number_format($produto->valor_comissao, 2, ',', '.') }}</td>
                                 <td class="text-center">R$ {{ 'R$ ' . number_format($produto->preco_final, 2, ',', '.') }}</td>
+                                <td class="text-center">{{ $produto->comissao_consultor }} %</td>
+                                <td class="text-center">R$ {{ 'R$ ' . number_format($produto->lucro_consultor, 2, ',', '.') }}</td>
+                                <td class="text-center">R$ {{ 'R$ ' . number_format($produto->lucro_loja, 2, ',', '.') }}</td>
                                 <td class="text-center">{{ \Carbon\Carbon::parse($produto->data_venda)->format('d/m/Y') }}</td>
                                 <td class="text-center">{{ $produto->situacao }}</td>
                                 <td class="d-md-flex justify-content-center">

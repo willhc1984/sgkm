@@ -20,15 +20,15 @@ class ProdutoController extends Controller
                 'id',
                 'nome',
                 'preco_fornecedor',
-                'preco_loja',
+                'preco_final',
                 'comissao_consultor',
                 'situacao',
                 'data_venda',
-                DB::raw('preco_loja + (preco_loja * (comissao_consultor / 100)) as preco_final'),
-                DB::raw('preco_loja * (comissao_consultor / 100) as valor_comissao')
+                DB::raw('preco_final * (comissao_consultor / 100) as lucro_consultor'),
+                DB::raw('preco_final - preco_fornecedor - (preco_final * (comissao_consultor / 100)) as lucro_loja')
             )
             ->where('consultor_id', $consultor->id)
-            ->orderBy('nome')->paginate(10);
+            ->orderBy('nome')->paginate(50);
 
         //dd($produtos);
 
@@ -61,7 +61,7 @@ class ProdutoController extends Controller
             $produto = Produto::create([
                 'nome' => $request->nome,
                 'preco_fornecedor' => str_replace(',', '.', str_replace('.', '', $request->preco_fornecedor)),
-                'preco_loja' => str_replace(',', '.', str_replace('.', '', $request->preco_loja)),
+                'preco_final' => str_replace(',', '.', str_replace('.', '', $request->preco_final)),
                 'comissao_consultor' => $request->comissao_consultor,
                 'data_venda' => $request->data_venda,
                 'situacao' => $request->situacao,
