@@ -6,6 +6,7 @@ use App\Http\Requests\ProdutoRequest;
 use App\Models\Consultor;
 use App\Models\Produto;
 use Exception;
+use GuzzleHttp\Handler\Proxy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Termwind\Components\Raw;
@@ -118,6 +119,22 @@ class ProdutoController extends Controller
             DB::rollBack();
             //Redireciona com msg de erro
             return redirect()->back()->with('error', 'Produto não editado! Tenete novamente.' . $e->getMessage());
+        }
+    }
+
+    //Excluir produto no banco de dados
+    public function destroy(Produto $produto){
+        try{
+            //Excluir registro do banco de dados
+            $produto->delete();
+
+            //Redireciona o usuario
+            return redirect()->route('produto.index', ['consultor' => $produto->consultor_id])->with
+                ('success','Produto excluido!');
+
+        }catch(Exception $e){
+            //Redireciona usuario, envia mensagem de erro
+            return redirect()->back()->with('error', 'Produto não excluido! Tente novamente.');
         }
     }
 }
