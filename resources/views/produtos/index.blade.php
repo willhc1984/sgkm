@@ -6,7 +6,8 @@
             <h2 class="mt-3">Produtos - {{ $consultor->nome }}</h2>
             <ol class="breadcrumb mb-3 mt-3 p-1 rounded bg-light">
                 <li class="breadcrumb-item"><a class="text-decoration-none" href="#">Início</a></li>
-                <li class="breadcrumb-item"><a class="text-decoration-none" href="{{ route('consultor.index')}}">Consultores</a></li>
+                <li class="breadcrumb-item"><a class="text-decoration-none"
+                        href="{{ route('consultor.index') }}">Consultores</a></li>
                 <li class="breadcrumb-item active">Produtos</li>
             </ol>
         </div>
@@ -30,8 +31,8 @@
                         <div class="col-md-4 col-sm-12 mt-2 pt-2">
                             <button type="submit" class="btn btn-info btn-sm"><i class="fa-solid fa-magnifying-glass">
                                 </i> Pesquisar</button>
-                            <a href="{{ route('produto.index', ['consultor' => $consultor->id]) }}" class="btn btn-warning btn-sm"><i
-                                    class="fa-solid fa-trash"></i>Limpar</a>
+                            <a href="{{ route('produto.index', ['consultor' => $consultor->id]) }}"
+                                class="btn btn-warning btn-sm"><i class="fa-solid fa-trash"></i>Limpar</a>
                         </div>
                     </div>
                 </form>
@@ -68,12 +69,19 @@
                             <tr>
                                 <th class="text-center" scope="row">{{ $produto->id }}</th>
                                 <td class="text-center">{{ $produto->nome }}</td>
-                                <td class="text-center">R$ {{ 'R$ ' . number_format($produto->preco_fornecedor, 2, ',', '.') }}</td>
-                                <td class="text-center">R$ {{ 'R$ ' . number_format($produto->preco_final, 2, ',', '.') }}</td>
+                                <td class="text-center">{{ 'R$ ' . number_format($produto->preco_fornecedor, 2, ',', '.') }}
+                                </td>
+                                <td class="text-center">{{ 'R$ ' . number_format($produto->preco_final, 2, ',', '.') }}</td>
                                 <td class="text-center">{{ $produto->comissao_consultor }} %</td>
-                                <td class="text-center">R$ {{ 'R$ ' . number_format($produto->lucro_consultor, 2, ',', '.') }}</td>
-                                <td class="text-center">R$ {{ 'R$ ' . number_format($produto->lucro_loja, 2, ',', '.') }}</td>
-                                <td class="text-center">{{ \Carbon\Carbon::parse($produto->data_venda)->format('d/m/Y') }}</td>
+                                <td class="text-center">{{ 'R$ ' . number_format($produto->lucro_consultor, 2, ',', '.') }}
+                                </td>
+                                <td class="text-center">{{ 'R$ ' . number_format($produto->lucro_loja, 2, ',', '.') }}</td>
+                                @if (empty($produto->data_venda))
+                                    <td class="text-center">Não vendido</td>
+                                @else
+                                    <td class="text-center">
+                                        {{ \Carbon\Carbon::parse($produto->data_venda)->format('d/m/Y') }}</td>
+                                @endif
                                 <td class="text-center">{{ $produto->situacao }}</td>
                                 <td class="d-md-flex justify-content-center">
 
