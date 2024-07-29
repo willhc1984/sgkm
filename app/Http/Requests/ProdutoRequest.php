@@ -26,6 +26,7 @@ class ProdutoRequest extends FormRequest
             'preco_fornecedor' => 'required',
             'preco_final' => 'required',
             'comissao_consultor' => 'required',
+            'situacao' => 'required'
         ];
     }
 
@@ -35,6 +36,7 @@ class ProdutoRequest extends FormRequest
             'preco_fornecedor.required' => 'Preço do fornecedor é obrigatório!',
             'preco_final.required' => 'Preço final é obrigatório!',
             'comissao_consultor.required' => 'Defina a comissão do consultor!',
+            'situacao.required' => 'Defina a situação do produto!'
         ];
     }
 

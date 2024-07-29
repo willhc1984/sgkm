@@ -79,4 +79,45 @@ class ProdutoController extends Controller
             return redirect()->back()->with('error', 'Produto não foi alocado! Tente novamente.' . $e->getMessage());
         }
     }
+
+    //Formulario editar produtos
+    public function edit(Produto $produto){
+
+        return view('produtos.edit', [
+            'produto' => $produto,
+            'consultor' => $produto->consultor->nome
+        ]);
+    }
+
+    //Atualiza produto no banco de dados
+    public function update(ProdutoRequest $request, Produto $produto){
+        //Valida o formulario
+        $request->validated();
+        
+        //Inicio da transação
+        db::beginTransaction();
+
+        try{
+            $produto->update([
+                'nome' => $request->nome,
+                'preco_fornecedor' => str_replace(',', '.', str_replace('.', '', $request->preco_fornecedor)),
+                'preco_final' => str_replace(',', '.', str_replace('.', '', $request->preco_final)),
+                'comissao_consultor' => $request->comissao_consultor,
+                'data_venda' => $request->data_venda,
+                'situacao' => $request->situacao,
+            ]);
+
+            //Transação com sucesso
+            DB::commit();
+
+            //Redireciona com msg de sucesso
+            return redirect()->route('produto.index', ['consultor' => $produto->consultor_id])
+                ->with('success', 'Produto editado!');
+        }catch(Exception $e){
+            //Transação não concluida
+            DB::rollBack();
+            //Redireciona com msg de erro
+            return redirect()->back()->with('error', 'Produto não editado! Tenete novamente.' . $e->getMessage());
+        }
+    }
 }
