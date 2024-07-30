@@ -53,7 +53,7 @@
                         <select class="form-select" name="situacao">
                             <option selected>{{ $produto->situacao }}</option>
                             <option value="Em estoque">Em estoque</option>
-                            <option value="Em estoque">Vendido</option>
+                            <option value="Vendido">Vendido</option>
                         </select>
                     </div>
                     <div class="col-12">

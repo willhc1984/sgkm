@@ -77,12 +77,24 @@
                                 </td>
                                 <td class="text-center">{{ 'R$ ' . number_format($produto->lucro_loja, 2, ',', '.') }}</td>
                                 @if (empty($produto->data_venda))
-                                    <td class="text-center">Não vendido</td>
+                                    <td class="text-center" style="color: red;">Não vendido</td>
                                 @else
                                     <td class="text-center">
                                         {{ \Carbon\Carbon::parse($produto->data_venda)->format('d/m/Y') }}</td>
                                 @endif
-                                <td class="text-center">{{ $produto->situacao }}</td>
+                                <td class="text-center">
+                                    @if (($produto->situacao == 'Vendido'))
+                                        <a
+                                            href="{{ route('produto.index', ['consultor' => $consultor->id]) }}">
+                                            <span class="badge bg-success">Vendido</span>
+                                        </a>
+                                    @else
+                                        <a
+                                            href="{{ route('produto.index', ['consultor' => $consultor->id]) }}">
+                                            <span class="badge bg-danger">Em estoque</span>
+                                        </a>
+                                    @endif
+
                                 <td class="d-md-flex justify-content-center">
 
                                     <a href="{{ route('produto.edit', ['produto' => $produto->id]) }}"

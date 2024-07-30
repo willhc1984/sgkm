@@ -55,7 +55,7 @@
                         <select class="form-select" name="situacao">
                             <option selected></option>
                             <option value="Em estoque">Em estoque</option>
-                            <option value="Em estoque">Vendido</option>
+                            <option value="Vendido">Vendido</option>
                         </select>
                     </div>
                     <div class="col-12">

@@ -17,21 +17,11 @@ class ProdutoController extends Controller
     public function index(Consultor $consultor)
     {
         $produtos = Produto::with('consultor')
-            ->select(
-                'id',
-                'nome',
-                'preco_fornecedor',
-                'preco_final',
-                'comissao_consultor',
-                'lucro_consultor',
-                'lucro_loja',
-                'situacao',
-                'data_venda'
-            )
             ->where('consultor_id', $consultor->id)
-            ->groupBy('id')->paginate(20);
+            ->orderBy('id')->paginate(20);
             
-            $query = Produto::with('consultor');
+            $query = Produto::with('consultor')->where('consultor_id', $consultor->id);
+
             $total_lucro_consultor = $query->sum('lucro_consultor');
             $total_lucro_loja = $query->sum('lucro_loja');
 
