@@ -31,12 +31,12 @@
                     <div class="col-12">
                         <label for="preco_fornecedor">Preço do Fornecedor:</label>
                         <input type="text" class="form-control" name="preco_fornecedor" id="preco_fornecedor"
-                            value="{{ old('preco_fornecedor', $produto->preco_fornecedor) }}" placeholder="R$">
+                            value="{{ old('preco_fornecedor', number_format($produto->preco_fornecedor, 2, ',', '.' )) }}" placeholder="R$">
                     </div>
                     <div class="col-12">
                         <label for="preco_final">Preço Final:</label>
                         <input type="text" class="form-control" name="preco_final" id="preco_final"
-                            value="{{ old('preco_final', $produto->preco_final) }}" placeholder="R$">
+                            value="{{ old('preco_final', number_format($produto->preco_final, 2, ',', '.')) }}" placeholder="R$">
                     </div>
                     <div class="col-12">
                         <label for="comissao_consultor">Comissão do consultor (%)</label>
@@ -51,7 +51,7 @@
                     <div class="col-md-6 col-sm-12">
                         <label for="situacao" class="form-label">Situação</label>
                         <select class="form-select" name="situacao">
-                            <option selected></option>
+                            <option selected>{{ $produto->situacao }}</option>
                             <option value="Em estoque">Em estoque</option>
                             <option value="Em estoque">Vendido</option>
                         </select>

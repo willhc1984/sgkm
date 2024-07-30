@@ -109,6 +109,9 @@
 
                 {{ $produtos->onEachSide(2)->links() }}
 
+                <p> Lucro total do consultor: <b> R$ {{ number_format($total_lucro_consultor, 2, ',', '.') }} </b>
+                <p> Lucro total da loja: <b> R$ {{ number_format($total_lucro_loja, 2, ',', '.') }} </b>
+
             </div>
         </div>
     </div>

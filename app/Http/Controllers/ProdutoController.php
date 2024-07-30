@@ -26,17 +26,21 @@ class ProdutoController extends Controller
                 'lucro_consultor',
                 'lucro_loja',
                 'situacao',
-                'data_venda',
-                // DB::raw('preco_final * (comissao_consultor / 100) as lucro_consultor'),
-                // DB::raw('preco_final - preco_fornecedor - (preco_final * (comissao_consultor / 100)) as lucro_loja'),
+                'data_venda'
             )
             ->where('consultor_id', $consultor->id)
             ->groupBy('id')->paginate(20);
+            
+            $query = Produto::with('consultor');
+            $total_lucro_consultor = $query->sum('lucro_consultor');
+            $total_lucro_loja = $query->sum('lucro_loja');
 
         return view('produtos.index', [
             'produtos' => $produtos,
-            'consultor' => $consultor
-        ]);
+            'consultor' => $consultor,
+            'total_lucro_consultor' => $total_lucro_consultor,
+            'total_lucro_loja' => $total_lucro_loja
+         ]);
     }
 
 
