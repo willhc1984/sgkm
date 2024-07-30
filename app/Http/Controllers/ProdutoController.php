@@ -23,15 +23,15 @@ class ProdutoController extends Controller
                 'preco_fornecedor',
                 'preco_final',
                 'comissao_consultor',
+                'lucro_consultor',
+                'lucro_loja',
                 'situacao',
                 'data_venda',
-                DB::raw('preco_final * (comissao_consultor / 100) as lucro_consultor'),
-                DB::raw('preco_final - preco_fornecedor - (preco_final * (comissao_consultor / 100)) as lucro_loja')
+                // DB::raw('preco_final * (comissao_consultor / 100) as lucro_consultor'),
+                // DB::raw('preco_final - preco_fornecedor - (preco_final * (comissao_consultor / 100)) as lucro_loja'),
             )
             ->where('consultor_id', $consultor->id)
-            ->orderBy('nome')->paginate(50);
-
-        //dd($produtos);
+            ->groupBy('id')->paginate(20);
 
         return view('produtos.index', [
             'produtos' => $produtos,
@@ -50,8 +50,6 @@ class ProdutoController extends Controller
     //Cadastrar e alocar produto para consultor
     public function store(ProdutoRequest $request)
     {
-
-        //dd($request);
         //Validar o formulario 
         $request->validated();
         //Marca ponto inicial da transação
@@ -70,6 +68,20 @@ class ProdutoController extends Controller
             ]);
 
             DB::commit();
+
+            //Calcula valores - lucro consultor e lucro da loja
+            $produto->update([
+                'lucro_consultor' => $produto->preco_final * ($produto->comissao_consultor / 100)
+            ]);
+
+            DB::commit();
+
+            $produto->update([
+                'lucro_loja' => $produto->preco_final - $produto->preco_fornecedor - $produto->lucro_consultor
+            ]);
+
+            DB::commit();
+
             //Redireciona com msg de sucesso
             return redirect()->route('produto.index', ['consultor' => $request->consultor_id])
                 ->with('success', 'Produto alocado para : ' . $request->consultor);
@@ -77,13 +89,12 @@ class ProdutoController extends Controller
             //Transaçõ não concluida com exito
             DB::rollBack();
             //Redireciona com msg de erro
-            return redirect()->back()->with('error', 'Produto não foi alocado! Tente novamente.' . $e->getMessage());
+            return redirect()->back()->with('error', 'Produto não foi alocado! Tente novamente.');
         }
     }
 
     //Formulario editar produtos
     public function edit(Produto $produto){
-
         return view('produtos.edit', [
             'produto' => $produto,
             'consultor' => $produto->consultor->nome
@@ -96,7 +107,7 @@ class ProdutoController extends Controller
         $request->validated();
         
         //Inicio da transação
-        db::beginTransaction();
+        DB::beginTransaction();
 
         try{
             $produto->update([
@@ -109,6 +120,18 @@ class ProdutoController extends Controller
             ]);
 
             //Transação com sucesso
+            DB::commit();
+
+            $produto->update([
+                'lucro_consultor' => $produto->preco_final * ($produto->comissao_consultor / 100)
+            ]);
+
+            DB::commit();
+
+            $produto->update([
+                'lucro_loja' => $produto->preco_final - $produto->preco_fornecedor - $produto->lucro_consultor
+            ]);
+
             DB::commit();
 
             //Redireciona com msg de sucesso
