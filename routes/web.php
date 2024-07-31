@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ConsultorController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProdutoController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+//Login
+Route::get('/login', [LoginController::class, 'index'])->name('login.index');
+Route::post('/login', [LoginController::class, 'loginProcess'])->name('login.process');
 
 //Consultores
 Route::get('/index-consultores', [ConsultorController::class, 'index'])->name('consultor.index');
