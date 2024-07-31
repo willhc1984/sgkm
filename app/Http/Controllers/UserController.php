@@ -24,13 +24,15 @@ class UserController extends Controller
     }
 
     //Detalhes do usuario
-    public function show(User $user){
+    public function show(User $user)
+    {
         //Carregar view
         return view('users.show', ['menu' => 'usuarios', 'user' => $user]);
     }
 
     //Carregar formulario para cadastrar
-    public function create(){
+    public function create()
+    {
         return view('users.create', ['menu' => 'usuarios']);
     }
 
@@ -43,7 +45,7 @@ class UserController extends Controller
         //Marca ponto iniical da transação
         DB::beginTransaction();
 
-        try{
+        try {
             //Cadastrar no banco de dados
             $user = User::create([
                 'name' => $request->name,
@@ -59,14 +61,104 @@ class UserController extends Controller
 
             //Redireciona usuario e envia mensagem de sucesso
             return redirect()->route('user.show', ['user' => $user->id])->with('success', 'Usuario cadastrado!');
-
-        }catch(Exception $e){
+        } catch (Exception $e) {
             //Operação nao concluida com exito
             DB::rollBack();
 
             //Redireciona usuario e envia mensagem de erro
             return back()->withInput()->with('error', 'Usuário não cadastrado! Tente novamente.');
         }
+    }
 
+    //Carregar formulario editar usuario 
+    public function edit(User $user)
+    {
+        //Carrega a view
+        return view('users.edit', [
+            'menu' => 'usuario',
+            'user' => $user,
+        ]);
+    }
+
+    //Editar usuario no banco de dados
+    public function update(UserRequest $request, User $user)
+    {
+        //Validar formulario
+        $request->validated();
+
+        //Ponto inicial da transação
+        DB::beginTransaction();
+
+        try {
+            //Editar as informação no banco de dados
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email,
+            ]);
+
+            DB::commit();
+
+            //Redirecionar usuario e enviar mensagem de sucesso
+            return redirect()->route('user.show', ['user' => $request->user])->with('success', 'Usuário editado!');
+        } catch (Exception $e) {
+            //Operação nao concluida
+            DB::rollBack();
+            //Redireciona com mensagem de erro
+            return back()->withInput()->with('error', 'Usuário não editado.');
+        }
+    }
+
+    //Carregar formulario de editar senha
+    public function editPassword(User $user)
+    {
+        //Carregar view
+        return view('users.editPassword', ['menu' => 'usuarios', 'user' => $user]);
+    }
+
+    //Salva senha do usuario
+    public function updatePassword(Request $request, User $user)
+    {
+        //Validar o formulario
+        $request->validate([
+            'password' => 'required|min:6',
+        ], [
+            'password.required' => 'O campo senha é obrigatório.',
+            'password.min' => 'A senha deve conter no minimo :min caracteres.'
+        ]);
+
+        //Inicio da transação
+        DB::beginTransaction();
+
+        try {
+            //Edita as informações no banco de dados
+            $user->update([
+                'password' => Hash::make($request->password),
+            ]);
+
+            //Operação é concluida
+            DB::commit();
+
+            //Redireciona ususairo com mensagem de exito
+            return redirect()->route('user.show', ['user' => $request->user])->with('success', 'Senha editada!');
+        } catch (Exception $e) {
+            //Operação não é concluida
+            DB::rollBack();
+            //Redireciona usuario com mensagem de erro
+            return back()->withInput()->with('error', 'Senha do usuário não editada! Tente novamente.');
+        }
+    }
+
+    //Excluir usuario no banco de dados
+    public function destroy(User $user)
+    {
+        try {
+            //Excluir usuario
+            $user->delete();
+            //Redireciona e envia mesnagem de sucesso
+            return redirect()->route('user.index')->with('success', 'Usuário excluído!');
+        } catch (Exception $e) {
+            //Redireciona com mensagem de erro
+            return redirect()->route('user.index')->with('error', 'Usuário não excluído! Tente novamente.');
+        }
     }
 }
