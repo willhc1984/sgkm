@@ -14,7 +14,10 @@ class ConsultorController extends Controller
     public function index(){
         //Recuperar registros de consultores
         $consultores = Consultor::orderBy('nome')->paginate(5);
-        return view('consultores.index', ['consultores' => $consultores]);
+        return view('consultores.index', [
+            'consultores' => $consultores,
+            'menu' => 'consultores'
+        ]);
     }
 
     //Formulário para consultor

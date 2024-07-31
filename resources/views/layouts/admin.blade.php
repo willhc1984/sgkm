@@ -49,14 +49,25 @@
                 <div class="sb-sidenav-menu">
                     <div class="nav">
 
-                        <a class="nav-link" href="#">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-school-flag"></i></div>
-                            Início
+                        <a @class(['nav-link', 'active' => isset($menu) && $menu == 'dashboard']) class="nav-link" href="{{ route('dashboard.index') }}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Dashboard
                         </a>
 
-                        <a class="nav-link" href="{{ route('consultor.index') }}">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-users-line"></i></i></div>
+                        <a @class([
+                            'nav-link',
+                            'active' => isset($menu) && $menu == 'consultores',
+                        ]) class="nav-link" href="{{ route('consultor.index') }}">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
                             Consultores
+                        </a>
+
+                        <a @class([
+                            'nav-link',
+                            'active' => isset($menu) && $menu == 'usuarios',
+                        ]) class="nav-link" href="{{ route('user.index') }}">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+                            Usuários
                         </a>
 
                         <a class="nav-link" href="#">

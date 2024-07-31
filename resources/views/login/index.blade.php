@@ -17,9 +17,9 @@
                                         @csrf
                                         @method('POST')
                                         <div class="form-floating mb-3">
-                                            <input class="form-control" id="login" name="login" type="text"
-                                                value="{{ old('login') }}" placeholder="Seu Login" />
-                                            <label for="email">Login</label>
+                                            <input class="form-control" id="email" name="email" type="email"
+                                                value="{{ old('email') }}" placeholder="Seu e-mail" />
+                                            <label for="email">E-mail</label>
                                         </div>
                                         <div class="form-floating mb-3">
                                             <div class="form-floating mb-3">
