@@ -75,7 +75,7 @@ class UserController extends Controller
     {
         //Carrega a view
         return view('users.edit', [
-            'menu' => 'usuario',
+            'menu' => 'usuarios',
             'user' => $user,
         ]);
     }

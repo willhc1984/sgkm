@@ -39,6 +39,7 @@ Route::delete('/destroy-user/{user}', [UserController::class, 'destroy'])->name(
 //Login
 Route::get('/login', [LoginController::class, 'index'])->name('login.index');
 Route::post('/login', [LoginController::class, 'loginProcess'])->name('login.process');
+Route::get('/logout', [LoginController::class, 'destroy'])->name('login.destroy');
 
 //Consultores
 Route::get('/index-consultores', [ConsultorController::class, 'index'])->name('consultor.index');

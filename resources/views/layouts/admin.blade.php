@@ -37,7 +37,7 @@
                     <li>
                         <hr class="dropdown-divider" />
                     </li>
-                    <li><a class="dropdown-item" href="#">Sair</a></li>
+                    <li><a class="dropdown-item" href="{{ route('login.destroy') }}">Sair</a></li>
                 </ul>
             </li>
         </ul>
@@ -62,15 +62,12 @@
                             Consultores
                         </a>
 
-                        <a @class([
-                            'nav-link',
-                            'active' => isset($menu) && $menu == 'usuarios',
-                        ]) class="nav-link" href="{{ route('user.index') }}">
+                        <a @class(['nav-link', 'active' => isset($menu) && $menu == 'usuarios']) class="nav-link" href="{{ route('user.index') }}">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
                             Usuários
                         </a>
 
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="{{ route('login.destroy') }}">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-right-from-bracket"></i></div>
                             Sair
                         </a>
@@ -78,7 +75,10 @@
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
-                    <div class="small">Usuário:
+                    <div class="small">Usuário: <b>
+                        @if (auth()->check())
+                            {{ auth()->user()->name }}
+                        @endif </b>
                     </div>
                 </div>
             </nav>
@@ -93,12 +93,7 @@
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; SGKM {{ date('Y') }}
-                        </div>
-                        <div>
-                            <a href="#" style="text-decoration: none;">Privacy Policy</a>
-                            &middot;
-                            <a href="#" style="text-decoration: none;">Terms &amp; Conditions</a>
+                        <div class="text-muted">Copyright &copy; S.G.K.M. {{ date('Y') }}
                         </div>
                     </div>
                 </div>

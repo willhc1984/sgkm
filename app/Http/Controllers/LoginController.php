@@ -32,4 +32,12 @@ class LoginController extends Controller
         //Rediciona o usuario para dentro so sistema
         return redirect()->route('dashboard.index');
     }
+
+    //Logout de usuario
+    public function destroy()
+    {
+        Auth::logout();
+        //Redireciona ussuaior com msg de sucesso
+        return redirect()->route('login.index')->with('success', 'Você saiu do sistema!');
+    }
 }
