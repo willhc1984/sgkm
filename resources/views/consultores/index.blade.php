@@ -10,32 +10,7 @@
             </ol>
         </div>
 
-        <x-alert />
-
-        <div class="card mb-4 border-light shadow">
-            <div class="card-header space-between-elements">
-                <span>Pesquisar</span>
-            </div>
-            <div class="card-body">
-                <form action="{{ route('consultor.index') }}">
-                    <div class="row">
-                        <div class="col-md-6 col-sm-12">
-                            <label class="form-label" for="name">Nome:</label>
-                            <input type="text" name="nome" id="nome" class="form-control" value=""
-                                placeholder="Nome do consultor(a)">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4 col-sm-12 mt-2 pt-2">
-                            <button type="submit" class="btn btn-info btn-sm"><i class="fa-solid fa-magnifying-glass">
-                                </i> Pesquisar</button>
-                            <a href="{{ route('consultor.index') }}" class="btn btn-warning btn-sm"><i
-                                    class="fa-solid fa-trash"></i>Limpar</a>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
+        <x-alert />   
 
         <div class="card mb-4 border-light shadow">
             <div class="card-header space-between-elements">
@@ -64,9 +39,9 @@
                                 <td>{{ $consultor->contato }}</td>
                                 <td class="d-md-flex justify-content-center">
 
-                                    <a href="{{ route('produto.index', ['consultor' => $consultor->id]) }}"
+                                    <a href="{{ route('produto.create', ['consultor' => $consultor->id]) }}"
                                         class="btn btn-info btn-sm me-1 mb-1">
-                                        <i class="fa-solid fa-list-check"></i> Produtos</a>
+                                        <i class="fa-solid fa-list-check"></i> Alocar produto </a>
 
                                     <a href="{{ route('consultor.edit', ['consultor' => $consultor->id]) }}"
                                         class="btn btn-secondary btn-sm me-1 mb-1">

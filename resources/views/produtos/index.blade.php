@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid px-4">
         <div class="mb1 space-between-elements">
-            <h2 class="mt-3">Produtos - {{ $consultor->nome }}</h2>
+            <h2 class="mt-3">Produtos</h2>
             <ol class="breadcrumb mb-3 mt-3 p-1 rounded bg-light">
                 <li class="breadcrumb-item"><a class="text-decoration-none" href="#">Início</a></li>
                 <li class="breadcrumb-item"><a class="text-decoration-none"
@@ -26,13 +26,23 @@
                             <input type="text" name="nome" id="nome" class="form-control" value=""
                                 placeholder="Nome do produto">
                         </div>
+                        <div class="col-md-6 col-sm-12">
+                            <label class="form-label" for="name">Consultor:</label>
+                            <select class="form-select" name="consultor" id="consultor" aria-label="Default select example">
+                                <option selected></option>
+                                @forelse($consultores as $consultor)
+                                    <option value="{{ $consultor->id }}">{{ $consultor->nome }}</option>
+                                @empty
+                                @endforelse
+                            </select>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-4 col-sm-12 mt-2 pt-2">
                             <button type="submit" class="btn btn-info btn-sm"><i class="fa-solid fa-magnifying-glass">
                                 </i> Pesquisar</button>
-                            <a href="{{ route('produto.index', ['consultor' => $consultor->id]) }}"
-                                class="btn btn-warning btn-sm"><i class="fa-solid fa-trash"></i>Limpar</a>
+                            <a href="{{ route('produto.index') }}" class="btn btn-warning btn-sm"><i
+                                    class="fa-solid fa-trash"></i>Limpar</a>
                         </div>
                     </div>
                 </form>
@@ -42,10 +52,6 @@
         <div class="card mb-4 border-light shadow">
             <div class="card-header space-between-elements">
                 <span>Listar</span>
-                <span>
-                    <a href="{{ route('produto.create', ['consultor' => $consultor->id]) }}" class="btn btn-success btn-sm">
-                        <i class="fa-solid fa-square-plus"></i> Alocar produto</a>
-                </span>
             </div>
 
             <div class="card-body">
@@ -83,14 +89,12 @@
                                         {{ \Carbon\Carbon::parse($produto->data_venda)->format('d/m/Y') }}</td>
                                 @endif
                                 <td class="text-center">
-                                    @if (($produto->situacao == 'Vendido'))
-                                        <a
-                                            href="{{ route('produto.index', ['consultor' => $consultor->id]) }}">
+                                    @if ($produto->situacao == 'Vendido')
+                                        <a href="{{ route('produto.index') }}">
                                             <span class="badge bg-success">Vendido</span>
                                         </a>
                                     @else
-                                        <a
-                                            href="{{ route('produto.index', ['consultor' => $consultor->id]) }}">
+                                        <a href="{{ route('produto.index') }}">
                                             <span class="badge bg-danger">Em estoque</span>
                                         </a>
                                     @endif
@@ -113,7 +117,7 @@
                             </tr>
                         @empty
                             <div class="alert alert-danger" role="alert">
-                                Nenhum produto alocado para {{ $consultor->nome }}!
+                                Nenhum produto encontrado!
                             </div>
                         @endforelse
                     </tbody>
@@ -121,8 +125,8 @@
 
                 {{ $produtos->onEachSide(2)->links() }}
 
-                <p> Lucro total do consultor: <b> R$ {{ number_format($total_lucro_consultor, 2, ',', '.') }} </b>
-                <p> Lucro total da loja: <b> R$ {{ number_format($total_lucro_loja, 2, ',', '.') }} </b>
+                {{-- <p> Lucro total do consultor: <b> R$ {{ number_format($total_lucro_consultor, 2, ',', '.') }} </b>
+                <p> Lucro total da loja: <b> R$ {{ number_format($total_lucro_loja, 2, ',', '.') }} </b> --}}
 
             </div>
         </div>

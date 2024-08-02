@@ -25,25 +25,61 @@ class ProdutoController extends Controller
         $this->middleware('permission:destroy-produtos', ['only' => ['destroy']]);
     }
 
-    //Listar produtos do consultor
-    public function index(Consultor $consultor)
+    public function index(Request $request)
     {
-        $produtos = Produto::with('consultor')
-            ->where('consultor_id', $consultor->id)
-            ->orderBy('id')->paginate(20);
+        //Recuperar os consultores
+        $consultores = Consultor::orderBy('nome')->get();
 
-        $query = Produto::with('consultor')->where('consultor_id', $consultor->id);
+        //Recuperar os registros no banco de dados conforme parametros do formulario de pesquisa
+        $produtos = Produto::when($request->has('nome'), function ($whenQuery) use ($request) {
+            $whenQuery->where('nome', 'like', '%' . $request->nome . '%');
+        })
+            ->when($request->filled('consultor'), function ($whenQuery) use ($request) {
+                $whenQuery->where('consultor_id', '=', $request->consultor);
+        })
+            // ->when($request->filled('data_cadastro_inicio'), function($whenQuery) use($request){
+            //     $whenQuery->where('created_at', '>=', \Carbon\Carbon::parse($request->data_cadastro_inicio)->format('Y-m-d H:i:s'));
+            // })
+            // ->when($request->filled('data_cadastro_fim'), function($whenQuery) use($request){
+            //     $whenQuery->where('created_at', '<=', \Carbon\Carbon::parse($request->data_cadastro_fim)->format('Y-m-d H:i:s'));
+            // })
 
-        $total_lucro_consultor = $query->sum('lucro_consultor');
-        $total_lucro_loja = $query->sum('lucro_loja');
+            ->orderByDesc('nome')
+            ->paginate(20)
+            ->withQueryString();
 
+        //Carregar view
         return view('produtos.index', [
+            'menu' => 'produtos',
             'produtos' => $produtos,
-            'consultor' => $consultor,
-            'total_lucro_consultor' => $total_lucro_consultor,
-            'total_lucro_loja' => $total_lucro_loja
+            'nome' => $request->nome,
+            'consultores' => $consultores
+            // 'email' => $request->email,
+            // 'data_cadastro_inicio' => $request->data_cadastro_inicio,
+            // 'data_cadastro_fim' => $request->data_cadastro_fim,
         ]);
     }
+
+    //Listar produtos do consultor
+    // public function index(Consultor $consultor)
+    // {
+    //     //Recuperar registros conforme parametros do formulario
+    //     $produtos = Produto::with('consultor')
+    //         ->where('consultor_id', $consultor->id)
+    //         ->orderBy('id')->paginate(20);
+
+    //     $query = Produto::with('consultor')->where('consultor_id', $consultor->id);
+
+    //     $total_lucro_consultor = $query->sum('lucro_consultor');
+    //     $total_lucro_loja = $query->sum('lucro_loja');
+
+    //     return view('produtos.index', [
+    //         'produtos' => $produtos,
+    //         'consultor' => $consultor,
+    //         'total_lucro_consultor' => $total_lucro_consultor,
+    //         'total_lucro_loja' => $total_lucro_loja
+    //     ]);
+    // }
 
 
     //Formulario para alocar produto ao consultor
@@ -86,7 +122,7 @@ class ProdutoController extends Controller
             DB::commit();
 
             //Redireciona com msg de sucesso
-            return redirect()->route('produto.index', ['consultor' => $request->consultor_id])
+            return redirect()->route('consultor.index')
                 ->with('success', 'Produto alocado para : ' . $request->consultor);
         } catch (Exception $e) {
             //Transaçõ não concluida com exito

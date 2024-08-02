@@ -52,7 +52,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/destroy-consultores/{consultor}', [ConsultorController::class, 'destroy'])->name('consultor.destroy');
 
     //Produtos
-    Route::get('/index-produtos/{consultor}', [ProdutoController::class, 'index'])->name('produto.index');
+    Route::get('/index-produtos', [ProdutoController::class, 'index'])->name('produto.index');
     Route::get('/create-produtos/{consultor}', [ProdutoController::class, 'create'])->name('produto.create');
     Route::post('/store-produtos', [ProdutoController::class, 'store'])->name('produto.store');
     Route::get('/edit-produtos/{produto}', [ProdutoController::class, 'edit'])->name('produto.edit');

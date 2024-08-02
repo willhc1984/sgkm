@@ -12,7 +12,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <title>Curso Celke</title>
+    <title>S.G.K.M - Sistema de Gestão KMartins</title>
 </head>
 
 <body class="sb-nav-fixed">
@@ -60,6 +60,14 @@
                         ]) class="nav-link" href="{{ route('consultor.index') }}">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
                             Consultores
+                        </a>
+
+                        <a @class([
+                            'nav-link',
+                            'active' => isset($menu) && $menu == 'produtos',
+                        ]) class="nav-link" href="{{ route('produto.index') }}">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+                            Produtos
                         </a>
 
                         <a @class(['nav-link', 'active' => isset($menu) && $menu == 'usuarios']) class="nav-link" href="{{ route('user.index') }}">
