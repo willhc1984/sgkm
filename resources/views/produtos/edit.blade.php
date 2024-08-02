@@ -46,7 +46,7 @@
                     <div class="col-12">
                         <label for="data_venda">Data da venda</label>
                         <input type="date" class="form-control" name="data_venda" id="data_venda"
-                            value="{{ old('data_venda', $produto->data_venda) }}" placeholder="Data">
+                            value="{{ \Carbon\Carbon::parse($produto->data_venda)->format('Y-m-d') }}" placeholder="Data">
                     </div>
                     <div class="col-md-6 col-sm-12">
                         <label for="situacao" class="form-label">Situação</label>

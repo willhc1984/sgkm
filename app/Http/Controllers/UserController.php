@@ -11,6 +11,18 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+
+    //Executar o construct com middleware de autenticação e permissão
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('permission:index-user', ['only' => ['index']]);
+        $this->middleware('permission:show-user', ['only' => ['show']]);
+        $this->middleware('permission:create-user', ['only' => ['create']]);
+        $this->middleware('permission:edit-user', ['only' => ['edit']]);
+        $this->middleware('permission:destroy-user', ['only' => ['destroy']]);
+    }
+
     //Listar usuários
     public function index()
     {

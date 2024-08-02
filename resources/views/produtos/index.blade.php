@@ -77,7 +77,7 @@
                                 </td>
                                 <td class="text-center">{{ 'R$ ' . number_format($produto->lucro_loja, 2, ',', '.') }}</td>
                                 @if (empty($produto->data_venda))
-                                    <td class="text-center" style="color: red;">Não vendido</td>
+                                    <td class="text-center" style="color: red;">Não informado</td>
                                 @else
                                     <td class="text-center">
                                         {{ \Carbon\Carbon::parse($produto->data_venda)->format('d/m/Y') }}</td>

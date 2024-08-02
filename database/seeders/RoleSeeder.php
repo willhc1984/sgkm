@@ -24,7 +24,7 @@ class RoleSeeder extends Seeder
                 'index-produtos',
                 'show-produtos',
                 'edit-produtos',
-
+                
                 'index-consultores',
                 'show-consultores',
             ]);

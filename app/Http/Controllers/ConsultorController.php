@@ -10,6 +10,18 @@ use Illuminate\Support\Facades\DB;
 
 class ConsultorController extends Controller
 {
+
+    //Executar o construct com middleware de autenticação e permissão
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('permission:index-consultores', ['only' => ['index']]);
+        $this->middleware('permission:show-consultores', ['only' => ['show']]);
+        $this->middleware('permission:create-consultores', ['only' => ['create']]);
+        $this->middleware('permission:edit-consultores', ['only' => ['edit']]);
+        $this->middleware('permission:destroy-consultores', ['only' => ['destroy']]);
+    }
+
     //Listar consultores
     public function index(){
         //Recuperar registros de consultores

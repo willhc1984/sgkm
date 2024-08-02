@@ -13,24 +13,36 @@ use Termwind\Components\Raw;
 
 class ProdutoController extends Controller
 {
+
+    //Executar o construct com middleware de autenticação e permissão
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('permission:index-produtos', ['only' => ['index']]);
+        $this->middleware('permission:show-produtos', ['only' => ['show']]);
+        $this->middleware('permission:create-produtos', ['only' => ['create']]);
+        $this->middleware('permission:edit-produtos', ['only' => ['edit']]);
+        $this->middleware('permission:destroy-produtos', ['only' => ['destroy']]);
+    }
+
     //Listar produtos do consultor
     public function index(Consultor $consultor)
     {
         $produtos = Produto::with('consultor')
             ->where('consultor_id', $consultor->id)
             ->orderBy('id')->paginate(20);
-            
-            $query = Produto::with('consultor')->where('consultor_id', $consultor->id);
 
-            $total_lucro_consultor = $query->sum('lucro_consultor');
-            $total_lucro_loja = $query->sum('lucro_loja');
+        $query = Produto::with('consultor')->where('consultor_id', $consultor->id);
+
+        $total_lucro_consultor = $query->sum('lucro_consultor');
+        $total_lucro_loja = $query->sum('lucro_loja');
 
         return view('produtos.index', [
             'produtos' => $produtos,
             'consultor' => $consultor,
             'total_lucro_consultor' => $total_lucro_consultor,
             'total_lucro_loja' => $total_lucro_loja
-         ]);
+        ]);
     }
 
 
@@ -62,18 +74,15 @@ class ProdutoController extends Controller
             ]);
 
             DB::commit();
-
             //Calcula valores - lucro consultor e lucro da loja
             $produto->update([
                 'lucro_consultor' => $produto->preco_final * ($produto->comissao_consultor / 100)
             ]);
-
             DB::commit();
 
             $produto->update([
                 'lucro_loja' => $produto->preco_final - $produto->preco_fornecedor - $produto->lucro_consultor
             ]);
-
             DB::commit();
 
             //Redireciona com msg de sucesso
@@ -88,7 +97,11 @@ class ProdutoController extends Controller
     }
 
     //Formulario editar produtos
-    public function edit(Produto $produto){
+    public function edit(Produto $produto)
+    {
+
+        //dd($produto->data_venda);
+
         return view('produtos.edit', [
             'produto' => $produto,
             'consultor' => $produto->consultor->nome
@@ -96,14 +109,15 @@ class ProdutoController extends Controller
     }
 
     //Atualiza produto no banco de dados
-    public function update(ProdutoRequest $request, Produto $produto){
+    public function update(ProdutoRequest $request, Produto $produto)
+    {
         //Valida o formulario
         $request->validated();
-        
+
         //Inicio da transação
         DB::beginTransaction();
 
-        try{
+        try {
             $produto->update([
                 'nome' => $request->nome,
                 'preco_fornecedor' => str_replace(',', '.', str_replace('.', '', $request->preco_fornecedor)),
@@ -131,7 +145,7 @@ class ProdutoController extends Controller
             //Redireciona com msg de sucesso
             return redirect()->route('produto.index', ['consultor' => $produto->consultor_id])
                 ->with('success', 'Produto editado!');
-        }catch(Exception $e){
+        } catch (Exception $e) {
             //Transação não concluida
             DB::rollBack();
             //Redireciona com msg de erro
@@ -140,16 +154,14 @@ class ProdutoController extends Controller
     }
 
     //Excluir produto no banco de dados
-    public function destroy(Produto $produto){
-        try{
+    public function destroy(Produto $produto)
+    {
+        try {
             //Excluir registro do banco de dados
             $produto->delete();
-
             //Redireciona o usuario
-            return redirect()->route('produto.index', ['consultor' => $produto->consultor_id])->with
-                ('success','Produto excluido!');
-
-        }catch(Exception $e){
+            return redirect()->route('produto.index', ['consultor' => $produto->consultor_id])->with('success', 'Produto excluido!');
+        } catch (Exception $e) {
             //Redireciona usuario, envia mensagem de erro
             return redirect()->back()->with('error', 'Produto não excluido! Tente novamente.');
         }
