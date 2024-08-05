@@ -40,9 +40,14 @@ class ProdutoController extends Controller
             ->when($request->filled('situacao'), function ($whenQuery) use ($request) {
                 $whenQuery->where('situacao', '=', $request->situacao);
         })
-
+            ->when($request->filled('data_inicio'), function($whenQuery) use($request){
+                $whenQuery->where('data_venda', '>=', \Carbon\Carbon::parse($request->data_inicio)->format('Y-m-d'));
+        })
+            ->when($request->filled('data_fim'), function($whenQuery) use($request){
+                $whenQuery->where('data_venda', '<=', \Carbon\Carbon::parse($request->data_fim)->format('Y-m-d'));
+        })
             ->orderByDesc('nome')
-            ->paginate(20)
+            ->paginate(50)
             ->withQueryString();
 
         //Carregar view

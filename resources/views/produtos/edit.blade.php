@@ -6,7 +6,7 @@
             <h2 class="mt-3">Editar produto</h2>
             <ol class="breadcrumb mb-3 mt-3">
                 <li class="breadcrumb-item"><a href="/dashboard">Início</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('consultor.index') }}">Consultores</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('produto.index') }}">Produtos</a></li>
                 <li class="breadcrumb-item active">Editar produto</li>
             </ol>
         </div>

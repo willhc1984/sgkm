@@ -22,12 +22,11 @@ class RoleSeeder extends Seeder
             //Dar permissao para o papel
             $consultor->givePermissionTo([
                 'index-produtos',
-                'show-produtos',
-                'edit-produtos',
-                
+                'show-produtos',                
                 'index-consultores',
                 'show-consultores',
             ]);
         }
+
     }
 }

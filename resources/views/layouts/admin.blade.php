@@ -19,7 +19,7 @@
 
     <nav class="sb-topnav navbar navbar-expand navbar-dark" style="background-color: black;">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="index.html">S.G.K.M</a>
+        <a class="navbar-brand ps-3" href="index.html"><b>S.G.K.M</b></a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
@@ -30,15 +30,21 @@
         <!-- Navbar-->
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#">Perfil</a></li>
-                    <li>
-                        <hr class="dropdown-divider" />
-                    </li>
-                    <li><a class="dropdown-item" href="{{ route('login.destroy') }}">Sair</a></li>
-                </ul>
+            <li class="d-flex flex-column justify-content-center align-items-center me-2" style="color: white;">
+                <b>@if (auth()->check())
+                    {{ auth()->user()->name }}
+                @endif</b>
+            </li>
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                <li>
+                    <hr class="dropdown-divider" />
+                </li>
+                <li><a class="dropdown-item" href="{{ route('login.destroy') }}">Sair</a></li>
+            </ul>
+
             </li>
         </ul>
     </nav>
@@ -62,10 +68,7 @@
                             Consultores
                         </a>
 
-                        <a @class([
-                            'nav-link',
-                            'active' => isset($menu) && $menu == 'produtos',
-                        ]) class="nav-link" href="{{ route('produto.index') }}">
+                        <a @class(['nav-link', 'active' => isset($menu) && $menu == 'produtos']) class="nav-link" href="{{ route('produto.index') }}">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
                             Produtos
                         </a>
@@ -84,9 +87,10 @@
                 </div>
                 <div class="sb-sidenav-footer">
                     <div class="small">Usuário: <b>
-                        @if (auth()->check())
-                            {{ auth()->user()->name }}
-                        @endif </b>
+                            @if (auth()->check())
+                                {{ auth()->user()->name }}
+                            @endif
+                        </b>
                     </div>
                 </div>
             </nav>

@@ -6,8 +6,6 @@
             <h2 class="mt-3">Produtos</h2>
             <ol class="breadcrumb mb-3 mt-3 p-1 rounded bg-light">
                 <li class="breadcrumb-item"><a class="text-decoration-none" href="#">Início</a></li>
-                <li class="breadcrumb-item"><a class="text-decoration-none"
-                        href="{{ route('consultor.index') }}">Consultores</a></li>
                 <li class="breadcrumb-item active">Produtos</li>
             </ol>
         </div>
@@ -45,6 +43,16 @@
                                 <option value="Pago">Pago</option>
                             </select>
                         </div>
+                        <div class="col-md-4 col-sm-12">
+                            <label class="form-label" for="data_inicio">Data início:</label>
+                            <input type="date" name="data_inicio" id="data_inicio"
+                                class="form-control" value="" placeholder="Data final">
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <label class="form-label" for="data_fim">Data final:</label>
+                            <input type="date" name="data_fim" id="data_fim"
+                                class="form-control" value="" placeholder="Data final">
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-4 col-sm-12 mt-2 pt-2">
@@ -75,7 +83,9 @@
                             <th scope="col">Preço-Final</th>
                             <th scope="col">Comissão em (%)</th>
                             <th scope="col">Lucro Consultor</th>
+                            @can('create-produtos')
                             <th scope="col">Lucro Loja</th>
+                            @endcan
                             <th scope="col">Data da venda</th>
                             <th scope="col">Situação</th>
                             <th scope="col">Ações</th>
@@ -94,7 +104,9 @@
                                 <td class="text-center">{{ $produto->comissao_consultor }} %</td>
                                 <td class="text-center">{{ 'R$ ' . number_format($produto->lucro_consultor, 2, ',', '.') }}
                                 </td>
+                                @can('create-produtos')
                                 <td class="text-center">{{ 'R$ ' . number_format($produto->lucro_loja, 2, ',', '.') }}</td>
+                                @endcan
                                 @if (empty($produto->data_venda))
                                     <td class="text-center" style="color: red;">Não informado</td>
                                 @else
