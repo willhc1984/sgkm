@@ -43,9 +43,7 @@ class LoginController extends Controller
         //dd($user->permissions);
 
         //Atribui as permissões ao usuario
-        $user->syncPermissions($permissions);
-
-        
+        $user->syncPermissions($permissions);        
 
         //Rediciona o usuario para dentro so sistema
         return redirect()->route('dashboard.index');

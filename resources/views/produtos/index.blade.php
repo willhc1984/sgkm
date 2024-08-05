@@ -58,9 +58,11 @@
                 <table class="table table-hover table-sm" style="font-size: 13px;">
                     <thead>
                         <tr class="text-center">
-                            <th scope="col">#ID</th>
+                            {{-- <th scope="col">#ID</th> --}}
                             <th scope="col">Nome</th>
+                            @can('create-produtos')
                             <th scope="col">Preço-Fornecedor</th>
+                            @endcan
                             <th scope="col">Preço-Final</th>
                             <th scope="col">Comissão em (%)</th>
                             <th scope="col">Lucro Consultor</th>
@@ -73,9 +75,11 @@
                     <tbody>
                         @forelse($produtos as $produto)
                             <tr>
-                                <th class="text-center" scope="row">{{ $produto->id }}</th>
+                                {{-- <th class="text-center" scope="row">{{ $produto->id }}</th> --}}
                                 <td class="text-center">{{ $produto->nome }}</td>
+                                @can('create-produtos')
                                 <td class="text-center">{{ 'R$ ' . number_format($produto->preco_fornecedor, 2, ',', '.') }}
+                                @endcan
                                 </td>
                                 <td class="text-center">{{ 'R$ ' . number_format($produto->preco_final, 2, ',', '.') }}</td>
                                 <td class="text-center">{{ $produto->comissao_consultor }} %</td>
