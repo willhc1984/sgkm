@@ -37,12 +37,9 @@ class ProdutoController extends Controller
             ->when($request->filled('consultor'), function ($whenQuery) use ($request) {
                 $whenQuery->where('consultor_id', '=', $request->consultor);
         })
-            // ->when($request->filled('data_cadastro_inicio'), function($whenQuery) use($request){
-            //     $whenQuery->where('created_at', '>=', \Carbon\Carbon::parse($request->data_cadastro_inicio)->format('Y-m-d H:i:s'));
-            // })
-            // ->when($request->filled('data_cadastro_fim'), function($whenQuery) use($request){
-            //     $whenQuery->where('created_at', '<=', \Carbon\Carbon::parse($request->data_cadastro_fim)->format('Y-m-d H:i:s'));
-            // })
+            ->when($request->filled('situacao'), function ($whenQuery) use ($request) {
+                $whenQuery->where('situacao', '=', $request->situacao);
+        })
 
             ->orderByDesc('nome')
             ->paginate(20)

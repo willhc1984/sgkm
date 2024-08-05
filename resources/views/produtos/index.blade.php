@@ -21,12 +21,12 @@
             <div class="card-body">
                 <form action="#">
                     <div class="row">
-                        <div class="col-md-6 col-sm-12">
+                        <div class="col-md-4 col-sm-12">
                             <label class="form-label" for="name">Nome:</label>
                             <input type="text" name="nome" id="nome" class="form-control" value=""
                                 placeholder="Nome do produto">
                         </div>
-                        <div class="col-md-6 col-sm-12">
+                        <div class="col-md-4 col-sm-12">
                             <label class="form-label" for="name">Consultor:</label>
                             <select class="form-select" name="consultor" id="consultor" aria-label="Default select example">
                                 <option selected></option>
@@ -34,6 +34,15 @@
                                     <option value="{{ $consultor->id }}">{{ $consultor->nome }}</option>
                                 @empty
                                 @endforelse
+                            </select>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <label class="form-label" for="name">Situação:</label>
+                            <select class="form-select" name="situacao" id="situacao" aria-label="Default select example">
+                                <option selected></option>
+                                <option value="Em estoque">Em estoque</option>
+                                <option value="Vendido">Vendido</option>
+                                <option value="Pago">Pago</option>
                             </select>
                         </div>
                     </div>
@@ -61,7 +70,7 @@
                             {{-- <th scope="col">#ID</th> --}}
                             <th scope="col">Nome</th>
                             @can('create-produtos')
-                            <th scope="col">Preço-Fornecedor</th>
+                                <th scope="col">Preço-Fornecedor</th>
                             @endcan
                             <th scope="col">Preço-Final</th>
                             <th scope="col">Comissão em (%)</th>
@@ -78,8 +87,8 @@
                                 {{-- <th class="text-center" scope="row">{{ $produto->id }}</th> --}}
                                 <td class="text-center">{{ $produto->nome }}</td>
                                 @can('create-produtos')
-                                <td class="text-center">{{ 'R$ ' . number_format($produto->preco_fornecedor, 2, ',', '.') }}
-                                @endcan
+                                    <td class="text-center">{{ 'R$ ' . number_format($produto->preco_fornecedor, 2, ',', '.') }}
+                                    @endcan
                                 </td>
                                 <td class="text-center">{{ 'R$ ' . number_format($produto->preco_final, 2, ',', '.') }}</td>
                                 <td class="text-center">{{ $produto->comissao_consultor }} %</td>
@@ -115,7 +124,7 @@
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger btn-sm me-1 mb-1 btnDelete"
                                             data-delete-id="{{ $produto->id }}"><i class="fa-regular fa-trash-can"></i>
-                                            </button>
+                                        </button>
                                     </form>
                                 </td>
                             </tr>
