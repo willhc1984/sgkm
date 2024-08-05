@@ -25,28 +25,37 @@
                     @method('PUT')
                     <div class="col-12">
                         <label for="name" class="form-label">Nome do produto:</label>
-                        <input type="text" class="form-control" name="nome" id="nome" value="{{ old('nome', $produto->nome) }}"
-                            placeholder="Nome do produto">
+                        <input type="text" class="form-control" name="nome" id="nome"
+                            value="{{ old('nome', $produto->nome) }}" placeholder="Nome do produto">
                     </div>
                     <div class="col-12">
                         <label for="preco_fornecedor">Preço do Fornecedor:</label>
                         <input type="text" class="form-control" name="preco_fornecedor" id="preco_fornecedor"
-                            value="{{ old('preco_fornecedor', number_format($produto->preco_fornecedor, 2, ',', '.' )) }}" placeholder="R$">
+                            value="{{ old('preco_fornecedor', number_format($produto->preco_fornecedor, 2, ',', '.')) }}"
+                            placeholder="R$">
                     </div>
                     <div class="col-12">
                         <label for="preco_final">Preço Final:</label>
                         <input type="text" class="form-control" name="preco_final" id="preco_final"
-                            value="{{ old('preco_final', number_format($produto->preco_final, 2, ',', '.')) }}" placeholder="R$">
+                            value="{{ old('preco_final', number_format($produto->preco_final, 2, ',', '.')) }}"
+                            placeholder="R$">
                     </div>
                     <div class="col-12">
                         <label for="comissao_consultor">Comissão do consultor (%)</label>
                         <input type="number" class="form-control" name="comissao_consultor" id="comissao_consultor"
-                            value="{{ old('comissao_consultor', $produto->comissao_consultor) }}" placeholder="Comissão do consultor (%)">
+                            value="{{ old('comissao_consultor', $produto->comissao_consultor) }}"
+                            placeholder="Comissão do consultor (%)">
                     </div>
                     <div class="col-12">
                         <label for="data_venda">Data da venda</label>
-                        <input type="date" class="form-control" name="data_venda" id="data_venda"
-                            value="{{ \Carbon\Carbon::parse($produto->data_venda)->format('Y-m-d') }}" placeholder="Data">
+                        @if ($produto->data_venda == null)
+                            <input type="date" class="form-control" name="data_venda" id="data_venda" value=""
+                                placeholder="Data">
+                        @else
+                            <input type="date" class="form-control" name="data_venda" id="data_venda"
+                                value="{{ \Carbon\Carbon::parse($produto->data_venda)->format('Y-m-d') }}"
+                                placeholder="Data">
+                        @endif
                     </div>
                     <div class="col-md-6 col-sm-12">
                         <label for="situacao" class="form-label">Situação</label>
