@@ -35,8 +35,8 @@
                     </div>
                     <div class="col-12">
                         <label  for="price">Contato:</label>
-                        <input type="text" class="form-control" name="contato" id="contato" value="{{ old('contato') }}"
-                            placeholder="Contato" >
+                        <input type="number" class="form-control" name="contato" id="contato" value="{{ old('contato') }}"
+                            placeholder="Contato" pattern="^\([1-9]{2}\)[0-9]{4}\-[0-9]{4}$" />
                     </div>
                     <div class="col-12">
                         <button type="submit" class="btn btn-primary bt-sm">Salvar</button>

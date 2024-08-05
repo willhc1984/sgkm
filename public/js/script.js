@@ -1,3 +1,4 @@
+
 // Receber o seletor do campo preço do fornecedor
 let inputPriceForn = document.getElementById('preco_fornecedor');
 

@@ -81,7 +81,8 @@
                                 <th scope="col">Preço-Fornecedor</th>
                             @endcan
                             <th scope="col">Preço-Final</th>
-                            <th scope="col">Comissão em (%)</th>
+                            <th scope="col">Consultor</th>
+                            <th scope="col">Comissão</th>
                             <th scope="col">Lucro Consultor</th>
                             @can('create-produtos')
                             <th scope="col">Lucro Loja</th>
@@ -95,12 +96,14 @@
                         @forelse($produtos as $produto)
                             <tr>
                                 {{-- <th class="text-center" scope="row">{{ $produto->id }}</th> --}}
-                                <td class="text-center">{{ $produto->nome }}</td>
+                                <td class="text-center nomeProduto" data-bs-toggle="tooltip" 
+                                    data-bs-placement="bottom" title="{{ $produto->nome }}">{{ $produto->nome }}</td>
                                 @can('create-produtos')
                                     <td class="text-center">{{ 'R$ ' . number_format($produto->preco_fornecedor, 2, ',', '.') }}
                                     @endcan
                                 </td>
                                 <td class="text-center">{{ 'R$ ' . number_format($produto->preco_final, 2, ',', '.') }}</td>
+                                <td class="text-center">{{ $produto->consultor->nome }}</td>
                                 <td class="text-center">{{ $produto->comissao_consultor }} %</td>
                                 <td class="text-center">{{ 'R$ ' . number_format($produto->lucro_consultor, 2, ',', '.') }}
                                 </td>
