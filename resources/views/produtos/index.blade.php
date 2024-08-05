@@ -103,7 +103,7 @@
 
                                     <a href="{{ route('produto.edit', ['produto' => $produto->id]) }}"
                                         class="btn btn-secondary btn-sm me-1 mb-1">
-                                        <i class="fa-solid fa-pen-to-square"></i>Editar</a>
+                                        <i class="fa-solid fa-pen-to-square"></i></a>
 
                                     <form id="formDelete{{ $produto->id }}" method="POST"
                                         action="{{ route('produto.destroy', ['produto' => $produto->id]) }}">
@@ -111,7 +111,7 @@
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger btn-sm me-1 mb-1 btnDelete"
                                             data-delete-id="{{ $produto->id }}"><i class="fa-regular fa-trash-can"></i>
-                                            Apagar</button>
+                                            </button>
                                     </form>
                                 </td>
                             </tr>

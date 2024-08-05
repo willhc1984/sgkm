@@ -1,7 +1,7 @@
 @extends('layouts.login')
 
 @section('content')
-    <div id="layoutAuthentication" style="background-image:url({{url('img/fundo3.jpg')}}); background-repeat: no-repeat;">
+    <div id="layoutAuthentication" style="background-image:url({{url('img/fundo3.jpg')}}); background-repeat: no-repeat; background-size: 100% 100%;">
         <div id="layoutAuthentication_content">
             <main>
                 <div class="container">
