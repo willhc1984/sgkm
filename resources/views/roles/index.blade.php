@@ -38,27 +38,22 @@
                                 <td>{{ $role->name }}</td>
                                 <td class="d-md-flex justify-content-center">
 
-
                                     <a href="{{ route('role-permission.index', ['role' => $role->id]) }}"
                                         class="btn btn-warning btn-sm me-1 mb-1">
                                         <i class="fa-solid fa-list-check"></i> Permissões</a>
-
-
 
                                     <a href="{{ route('role.edit', ['role' => $role->id]) }}"
                                         class="btn btn-primary btn-sm me-1 mb-1">
                                         <i class="fa-solid fa-pen-to-square"></i> Editar</a>
 
-
-
-                                    <form method="POST" action="{{ route('role.destroy', ['role' => $role->id]) }}">
+                                    <form id="formDelete{{ $role->id }}" method="POST"
+                                        action="{{ route('role.destroy', ['role' => $role->id]) }}">
                                         @csrf
                                         @method('delete')
-                                        <button class="btn btn-danger btn-sm me-1 mb-1" type="submit"
-                                            onclick="return confirm('Tem certeza que desja excluir este registro?')">
-                                            <i class="fa-solid fa-trash-can"></i> Apagar</button>
+                                        <button type="submit" class="btn btn-danger btn-sm me-1 mb-1 btnDelete"
+                                            data-delete-id="{{ $role->id }}"><i class="fa-regular fa-trash-can"></i>
+                                            Apagar</button>
                                     </form>
-
                                 </td>
                             </tr>
 
