@@ -32,6 +32,13 @@ class PermissionSeeder extends Seeder
             'edit-consultores',
             'destroy-consultores',
 
+            'index-role',
+            'show-role',
+            'create-role',
+            'edit-role',
+            'destroy-role',
+            'index-role-permission',
+            'update-role-permission'
         ];
 
         foreach ($permissions as $permission) {

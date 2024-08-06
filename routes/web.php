@@ -3,7 +3,10 @@
 use App\Http\Controllers\ConsultorController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -58,6 +61,25 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/edit-produtos/{produto}', [ProdutoController::class, 'edit'])->name('produto.edit');
     Route::put('/update-produtos/{produto}', [ProdutoController::class, 'update'])->name('produto.update');
     Route::delete('/destroy-produtos/{produto}', [ProdutoController::class, 'destroy'])->name('produto.destroy');
+
+    //Papéis
+    Route::get('/index-role', [RoleController::class, 'index'])->name('role.index');
+    Route::get('/create-role', [RoleController::class, 'create'])->name('role.create');
+    Route::post('/store-role', [RoleController::class, 'store'])->name('role.store');
+    Route::get('/edit-role/{role}', [RoleController::class, 'edit'])->name('role.edit');
+    Route::put('/update-role/{role}', [RoleController::class, 'update'])->name('role.update');
+    Route::delete('/destroy-role/{role}', [RoleController::class, 'destroy'])->name('role.destroy');
+
+    //Permissões
+    Route::get('/index-permission', [PermissionController::class, 'index'])->name('permissions.index');
+    Route::get('/create-permission', [PermissionController::class, 'create'])->name('permissions.create');
+    Route::post('/store-permission', [PermissionController::class, 'store'])->name('permissions.store');
+    Route::delete('/destroy-permission/{permission}', [PermissionController::class, 'destroy'])->name('permissions.destroy');
+
+     //Permissões do papel
+     Route::get('/index-role-permission/{role}', [RolePermissionController::class, 'index'])->name('role-permission.index');
+     Route::get('/update-role-permission/{role}/{permission}', [RolePermissionController::class, 'update'])->name('role-permission.update');
+ 
 
     //Logout 
     Route::get('/logout', [LoginController::class, 'destroy'])->name('login.destroy');
