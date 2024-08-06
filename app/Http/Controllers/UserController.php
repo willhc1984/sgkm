@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -45,7 +46,13 @@ class UserController extends Controller
     //Carregar formulario para cadastrar
     public function create()
     {
-        return view('users.create', ['menu' => 'usuarios']);
+        //Recuperar os papeis
+        $roles = Role::pluck('name')->all();
+        //Retorna a view de cadastro
+        return view('users.create', [
+            'menu' => 'usuarios',
+            'roles' => $roles
+        ]);
     }
 
     //Salvar usuario no banco de dados
@@ -66,7 +73,7 @@ class UserController extends Controller
             ]);
 
             //Atribuir papel ao usuário
-            //$user->assignRole($request->roles);
+            $user->assignRole($request->roles);
 
             //Operação concluida com exito
             DB::commit();
@@ -85,10 +92,18 @@ class UserController extends Controller
     //Carregar formulario editar usuario 
     public function edit(User $user)
     {
+        //Recuperar os papeis do banco de daods
+        $roles = Role::pluck('name')->all();
+
+        //Recuperar papel do usuario
+        $userRoles = $user->roles->pluck('name')->first();
+
         //Carrega a view
         return view('users.edit', [
             'menu' => 'usuarios',
             'user' => $user,
+            'roles' => $roles,
+            'userRoles' => $userRoles
         ]);
     }
 
@@ -107,6 +122,9 @@ class UserController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
             ]);
+
+            //Editar o papel do usuario
+            $user->syncRoles($request->roles);
 
             DB::commit();
 
@@ -166,6 +184,8 @@ class UserController extends Controller
         try {
             //Excluir usuario
             $user->delete();
+            //Remove todos os papeis atribuidos ao usuario
+            $user->syncRoles([]);
             //Redireciona e envia mesnagem de sucesso
             return redirect()->route('user.index')->with('success', 'Usuário excluído!');
         } catch (Exception $e) {

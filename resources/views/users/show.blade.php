@@ -48,6 +48,14 @@
                     <dt class="col-sm-3">Email: </dt>
                     <dd class="col-sm-9">{{ $user->email }}</dd>
 
+                    <dt class="col-sm-3">Papel: </dt>
+                    <dd class="col-sm-9">
+                        @forelse($user->getRoleNames() as $role)
+                            {{ $role }}
+                        @empty
+                        @endforelse
+                    </dd>
+
                 </dl>
             </div>
         </div>

@@ -42,7 +42,22 @@
                         <input type="password" class="form-control" name="password" id="password"
                             value="{{ old('password') }}" placeholder="Senha do usuário">
                     </div>
-
+                    <div class="col-12">
+                        <label for="papel" class="form-label">Papel:</label>
+                        <select name="roles" class="form-select" id="roles">
+                            <option value="">Selecione</option>
+                            @forelse($roles as $role)
+                                @if ($role != 'Super Admin')
+                                    <option value="{{ $role }}" {{ old('roles') == $role ? 'selected' : '' }}>{{ $role }}</option>
+                                @else
+                                    @if (Auth::user()->hasRole('Super Admin'))
+                                        <option value="{{ $role }}" {{ old('roles') == $role ? 'selected' : '' }}">{{ $role }}</option>
+                                    @endif
+                                @endif
+                            @empty
+                            @endforelse
+                        </select>
+                    </div>
                     <div class="col-12">
                         <button type="submit" class="btn btn-primary bt-sm">Salvar</button>
                     </div>
