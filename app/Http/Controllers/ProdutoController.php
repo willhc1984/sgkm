@@ -36,29 +36,34 @@ class ProdutoController extends Controller
         })
             ->when($request->filled('consultor'), function ($whenQuery) use ($request) {
                 $whenQuery->where('consultor_id', '=', $request->consultor);
-        })
+            })
             ->when($request->filled('situacao'), function ($whenQuery) use ($request) {
                 $whenQuery->where('situacao', '=', $request->situacao);
-        })
-            ->when($request->filled('data_inicio'), function($whenQuery) use($request){
+            })
+            ->when($request->filled('data_inicio'), function ($whenQuery) use ($request) {
                 $whenQuery->where('data_venda', '>=', \Carbon\Carbon::parse($request->data_inicio)->format('Y-m-d'));
-        })
-            ->when($request->filled('data_fim'), function($whenQuery) use($request){
+            })
+            ->when($request->filled('data_fim'), function ($whenQuery) use ($request) {
                 $whenQuery->where('data_venda', '<=', \Carbon\Carbon::parse($request->data_fim)->format('Y-m-d'));
-        })
+            })
             ->orderByDesc('nome')
-            ->paginate(50)
+            ->paginate($request->qtde)
             ->withQueryString();
+
+        //Variaveis de contabilização
+        $lucro_consultor = $produtos->sum('lucro_consultor');
+        $total_produtos = $produtos->count();
+        $total_bruto = $produtos->sum('preco_final');
 
         //Carregar view
         return view('produtos.index', [
             'menu' => 'produtos',
             'produtos' => $produtos,
             'nome' => $request->nome,
-            'consultores' => $consultores
-            // 'email' => $request->email,
-            // 'data_cadastro_inicio' => $request->data_cadastro_inicio,
-            // 'data_cadastro_fim' => $request->data_cadastro_fim,
+            'consultores' => $consultores,
+            'lucro_consultor' => $lucro_consultor,
+            'total_produtos' => $total_produtos,
+            'total_bruto' => $total_bruto
         ]);
     }
 

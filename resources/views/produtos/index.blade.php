@@ -45,13 +45,18 @@
                         </div>
                         <div class="col-md-4 col-sm-12">
                             <label class="form-label" for="data_inicio">Data início:</label>
-                            <input type="date" name="data_inicio" id="data_inicio"
-                                class="form-control" value="" placeholder="Data final">
+                            <input type="date" name="data_inicio" id="data_inicio" class="form-control" value=""
+                                placeholder="Data final">
                         </div>
                         <div class="col-md-4 col-sm-12">
                             <label class="form-label" for="data_fim">Data final:</label>
-                            <input type="date" name="data_fim" id="data_fim"
-                                class="form-control" value="" placeholder="Data final">
+                            <input type="date" name="data_fim" id="data_fim" class="form-control" value=""
+                                placeholder="Data final">
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <label class="form-label" for="qtde">Registros:</label>
+                            <input type="number" name="qtde" id="qtde" class="form-control" value=""
+                                placeholder="Quantidade de registros exibidos">
                         </div>
                     </div>
                     <div class="row">
@@ -85,7 +90,7 @@
                             <th scope="col">Comissão</th>
                             <th scope="col">Lucro Consultor</th>
                             @can('create-produtos')
-                            <th scope="col">Lucro Loja</th>
+                                <th scope="col">Lucro Loja</th>
                             @endcan
                             <th scope="col">Data da venda</th>
                             <th scope="col">Situação</th>
@@ -96,8 +101,8 @@
                         @forelse($produtos as $produto)
                             <tr>
                                 {{-- <th class="text-center" scope="row">{{ $produto->id }}</th> --}}
-                                <td class="text-center nomeProduto" data-bs-toggle="tooltip" 
-                                    data-bs-placement="bottom" title="{{ $produto->nome }}">{{ $produto->nome }}</td>
+                                <td class="text-center nomeProduto" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                    title="{{ $produto->nome }}">{{ $produto->nome }}</td>
                                 @can('create-produtos')
                                     <td class="text-center">{{ 'R$ ' . number_format($produto->preco_fornecedor, 2, ',', '.') }}
                                     @endcan
@@ -108,7 +113,8 @@
                                 <td class="text-center">{{ 'R$ ' . number_format($produto->lucro_consultor, 2, ',', '.') }}
                                 </td>
                                 @can('create-produtos')
-                                <td class="text-center">{{ 'R$ ' . number_format($produto->lucro_loja, 2, ',', '.') }}</td>
+                                    <td class="text-center">{{ 'R$ ' . number_format($produto->lucro_loja, 2, ',', '.') }}
+                                    </td>
                                 @endcan
                                 @if (empty($produto->data_venda))
                                     <td class="text-center" style="color: red;">Não informado</td>
@@ -153,8 +159,20 @@
 
                 {{ $produtos->onEachSide(2)->links() }}
 
-                {{-- <p> Lucro total do consultor: <b> R$ {{ number_format($total_lucro_consultor, 2, ',', '.') }} </b>
-                <p> Lucro total da loja: <b> R$ {{ number_format($total_lucro_loja, 2, ',', '.') }} </b> --}}
+                <h2 class="text-center mt-5 mb-3">Resultados para esta página</h2>
+                <p class="text-center"> Total de produtos: <b><span class="badge bg-success"> {{ $total_produtos }}
+                        </span></b>
+                <p class="text-center"> Total bruto: <b><span class="badge bg-success"> R$
+                            {{ number_format($total_bruto, 2, ',', '.') }} </span></b>
+                <p class="text-center"> Comissão total do consultor(a): <b><span class="badge bg-success">R$
+                            {{ number_format($lucro_consultor, 2, ',', '.') }} </i></b>
+
+                <p>
+
+                <div class="alert alert-warning" role="alert">
+                    <b>Obs..:</b> Utilize os filtros de modo a exibir todos os registros na mesma página
+                    para correto cálculo de valores.
+                </div>
 
             </div>
         </div>
