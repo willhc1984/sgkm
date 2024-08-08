@@ -31,6 +31,11 @@ class RolePermissionController extends Controller
             'permissions' => $permissions,
             'role' => $role
         ]);
-
     }
+
+     //Atualizar permissão do papel
+     public function update()
+     {
+            
+     }
 }

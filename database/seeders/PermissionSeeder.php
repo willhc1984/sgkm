@@ -14,37 +14,38 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         $permissions = [
-            'index-user',
-            'show-user',
-            'create-user',
-            'edit-user',
-            'destroy-user',
+            ['title' => 'Listar usuários', 'name' => 'index-user'],
+            ['title' => 'Exibir usuários', 'name' => 'show-user'],
+            ['title' => 'Cadastrar usuários', 'name' => 'create-user'],
+            ['title' => 'Editar usuários', 'name' => 'edit-user'],
+            ['title' => 'Apagar usuários', 'name' => 'destroy-user'],
 
-            'index-produtos',
-            'show-produtos',
-            'create-produtos',
-            'edit-produtos',
-            'destroy-produtos',
+            ['title' => 'Listar produtos', 'name' => 'index-produtos'],
+            ['title' => 'Exibir produtos', 'name' => 'show-produtos'],
+            ['title' => 'Cadastrar produtos', 'name' => 'create-produtos'],
+            ['title' => 'Editar produtos', 'name' => 'edit-produtos'],
+            ['title' => 'Apagar produtos', 'name' => 'destroy-produtos'],
 
-            'index-consultores',
-            'show-consultores',
-            'create-consultores',
-            'edit-consultores',
-            'destroy-consultores',
+            ['title' => 'Listar consultores', 'name' => 'index-consultores'],
+            ['title' => 'Exibir consultores', 'name' => 'show-consultores'],
+            ['title' => 'Cadastrar consultores', 'name' => 'create-consultores'],
+            ['title' => 'Editar consultores', 'name' => 'edit-consultores'],
+            ['title' => 'Apagar consultores', 'name' => 'destroy-consultores'],
 
-            'index-role',
-            'show-role',
-            'create-role',
-            'edit-role',
-            'destroy-role',
-            'index-role-permission',
-            'update-role-permission'
+            ['title' => 'Listar papéis', 'name' => 'index-role'],
+            ['title' => 'Exibir papéis', 'name' => 'show-role'],
+            ['title' => 'Cadastrar papéis', 'name' => 'create-role'],
+            ['title' => 'Editar papéis', 'name' => 'edit-role'],
+            ['title' => 'Apagar papéis', 'name' => 'destroy-role'],
+            ['title' => 'Listar permissões do papel', 'name' => 'index-role-permission'],
+            ['title' => 'Atualizar permissões do papel', 'name' => 'update-role-permission']
         ];
 
         foreach ($permissions as $permission) {
-            $existingPermission = Permission::where('name', $permission)->first();
+            $existingPermission = Permission::where('name', $permission['name'])->first();
+
             if (!$existingPermission) {
-                Permission::create(['name' => $permission, 'guard_name' => 'web']);
+                Permission::create(['title' => $permission['title'], 'name' => $permission['name'], 'guard_name' => 'web']);
             }
         }
     }
