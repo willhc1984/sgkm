@@ -160,14 +160,22 @@
                 {{ $produtos->onEachSide(2)->links() }}
 
                 <h2 class="text-center mt-5 mb-3">Resultados para esta página</h2>
-                <p class="text-center"> Total de produtos: <b><span class="badge bg-success"> {{ $total_produtos }}
-                        </span></b>
-                <p class="text-center"> Total bruto: <b><span class="badge bg-success"> R$
-                            {{ number_format($total_bruto, 2, ',', '.') }} </span></b>
-                <p class="text-center"> Comissão total do consultor(a): <b><span class="badge bg-success">R$
-                            {{ number_format($lucro_consultor, 2, ',', '.') }} </i></b>
 
-                <p>
+                <p class="text-center"> Total de produtos: <b><span class="badge bg-success"> {{ $produtos->count() }}
+                        </span></b></p>
+                <p class="text-center"> Total bruto: <b><span class="badge bg-success"> R$
+                            {{ number_format($produtos->sum('preco_final'), 2, ',', '.') }} </span></b></p>
+                <p class="text-center"> Comissão total do consultor(a): <b><span class="badge bg-success">R$
+                            {{ number_format($produtos->sum('lucro_consultor'), 2, ',', '.') }} </i></b>
+                </p>
+                @can('create-produtos')
+                <p class="text-center">Total preço de custo: <b><span class="badge bg-success">R$
+                            {{ number_format($produtos->sum('preco_fornecedor'), 2, ',', '.') }} </i></b>
+                </p>
+                <p class="text-center"> Lucro total a loja: <b><span class="badge bg-success">R$
+                            {{ number_format($produtos->sum('lucro_loja'), 2, ',', '.') }} </i></b>
+                </p>
+                @endcan
 
                 <div class="alert alert-warning" role="alert">
                     <b>Obs..:</b> Utilize os filtros de modo a exibir todos os registros na mesma página

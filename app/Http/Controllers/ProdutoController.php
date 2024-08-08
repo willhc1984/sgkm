@@ -38,7 +38,7 @@ class ProdutoController extends Controller
                 $whenQuery->where('consultor_id', '=', $request->consultor);
             })
             ->when($request->filled('situacao'), function ($whenQuery) use ($request) {
-                $whenQuery->where('situacao', '=', $request->situacao);
+                $whenQuery->where('situacao', 'like', $request->situacao);
             })
             ->when($request->filled('data_inicio'), function ($whenQuery) use ($request) {
                 $whenQuery->where('data_venda', '>=', \Carbon\Carbon::parse($request->data_inicio)->format('Y-m-d'));
@@ -48,12 +48,7 @@ class ProdutoController extends Controller
             })
             ->orderByDesc('nome')
             ->paginate($request->qtde)
-            ->withQueryString();
-
-        //Variaveis de contabilização
-        $lucro_consultor = $produtos->sum('lucro_consultor');
-        $total_produtos = $produtos->count();
-        $total_bruto = $produtos->sum('preco_final');
+            ->withQueryString();   
 
         //Carregar view
         return view('produtos.index', [
@@ -61,9 +56,6 @@ class ProdutoController extends Controller
             'produtos' => $produtos,
             'nome' => $request->nome,
             'consultores' => $consultores,
-            'lucro_consultor' => $lucro_consultor,
-            'total_produtos' => $total_produtos,
-            'total_bruto' => $total_bruto
         ]);
     }
 
