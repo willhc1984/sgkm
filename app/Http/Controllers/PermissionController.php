@@ -53,4 +53,39 @@ class PermissionController extends Controller
             return back()->withInput()->with('error', 'Permissão não cadastrada! Tente novamente.');
         }
     }
+
+    //Formulário para editar permissão
+    public function edit(Permission $permission){
+        return view('permissions.edit', ['permission' => $permission]);
+    }
+
+    //Salva alterações de permissão no banco de dados
+    public function update(PermissionRequest $request, Permission $permission){
+        //Validação dos campos do formulario.
+        $request->validated();
+
+        //Marca ponto inicial da transação
+        DB::beginTransaction();
+
+        try{
+            //Atualiza no banco de dados
+            $permission->update([
+                'name' => $request->name, 
+                'title' => $request->title
+            ]);
+
+            //Operação concluida com exito
+            DB::commit();
+
+            //Redirecionar usuario
+            return redirect()->route('permissions.index', ['menu' => 'permission'])
+                ->with('success', 'Permissão atualizada!');
+
+        }catch(Exception $e){
+            //Operação não concluida
+            DB::rollBack();
+            //Retorno com mensagem de erro
+            return back()->withInput()->with('error','Permissão não atualizada! Tente novamente.' . $e->getMessage());
+        }
+    }
 }

@@ -75,6 +75,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/create-permission', [PermissionController::class, 'create'])->name('permissions.create');
     Route::get('/edit-permission/{permission}', [PermissionController::class, 'edit'])->name('permissions.edit');
     Route::post('/store-permission', [PermissionController::class, 'store'])->name('permissions.store');
+    Route::put('/update-permission/{permission}', [PermissionController::class, 'update'])->name('permissions.update');
     Route::delete('/destroy-permission/{permission}', [PermissionController::class, 'destroy'])->name('permissions.destroy');
 
      //Permissões do papel
