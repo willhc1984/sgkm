@@ -33,9 +33,25 @@ class RolePermissionController extends Controller
         ]);
     }
 
-     //Atualizar permissão do papel
-     public function update()
-     {
-            
-     }
+    //Atualizar a permissão de acesso do papel
+    public function update(Request $request, Role $role)
+    {
+        //Obter a permissão especifica com base no ID forneecido em $request->permission
+        $permission = Permission::find($request->permission);
+
+        if(!$permission){
+            return redirect()->route('role-permission.index', ['role' => $role->id])->with('error', 'Permissão não encontrada!');
+        }
+
+        //Verificar se a permissão ká esta associada ao papel
+        if($role->permissions->contains($permission)){
+            //Bloquear permissão do papel
+            $role->revokePermissionTo($permission);
+            return redirect()->route('role-permission.index', ['role' => $role])->with('success', 'Permissão bloqueada para este papel!');
+        }else{
+            //Liberar permissão para o papel
+            $role->givePermissionTo($permission);
+            return redirect()->route('role-permission.index', ['role' => $role])->with('success', 'Permissão liberada para este papel!');
+        };
+    }
 }
