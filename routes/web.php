@@ -68,11 +68,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/store-role', [RoleController::class, 'store'])->name('role.store');
     Route::get('/edit-role/{role}', [RoleController::class, 'edit'])->name('role.edit');
     Route::put('/update-role/{role}', [RoleController::class, 'update'])->name('role.update');
-    Route::delete('/destroy-role/{role}', [RoleController::class, 'destroy'])->name('role.destroy');
+    Route::delete('/destroy-roles/{role}', [RoleController::class, 'destroy'])->name('role.destroy');
 
     //Permissões
     Route::get('/index-permission', [PermissionController::class, 'index'])->name('permissions.index');
     Route::get('/create-permission', [PermissionController::class, 'create'])->name('permissions.create');
+    Route::get('/edit-permission/{permission}', [PermissionController::class, 'edit'])->name('permissions.edit');
     Route::post('/store-permission', [PermissionController::class, 'store'])->name('permissions.store');
     Route::delete('/destroy-permission/{permission}', [PermissionController::class, 'destroy'])->name('permissions.destroy');
 

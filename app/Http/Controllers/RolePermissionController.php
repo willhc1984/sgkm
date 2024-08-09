@@ -9,6 +9,14 @@ use Spatie\Permission\Models\Role;
 
 class RolePermissionController extends Controller
 {
+    //Executar o construct quando instanciar a classe - verifica permissão de quem esta logado
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('permission:index-role-permission', ['only' => ['index']]);
+        $this->middleware('permission:update-role-permission', ['only' => ['update']]);
+    }
+
     //Listar as permissões do papel
     public function index(Role $role)
     {

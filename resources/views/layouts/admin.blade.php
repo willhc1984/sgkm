@@ -83,6 +83,11 @@
                             Papéis
                         </a>
 
+                        <a @class(['nav-link', 'active' => isset($menu) && $menu == 'permissoes']) class="nav-link" href="{{ route('permissions.index') }}">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-scroll"></i></div>
+                            Permissões
+                        </a>
+
                         <a class="nav-link" href="{{ route('login.destroy') }}">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-right-from-bracket"></i></div>
                             Sair
