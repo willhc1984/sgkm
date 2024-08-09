@@ -23,7 +23,7 @@ class PermissionRequest extends FormRequest
     {
         return [
             'title' => 'required',
-            'name' => 'required'
+            'name' => 'required|unique:permissions,name'
         ];
     }
 
@@ -32,6 +32,7 @@ class PermissionRequest extends FormRequest
         return [
             'title.required' => 'Titulo é obrigatório!',
             'name.required' => 'Rota é obrigatório!',
+            'name.unique' => 'Essa rota já existe! Defina uma diferente.'
         ];
     }
 }

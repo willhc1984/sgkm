@@ -6,7 +6,8 @@
             <h2 class="mt-3">Permissões</h2>
             <ol class="breadcrumb mb-3 mt-3">
                 <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
-                <li class="breadcrumb-item active">Permissões</li>
+                 <li class="breadcrumb-item"><a href="{{ route('permissions.index') }}">Permissões</a></li>
+                <li class="breadcrumb-item active">Cadastrar</li>
             </ol>
         </div>
 

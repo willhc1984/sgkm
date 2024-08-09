@@ -10,6 +10,17 @@ use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
 {
+    // Executar o construct quando instanciar a classe
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('permission:index-permission', ['only' => ['index']]);
+        $this->middleware('permission:show-permission', ['only' => ['show']]);
+        $this->middleware('permission:create-permission', ['only' => ['create', 'store']]);
+        $this->middleware('permission:edit-permission', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:destroy-permission', ['only' => ['destroy']]);
+    }
+
     //Listar permissõs do sistema (rotas)
     public function index()
     {
@@ -86,6 +97,25 @@ class PermissionController extends Controller
             DB::rollBack();
             //Retorno com mensagem de erro
             return back()->withInput()->with('error','Permissão não atualizada! Tente novamente.' . $e->getMessage());
+        }
+    }
+
+    public function destroy(Permission $permission){
+        dd($permission->users);
+        //Não permite excluir permissões com usuarios.
+        if($permission->users->isNotEmpty()){
+             //Redireciona usuario com msg de erro
+             return redirect()->route('permissions.index')->with('error','Permissão não pode ser excluída pois possui usuários associados.');
+        }
+        //Exclui regitro
+        try {       
+            $permission->delete();
+            //Redireciona usuario com msg de successo
+            return redirect()->route('permissions.index')->with('success','Permissão deletada!');
+        }catch(Exception $e){
+            //Redireciona usuario com mensagem de erro
+            return redirect()->route('permissions.index')->with('error','Permissão não excluida! Possui usuários 
+                associados.' . $e->getMessage());
         }
     }
 }

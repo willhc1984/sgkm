@@ -51,7 +51,7 @@ class RolePermissionController extends Controller
             return redirect()->route('role-permission.index', ['role' => $role->id])->with('error', 'Permissão não encontrada!');
         }
 
-        //Verificar se a permissão ká esta associada ao papel
+        //Verificar se a permissão está esta associada ao papel
         if($role->permissions->contains($permission)){
             //Bloquear permissão do papel
             $role->revokePermissionTo($permission);
