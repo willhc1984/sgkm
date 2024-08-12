@@ -17,8 +17,8 @@ class ConsultorController extends Controller
         $this->middleware('auth');
         $this->middleware('permission:index-consultores', ['only' => ['index']]);
         $this->middleware('permission:show-consultores', ['only' => ['show']]);
-        $this->middleware('permission:create-consultores', ['only' => ['create']]);
-        $this->middleware('permission:edit-consultores', ['only' => ['edit']]);
+        $this->middleware('permission:create-consultores', ['only' => ['create', 'store']]);
+        $this->middleware('permission:edit-consultores', ['only' => ['edit', 'update']]);
         $this->middleware('permission:destroy-consultores', ['only' => ['destroy']]);
     }
 

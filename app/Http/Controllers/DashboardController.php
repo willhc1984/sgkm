@@ -10,4 +10,9 @@ class DashboardController extends Controller
     public function index(){
         return view('dashboard.index', ['menu' => 'dashboard']);
     }
+
+     //teste
+     public function teste(){
+        return view('dashboard.index', ['menu' => 'dashboard']);
+    }
 }

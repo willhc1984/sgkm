@@ -29,16 +29,25 @@ class UserSeeder extends Seeder
             'password' => Hash::make('123456', ['rounds' => 10])
         ]);
 
-         //Atribui papel para o usuario
-         $superAdmin2->assignRole('Super Admin');
+        // //Atribui papel para o usuario
+        // $superAdmin2->assignRole('Super Admin');
 
-        $consultor = User::create([
-            'name' => 'Evelin Eufrásio',
-            'email' => 'evelin@hotmail.com',
-            'password' => Hash::make('123456', ['rounds' => 10])
-        ]);
+        // $consultor = User::create([
+        //     'name' => 'Evelin Eufrásio',
+        //     'email' => 'evelin@hotmail.com',
+        //     'password' => Hash::make('123456', ['rounds' => 10])
+        // ]);
 
-         //Atribui papel para o usuario
-         $consultor->assignRole('Consultor');
+        //Atribui papel para o usuario
+        // $consultor->assignRole('Consultor');
+
+        // $admin = User::create([
+        //     'name' => 'José Eufrásio',
+        //     'email' => 'admin@admin',
+        //     'password' => Hash::make('123456', ['rounds' => 10])
+        // ]);
+
+        // //Atribui papel para o usuario
+        // $admin->assignRole('Admin');
     }
 }

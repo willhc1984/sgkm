@@ -37,6 +37,13 @@ class PermissionSeeder extends Seeder
             ['title' => 'Cadastrar papéis', 'name' => 'create-role'],
             ['title' => 'Editar papéis', 'name' => 'edit-role'],
             ['title' => 'Apagar papéis', 'name' => 'destroy-role'],
+
+            ['title' => 'Listar permissões', 'name' => 'index-permission'],
+            ['title' => 'Exibir permissões', 'name' => 'show-permission'],
+            ['title' => 'Cadastrar permissões', 'name' => 'create-permission'],
+            ['title' => 'Editar permissões', 'name' => 'edit-permission'],
+            ['title' => 'Apagar permissões', 'name' => 'destroy-permission'],
+
             ['title' => 'Listar permissões do papel', 'name' => 'index-role-permission'],
             ['title' => 'Atualizar permissões do papel', 'name' => 'update-role-permission']
         ];

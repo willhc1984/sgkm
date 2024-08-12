@@ -20,8 +20,8 @@ class ProdutoController extends Controller
         $this->middleware('auth');
         $this->middleware('permission:index-produtos', ['only' => ['index']]);
         $this->middleware('permission:show-produtos', ['only' => ['show']]);
-        $this->middleware('permission:create-produtos', ['only' => ['create']]);
-        $this->middleware('permission:edit-produtos', ['only' => ['edit']]);
+        $this->middleware('permission:create-produtos', ['only' => ['create', 'store']]);
+        $this->middleware('permission:edit-produtos', ['only' => ['edit', 'update']]);
         $this->middleware('permission:destroy-produtos', ['only' => ['destroy']]);
     }
 

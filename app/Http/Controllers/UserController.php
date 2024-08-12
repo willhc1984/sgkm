@@ -6,6 +6,7 @@ use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
@@ -19,8 +20,8 @@ class UserController extends Controller
         $this->middleware('auth');
         $this->middleware('permission:index-user', ['only' => ['index']]);
         $this->middleware('permission:show-user', ['only' => ['show']]);
-        $this->middleware('permission:create-user', ['only' => ['create']]);
-        $this->middleware('permission:edit-user', ['only' => ['edit']]);
+        $this->middleware('permission:create-user', ['only' => ['create', 'store']]);
+        $this->middleware('permission:edit-user', ['only' => ['edit', 'update']]);
         $this->middleware('permission:destroy-user', ['only' => ['destroy']]);
     }
 
@@ -181,6 +182,11 @@ class UserController extends Controller
     //Excluir usuario no banco de dados
     public function destroy(User $user)
     {
+        if (Auth::id() == $user->id) {
+            //Redireciona com mensagem de erro
+            return redirect()->route('user.index')->with('error', 'Usuário logado não pode excluído!');
+        };
+
         try {
             //Excluir usuario
             $user->delete();

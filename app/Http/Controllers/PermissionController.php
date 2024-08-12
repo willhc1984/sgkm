@@ -101,7 +101,6 @@ class PermissionController extends Controller
     }
 
     public function destroy(Permission $permission){
-        dd($permission->users);
         //Não permite excluir permissões com usuarios.
         if($permission->users->isNotEmpty()){
              //Redireciona usuario com msg de erro

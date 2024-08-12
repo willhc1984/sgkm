@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('dashboard.index', ['menu' => 'dashboard']);
 });
 
 //Dashboard
@@ -52,7 +52,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/store-consultores', [ConsultorController::class, 'store'])->name('consultor.store');
     Route::get('/edit-consultores/{consultor}', [ConsultorController::class, 'edit'])->name('consultor.edit');
     Route::put('/update-consultores/{consultor}', [ConsultorController::class, 'update'])->name('consultor.update');
-    Route::delete('/destroy-consultores/{consultor}', [ConsultorController::class, 'destroy'])->name('consultor.destroy');
+    Route::delete('/destroy-consultores/{consultor}', [ConsultorController::class, 'destroy'])->name('consultor.destroy');  
 
     //Produtos
     Route::get('/index-produtos', [ProdutoController::class, 'index'])->name('produto.index');
@@ -78,10 +78,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/update-permission/{permission}', [PermissionController::class, 'update'])->name('permissions.update');
     Route::delete('/destroy-permission/{permission}', [PermissionController::class, 'destroy'])->name('permissions.destroy');
 
-     //Permissões do papel
-     Route::get('/index-role-permission/{role}', [RolePermissionController::class, 'index'])->name('role-permission.index');
-     Route::get('/update-role-permission/{role}/{permission}', [RolePermissionController::class, 'update'])->name('role-permission.update');
- 
+    //Permissões do papel
+    Route::get('/index-role-permission/{role}', [RolePermissionController::class, 'index'])->name('role-permission.index');
+    Route::get('/update-role-permission/{role}/{permission}', [RolePermissionController::class, 'update'])->name('role-permission.update');
 
     //Logout 
     Route::get('/logout', [LoginController::class, 'destroy'])->name('login.destroy');
