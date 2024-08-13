@@ -8,6 +8,7 @@ use App\Models\Produto;
 use Exception;
 use GuzzleHttp\Handler\Proxy;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Termwind\Components\Raw;
 
@@ -48,7 +49,7 @@ class ProdutoController extends Controller
             })
             ->orderByDesc('nome')
             ->paginate($request->qtde)
-            ->withQueryString();   
+            ->withQueryString(); 
 
         //Carregar view
         return view('produtos.index', [

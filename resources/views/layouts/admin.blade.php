@@ -38,7 +38,7 @@
             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                 data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                <li><a class="dropdown-item" href="{{ route('profile.show') }}">Perfil</a></li>
                 <li>
                     <hr class="dropdown-divider" />
                 </li>
@@ -57,7 +57,7 @@
 
                         <a @class(['nav-link', 'active' => isset($menu) && $menu == 'dashboard']) class="nav-link" href="{{ route('dashboard.index') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                            Dashboard
+                            Início
                         </a>
 
                         <a @class([
@@ -84,7 +84,7 @@
                         </a>
 
                         <a @class(['nav-link', 'active' => isset($menu) && $menu == 'permissoes']) class="nav-link" href="{{ route('permissions.index') }}">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-scroll"></i></div>
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-eye"></i></div>
                             Permissões
                         </a>
 

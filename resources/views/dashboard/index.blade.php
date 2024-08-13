@@ -2,14 +2,9 @@
 
 @section('content')
     <div class="container-fluid px-4">
-        <div class="mb1 space-between-elements">
-            <h2 class="mt-3">Início</h2>
-            <ol class="breadcrumb mb-3 mt-3 p-1 rounded bg-light">
-                <li class="breadcrumb-item active">Início</li>
-            </ol>
-        </div>
 
-    <h1>SGKM</h1>
-    
+        <h3 class="text-center font-weight-light my-5 mt-5">S.G.K.M.</h3>
+        <div class="d-flex justify-content-center mt-4"> <img src="{{ asset('/img/logo.png') }}" /></div>
+
     </div>
 @endsection

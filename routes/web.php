@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserController;
@@ -21,19 +22,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard.index', ['menu' => 'dashboard']);
-});
-
-//Dashboard
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
-
 //Login
 Route::get('/login', [LoginController::class, 'index'])->name('login.index');
 Route::post('/login', [LoginController::class, 'loginProcess'])->name('login.process');
 
 
 Route::group(['middleware' => 'auth'], function () {
+
+    //Dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
     //Usuarios
     Route::get('/index-user', [UserController::class, 'index'])->name('user.index');
@@ -46,13 +43,20 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/update-user-password/{user}', [UserController::class, 'updatePassword'])->name('user.update-password');
     Route::delete('/destroy-user/{user}', [UserController::class, 'destroy'])->name('user.destroy');
 
+    //Perfil
+    Route::get('/show-profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/edit-profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/update-profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/edit-profile-password', [ProfileController::class, 'editPassword'])->name('profile.edit-password');
+    Route::put('/update-profile-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
+
     //Consultores
     Route::get('/index-consultores', [ConsultorController::class, 'index'])->name('consultor.index');
     Route::get('/create-consultores', [ConsultorController::class, 'create'])->name('consultor.create');
     Route::post('/store-consultores', [ConsultorController::class, 'store'])->name('consultor.store');
     Route::get('/edit-consultores/{consultor}', [ConsultorController::class, 'edit'])->name('consultor.edit');
     Route::put('/update-consultores/{consultor}', [ConsultorController::class, 'update'])->name('consultor.update');
-    Route::delete('/destroy-consultores/{consultor}', [ConsultorController::class, 'destroy'])->name('consultor.destroy');  
+    Route::delete('/destroy-consultores/{consultor}', [ConsultorController::class, 'destroy'])->name('consultor.destroy');
 
     //Produtos
     Route::get('/index-produtos', [ProdutoController::class, 'index'])->name('produto.index');
@@ -84,5 +88,4 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Logout 
     Route::get('/logout', [LoginController::class, 'destroy'])->name('login.destroy');
-
 });
