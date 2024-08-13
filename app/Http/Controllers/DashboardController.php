@@ -10,7 +10,6 @@ class DashboardController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('permission:index-dashboard', ['only' => ['index']]);
     }
 
     //Dashboard
