@@ -18,4 +18,10 @@ class DashboardController extends Controller
         return view('dashboard.index', ['menu' => 'dashboard']);
     }
 
+     //Dashboard
+     public function inicio()
+     {
+         return view('dashboard.index', ['menu' => 'dashboard']);
+     }
+
 }

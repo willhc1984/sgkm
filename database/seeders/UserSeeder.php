@@ -30,7 +30,7 @@ class UserSeeder extends Seeder
         ]);
 
         // //Atribui papel para o usuario
-        // $superAdmin2->assignRole('Super Admin');
+        $superAdmin2->assignRole('Super Admin');
 
         // $consultor = User::create([
         //     'name' => 'Evelin Eufrásio',

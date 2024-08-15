@@ -26,11 +26,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/login', [LoginController::class, 'index'])->name('login.index');
 Route::post('/login', [LoginController::class, 'loginProcess'])->name('login.process');
 
-
 Route::group(['middleware' => 'auth'], function () {
 
     //Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+    Route::get('/', [DashboardController::class, 'inicio'])->name('dashboard.inicio');
 
     //Usuarios
     Route::get('/index-user', [UserController::class, 'index'])->name('user.index');
