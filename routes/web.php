@@ -65,6 +65,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/edit-produtos/{produto}', [ProdutoController::class, 'edit'])->name('produto.edit');
     Route::put('/update-produtos/{produto}', [ProdutoController::class, 'update'])->name('produto.update');
     Route::delete('/destroy-produtos/{produto}', [ProdutoController::class, 'destroy'])->name('produto.destroy');
+    Route::get('/generate-pdf-produtos', [ProdutoController::class, 'generatePdf'])->name('produto.generate-pdf');
 
     //Papéis
     Route::get('/index-role', [RoleController::class, 'index'])->name('role.index');
@@ -85,6 +86,7 @@ Route::group(['middleware' => 'auth'], function () {
     //Permissões do papel
     Route::get('/index-role-permission/{role}', [RolePermissionController::class, 'index'])->name('role-permission.index');
     Route::get('/update-role-permission/{role}/{permission}', [RolePermissionController::class, 'update'])->name('role-permission.update');
+
 
     //Logout 
     Route::get('/logout', [LoginController::class, 'destroy'])->name('login.destroy');

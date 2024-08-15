@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProdutoRequest;
 use App\Models\Consultor;
 use App\Models\Produto;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 use GuzzleHttp\Handler\Proxy;
 use Illuminate\Http\Request;
@@ -49,7 +50,7 @@ class ProdutoController extends Controller
             })
             ->orderByDesc('nome')
             ->paginate($request->qtde)
-            ->withQueryString(); 
+            ->withQueryString();
 
         //Carregar view
         return view('produtos.index', [
@@ -59,28 +60,6 @@ class ProdutoController extends Controller
             'consultores' => $consultores,
         ]);
     }
-
-    //Listar produtos do consultor
-    // public function index(Consultor $consultor)
-    // {
-    //     //Recuperar registros conforme parametros do formulario
-    //     $produtos = Produto::with('consultor')
-    //         ->where('consultor_id', $consultor->id)
-    //         ->orderBy('id')->paginate(20);
-
-    //     $query = Produto::with('consultor')->where('consultor_id', $consultor->id);
-
-    //     $total_lucro_consultor = $query->sum('lucro_consultor');
-    //     $total_lucro_loja = $query->sum('lucro_loja');
-
-    //     return view('produtos.index', [
-    //         'produtos' => $produtos,
-    //         'consultor' => $consultor,
-    //         'total_lucro_consultor' => $total_lucro_consultor,
-    //         'total_lucro_loja' => $total_lucro_loja
-    //     ]);
-    // }
-
 
     //Formulario para alocar produto ao consultor
     public function create(Consultor $consultor)
@@ -201,5 +180,34 @@ class ProdutoController extends Controller
             //Redireciona usuario, envia mensagem de erro
             return redirect()->back()->with('error', 'Produto não excluido! Tente novamente.');
         }
+    }
+
+    //Gerar PDF
+    public function generatePdf(Request $request)
+    {
+        //Recuperar os registros no banco de dados conforme parametros do formulario de pesquisa
+        $produtos = Produto::when($request->has('nome'), function ($whenQuery) use ($request) {
+            $whenQuery->where('nome', 'like', '%' . $request->nome . '%');
+        })
+            ->when($request->filled('consultor'), function ($whenQuery) use ($request) {
+                $whenQuery->where('consultor_id', '=', $request->consultor);
+            })
+            ->when($request->filled('situacao'), function ($whenQuery) use ($request) {
+                $whenQuery->where('situacao', 'like', $request->situacao);
+            })
+            ->when($request->filled('data_inicio'), function ($whenQuery) use ($request) {
+                $whenQuery->where('data_venda', '>=', \Carbon\Carbon::parse($request->data_inicio)->format('Y-m-d'));
+            })
+            ->when($request->filled('data_fim'), function ($whenQuery) use ($request) {
+                $whenQuery->where('data_venda', '<=', \Carbon\Carbon::parse($request->data_fim)->format('Y-m-d'));
+            })
+            ->orderByDesc('nome')
+            ->get();
+
+        //Carrega a string com HTML/conteudo 
+        $pdf = Pdf::loadView('produtos.generate-pdf', ['produtos' => $produtos])->setPaper('a4', 'portrait');
+
+        //Fazer download do arquivo
+        return $pdf->download('produtos.pdf');
     }
 }

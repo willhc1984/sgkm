@@ -74,6 +74,8 @@
         <div class="card mb-4 border-light shadow">
             <div class="card-header space-between-elements">
                 <span>Listar</span>
+                <span><a href="{{ url('generate-pdf-produtos?' . request()->getQueryString()) }}" class="btn btn-warning btn-sm">
+                        <i class="fa-regular fa-file-pdf"></i> Gerar PDF</a></span>
             </div>
 
             <div class="card-body">
@@ -110,7 +112,8 @@
                                 <td class="text-center">{{ 'R$ ' . number_format($produto->preco_final, 2, ',', '.') }}</td>
                                 <td class="text-center">{{ $produto->consultor->nome }}</td>
                                 <td class="text-center">{{ $produto->comissao_consultor }} %</td>
-                                <td class="text-center">{{ 'R$ ' . number_format($produto->lucro_consultor, 2, ',', '.') }}
+                                <td class="text-center">
+                                    {{ 'R$ ' . number_format($produto->lucro_consultor, 2, ',', '.') }}
                                 </td>
                                 @can('create-produtos')
                                     <td class="text-center">{{ 'R$ ' . number_format($produto->lucro_loja, 2, ',', '.') }}
@@ -169,12 +172,12 @@
                             {{ number_format($produtos->sum('lucro_consultor'), 2, ',', '.') }} </i></b>
                 </p>
                 @can('create-produtos')
-                <p class="text-center">Total preço de custo: <b><span class="badge bg-success">R$
-                            {{ number_format($produtos->sum('preco_fornecedor'), 2, ',', '.') }} </i></b>
-                </p>
-                <p class="text-center"> Lucro total a loja: <b><span class="badge bg-success">R$
-                            {{ number_format($produtos->sum('lucro_loja'), 2, ',', '.') }} </i></b>
-                </p>
+                    <p class="text-center">Total preço de custo: <b><span class="badge bg-success">R$
+                                {{ number_format($produtos->sum('preco_fornecedor'), 2, ',', '.') }} </i></b>
+                    </p>
+                    <p class="text-center"> Lucro total a loja: <b><span class="badge bg-success">R$
+                                {{ number_format($produtos->sum('lucro_loja'), 2, ',', '.') }} </i></b>
+                    </p>
                 @endcan
 
                 <div class="alert alert-warning" role="alert">
