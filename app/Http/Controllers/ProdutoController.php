@@ -117,10 +117,16 @@ class ProdutoController extends Controller
     //Formulario editar produtos
     public function edit(Produto $produto)
     {
-
-        //dd($produto->data_venda);
-
         return view('produtos.edit', [
+            'produto' => $produto,
+            'consultor' => $produto->consultor->nome
+        ]);
+    }
+
+    //Formulario para alterar status do produto
+    public function alter(Produto $produto)
+    {
+        return view('produtos.alter', [
             'produto' => $produto,
             'consultor' => $produto->consultor->nome
         ]);

@@ -66,6 +66,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/update-produtos/{produto}', [ProdutoController::class, 'update'])->name('produto.update');
     Route::delete('/destroy-produtos/{produto}', [ProdutoController::class, 'destroy'])->name('produto.destroy');
     Route::get('/generate-pdf-produtos', [ProdutoController::class, 'generatePdf'])->name('produto.generate-pdf');
+    Route::get('/alter-produtos/{produto}', [ProdutoController::class, 'alter'])->name('produto.alter');
 
     //Papéis
     Route::get('/index-role', [RoleController::class, 'index'])->name('role.index');

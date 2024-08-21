@@ -142,17 +142,18 @@
                                     @endif
 
                                 <td class="d-md-flex justify-content-center">
-
+                                    <a href="{{ route('produto.alter', ['produto' => $produto->id]) }}"
+                                        class="btn btn-warning btn-sm me-1 mb-1" title="Alterar status">
+                                        <i class="fa-solid fa-rotate"></i></a>
                                     <a href="{{ route('produto.edit', ['produto' => $produto->id]) }}"
-                                        class="btn btn-secondary btn-sm me-1 mb-1">
+                                        class="btn btn-secondary btn-sm me-1 mb-1" title="Editar produto">
                                         <i class="fa-solid fa-pen-to-square"></i></a>
-
                                     <form id="formDelete{{ $produto->id }}" method="POST"
                                         action="{{ route('produto.destroy', ['produto' => $produto->id]) }}">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger btn-sm me-1 mb-1 btnDelete"
-                                            data-delete-id="{{ $produto->id }}"><i class="fa-regular fa-trash-can"></i>
+                                            data-delete-id="{{ $produto->id }}" title="Excluir produto"><i class="fa-regular fa-trash-can"></i>
                                         </button>
                                     </form>
                                 </td>
