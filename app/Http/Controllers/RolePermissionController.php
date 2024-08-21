@@ -44,7 +44,7 @@ class RolePermissionController extends Controller
     //Atualizar a permissão de acesso do papel
     public function update(Request $request, Role $role)
     {
-        //Obter a permissão especifica com base no ID forneecido em $request->permission
+        //Obter a permissão especifica com base no ID fornecido em $request->permission
         $permission = Permission::find($request->permission);
 
         if(!$permission){

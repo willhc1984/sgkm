@@ -20,7 +20,7 @@
 
                 <x-alert />
 
-                <form class="row g-3" action="{{ route('produto.alter', ['produto' => $produto->id]) }}" method="POST">
+                <form class="row g-3" action="{{ route('produto.updateAlter', ['produto' => $produto->id]) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="col-12">

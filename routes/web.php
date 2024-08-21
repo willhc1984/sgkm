@@ -67,6 +67,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/destroy-produtos/{produto}', [ProdutoController::class, 'destroy'])->name('produto.destroy');
     Route::get('/generate-pdf-produtos', [ProdutoController::class, 'generatePdf'])->name('produto.generate-pdf');
     Route::get('/alter-produtos/{produto}', [ProdutoController::class, 'alter'])->name('produto.alter');
+    Route::put('/alter-produtos/{produto}', [ProdutoController::class, 'updateAlter'])->name('produto.updateAlter');
 
     //Papéis
     Route::get('/index-role', [RoleController::class, 'index'])->name('role.index');

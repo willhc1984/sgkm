@@ -56,6 +56,7 @@
                             <option selected></option>
                             <option value="Em estoque">Em estoque</option>
                             <option value="Vendido">Vendido</option>
+                            <option value="Pago">Pago</option>
                         </select>
                     </div>
                     <div class="col-12">

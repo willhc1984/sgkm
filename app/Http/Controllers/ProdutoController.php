@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AlterProdutoRequest;
 use App\Http\Requests\ProdutoRequest;
 use App\Models\Consultor;
 use App\Models\Produto;
@@ -25,6 +26,7 @@ class ProdutoController extends Controller
         $this->middleware('permission:create-produtos', ['only' => ['create', 'store']]);
         $this->middleware('permission:edit-produtos', ['only' => ['edit', 'update']]);
         $this->middleware('permission:destroy-produtos', ['only' => ['destroy']]);
+        $this->middleware('permission:alter-produtos', ['only' => ['alter, updateAlter']]);
     }
 
     public function index(Request $request)
@@ -77,6 +79,7 @@ class ProdutoController extends Controller
         //Validar o formulario 
         $request->validated();
         //Marca ponto inicial da transação
+
         DB::beginTransaction();
 
         try {
@@ -105,7 +108,7 @@ class ProdutoController extends Controller
 
             //Redireciona com msg de sucesso
             return redirect()->route('consultor.index')
-                ->with('success', 'Produto alocado para : ' . $request->consultor);
+                ->with('success', 'Produto alocado para : ' . $request->consultor . '. Código: ' . $produto->id);
         } catch (Exception $e) {
             //Transaçõ não concluida com exito
             DB::rollBack();
@@ -118,15 +121,6 @@ class ProdutoController extends Controller
     public function edit(Produto $produto)
     {
         return view('produtos.edit', [
-            'produto' => $produto,
-            'consultor' => $produto->consultor->nome
-        ]);
-    }
-
-    //Formulario para alterar status do produto
-    public function alter(Produto $produto)
-    {
-        return view('produtos.alter', [
             'produto' => $produto,
             'consultor' => $produto->consultor->nome
         ]);
@@ -174,6 +168,44 @@ class ProdutoController extends Controller
             DB::rollBack();
             //Redireciona com msg de erro
             return redirect()->back()->with('error', 'Produto não editado! Tenete novamente.' . $e->getMessage());
+        }
+    }
+
+     //Formulario para alterar status do produto
+     public function alter(Produto $produto)
+     {
+         return view('produtos.alter', [
+             'produto' => $produto,
+             'consultor' => $produto->consultor->nome
+         ]);
+     }
+
+     //Altera status do produto no banco de dados
+    public function updateAlter(AlterProdutoRequest $request, Produto $produto)
+    {
+        //Valida o formulario
+        $request->validated();
+
+        //Inicio da transação
+        DB::beginTransaction();
+
+        try {
+            $produto->update([
+                'data_venda' => $request->data_venda,
+                'situacao' => $request->situacao,
+            ]);
+
+            //Transação com sucesso
+            DB::commit();
+
+            //Redireciona com msg de sucesso
+            return redirect()->route('produto.index', ['consultor' => $produto->consultor_id])
+                ->with('success', 'Alterado para ' . $request->situacao . '!');
+        } catch (Exception $e) {
+            //Transação não concluida
+            DB::rollBack();
+            //Redireciona com msg de erro
+            return redirect()->back()->with('error', 'Status não alterado! Tente novamente.' . $e->getMessage());
         }
     }
 

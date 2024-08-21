@@ -79,7 +79,8 @@
         <div class="card mb-4 border-light shadow">
             <div class="card-header space-between-elements">
                 <span>Listar</span>
-                <span><a href="{{ url('generate-pdf-produtos?' . request()->getQueryString()) }}" class="btn btn-warning btn-sm">
+                <span><a href="{{ url('generate-pdf-produtos?' . request()->getQueryString()) }}"
+                        class="btn btn-warning btn-sm">
                         <i class="fa-regular fa-file-pdf"></i> Gerar PDF</a></span>
             </div>
 
@@ -111,10 +112,12 @@
                                 <td class="text-center nomeProduto" data-bs-toggle="tooltip" data-bs-placement="bottom"
                                     title="{{ $produto->nome }}">{{ $produto->nome }}</td>
                                 @can('create-produtos')
-                                    <td class="text-center">{{ 'R$ ' . number_format($produto->preco_fornecedor, 2, ',', '.') }}
+                                    <td class="text-center">
+                                        {{ 'R$ ' . number_format($produto->preco_fornecedor, 2, ',', '.') }}
                                     @endcan
                                 </td>
-                                <td class="text-center">{{ 'R$ ' . number_format($produto->preco_final, 2, ',', '.') }}</td>
+                                <td class="text-center">{{ 'R$ ' . number_format($produto->preco_final, 2, ',', '.') }}
+                                </td>
                                 <td class="text-center">{{ $produto->consultor->nome }}</td>
                                 <td class="text-center">{{ $produto->comissao_consultor }} %</td>
                                 <td class="text-center">
@@ -131,9 +134,13 @@
                                         {{ \Carbon\Carbon::parse($produto->data_venda)->format('d/m/Y') }}</td>
                                 @endif
                                 <td class="text-center">
-                                    @if ($produto->situacao == 'Vendido')
+                                    @if ($produto->situacao == 'Pago')
+                                    <a href="{{ route('produto.index') }}">
+                                        <span class="badge bg-success">Pago</span>
+                                    </a>
+                                    @elseif ($produto->situacao == 'Vendido')
                                         <a href="{{ route('produto.index') }}">
-                                            <span class="badge bg-success">Vendido</span>
+                                            <span class="badge bg-primary">Vendido</span>
                                         </a>
                                     @else
                                         <a href="{{ route('produto.index') }}">
@@ -153,7 +160,8 @@
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger btn-sm me-1 mb-1 btnDelete"
-                                            data-delete-id="{{ $produto->id }}" title="Excluir produto"><i class="fa-regular fa-trash-can"></i>
+                                            data-delete-id="{{ $produto->id }}" title="Excluir produto"><i
+                                                class="fa-regular fa-trash-can"></i>
                                         </button>
                                     </form>
                                 </td>
