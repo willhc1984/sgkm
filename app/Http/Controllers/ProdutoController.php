@@ -39,6 +39,9 @@ class ProdutoController extends Controller
             ->when($request->filled('consultor'), function ($whenQuery) use ($request) {
                 $whenQuery->where('consultor_id', '=', $request->consultor);
             })
+            ->when($request->filled('codigo'), function ($whenQuery) use ($request) {
+                $whenQuery->where('id', '=', $request->codigo);
+            })
             ->when($request->filled('situacao'), function ($whenQuery) use ($request) {
                 $whenQuery->where('situacao', 'like', $request->situacao);
             })
@@ -205,7 +208,9 @@ class ProdutoController extends Controller
             ->get();
 
         //Carrega a string com HTML/conteudo 
-        $pdf = Pdf::loadView('produtos.generate-pdf', ['produtos' => $produtos])->setPaper('a4', 'portrait');
+        $pdf = Pdf::loadView('produtos.generate-pdf', [
+            'produtos' => $produtos,
+        ])->setPaper('a4', 'portrait');
 
         //Fazer download do arquivo
         return $pdf->download('produtos.pdf');

@@ -19,12 +19,17 @@
             <div class="card-body">
                 <form action="#">
                     <div class="row">
-                        <div class="col-md-4 col-sm-12">
+                        <div class="col-md-3 col-sm-12">
+                            <label class="form-label" for="codigo">Código:</label>
+                            <input type="number" name="codigo" id="codigo" class="form-control" value=""
+                                placeholder="Código do produto">
+                        </div>
+                        <div class="col-md-3 col-sm-12">
                             <label class="form-label" for="name">Nome:</label>
                             <input type="text" name="nome" id="nome" class="form-control" value=""
                                 placeholder="Nome do produto">
                         </div>
-                        <div class="col-md-4 col-sm-12">
+                        <div class="col-md-3 col-sm-12">
                             <label class="form-label" for="name">Consultor:</label>
                             <select class="form-select" name="consultor" id="consultor" aria-label="Default select example">
                                 <option selected></option>
@@ -34,7 +39,7 @@
                                 @endforelse
                             </select>
                         </div>
-                        <div class="col-md-4 col-sm-12">
+                        <div class="col-md-3 col-sm-12">
                             <label class="form-label" for="name">Situação:</label>
                             <select class="form-select" name="situacao" id="situacao" aria-label="Default select example">
                                 <option selected></option>
@@ -43,17 +48,17 @@
                                 <option value="Pago">Pago</option>
                             </select>
                         </div>
-                        <div class="col-md-4 col-sm-12">
+                        <div class="col-md-3 col-sm-12">
                             <label class="form-label" for="data_inicio">Data início:</label>
                             <input type="date" name="data_inicio" id="data_inicio" class="form-control" value=""
                                 placeholder="Data final">
                         </div>
-                        <div class="col-md-4 col-sm-12">
+                        <div class="col-md-3 col-sm-12">
                             <label class="form-label" for="data_fim">Data final:</label>
                             <input type="date" name="data_fim" id="data_fim" class="form-control" value=""
                                 placeholder="Data final">
                         </div>
-                        <div class="col-md-4 col-sm-12">
+                        <div class="col-md-3 col-sm-12">
                             <label class="form-label" for="qtde">Registros:</label>
                             <input type="number" name="qtde" id="qtde" class="form-control" value=""
                                 placeholder="Quantidade de registros exibidos">
@@ -82,7 +87,7 @@
                 <table class="table table-hover table-sm" style="font-size: 13px;">
                     <thead>
                         <tr class="text-center">
-                            {{-- <th scope="col">#ID</th> --}}
+                            <th scope="col">Cód.</th>
                             <th scope="col">Nome</th>
                             @can('create-produtos')
                                 <th scope="col">Preço-Fornecedor</th>
@@ -102,7 +107,7 @@
                     <tbody>
                         @forelse($produtos as $produto)
                             <tr>
-                                {{-- <th class="text-center" scope="row">{{ $produto->id }}</th> --}}
+                                <th class="text-center" scope="row">{{ $produto->id }}</th>
                                 <td class="text-center nomeProduto" data-bs-toggle="tooltip" data-bs-placement="bottom"
                                     title="{{ $produto->nome }}">{{ $produto->nome }}</td>
                                 @can('create-produtos')
