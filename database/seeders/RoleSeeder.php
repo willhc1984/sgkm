@@ -17,5 +17,13 @@ class RoleSeeder extends Seeder
             Role::create(['name' => 'Super Admin']);
         }
 
+        if (!Role::where('name', 'Consultor')->first()) {
+            $consultor = Role::create(['name' => 'Consultor']);
+            $consultor->givePermissionTo([
+                'index-produtos',
+                'alter-produtos',
+                'index-consultores',
+            ]);
+        }
     }
 }

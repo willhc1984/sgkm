@@ -25,6 +25,8 @@ class PermissionSeeder extends Seeder
             ['title' => 'Cadastrar produtos', 'name' => 'create-produtos'],
             ['title' => 'Editar produtos', 'name' => 'edit-produtos'],
             ['title' => 'Apagar produtos', 'name' => 'destroy-produtos'],
+            ['title' => 'Alterar status do produto', 'name' => 'alter-produtos'],
+            ['title' => 'Alterar consultor do produto', 'name' => 'alter-produtos-consultor'],
 
             ['title' => 'Listar consultores', 'name' => 'index-consultores'],
             ['title' => 'Exibir consultores', 'name' => 'show-consultores'],
@@ -45,7 +47,7 @@ class PermissionSeeder extends Seeder
             ['title' => 'Apagar permissões', 'name' => 'destroy-permission'],
 
             ['title' => 'Listar permissões do papel', 'name' => 'index-role-permission'],
-            ['title' => 'Atualizar permissões do papel', 'name' => 'update-role-permission']
+            ['title' => 'Atualizar permissões do papel', 'name' => 'update-role-permission'],
         ];
 
         foreach ($permissions as $permission) {

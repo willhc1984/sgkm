@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AlterProdutoRequest;
 use App\Http\Requests\ProdutoRequest;
+use App\Http\Requests\UpdateConsultorRequest;
 use App\Models\Consultor;
 use App\Models\Produto;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -27,6 +28,7 @@ class ProdutoController extends Controller
         $this->middleware('permission:edit-produtos', ['only' => ['edit', 'update']]);
         $this->middleware('permission:destroy-produtos', ['only' => ['destroy']]);
         $this->middleware('permission:alter-produtos', ['only' => ['alter, updateAlter']]);
+        $this->middleware('permission:alter-produtos-consultor', ['only' => ['alterConsultor, updateConsultor']]);
     }
 
     public function index(Request $request)
@@ -171,16 +173,16 @@ class ProdutoController extends Controller
         }
     }
 
-     //Formulario para alterar status do produto
-     public function alter(Produto $produto)
-     {
-         return view('produtos.alter', [
-             'produto' => $produto,
-             'consultor' => $produto->consultor->nome
-         ]);
-     }
+    //Formulario para alterar status do produto
+    public function alter(Produto $produto)
+    {
+        return view('produtos.alter', [
+            'produto' => $produto,
+            'consultor' => $produto->consultor->nome
+        ]);
+    }
 
-     //Altera status do produto no banco de dados
+    //Altera status do produto no banco de dados
     public function updateAlter(AlterProdutoRequest $request, Produto $produto)
     {
         //Valida o formulario
@@ -206,6 +208,47 @@ class ProdutoController extends Controller
             DB::rollBack();
             //Redireciona com msg de erro
             return redirect()->back()->with('error', 'Status não alterado! Tente novamente.' . $e->getMessage());
+        }
+    }
+
+    //Formulario para alterar consultor do produto
+    public function alterConsultor(Produto $produto)
+    {
+        //Recuperar os consultores
+        $consultores = Consultor::orderBy('nome')->get();
+
+        return view('produtos.alterConsultor', [
+            'produto' => $produto,
+            'consultor' => $produto->consultor->nome,
+            'consultores' => $consultores
+        ]);
+    }
+
+    //Alterar consultor do produto no banco de dados
+    public function updateConsultor(UpdateConsultorRequest $request, Produto $produto)
+    {
+        //Valida o formulario
+        $request->validated();
+
+        //Inicio da transação
+        DB::beginTransaction();
+
+        try {
+            $produto->update([
+                'consultor_id' => $request->consultor,
+            ]);
+
+            //Transação com sucesso
+            DB::commit();
+
+            //Redireciona com msg de sucesso
+            return redirect()->route('produto.index')
+                ->with('success', 'Consultor alterado');
+        } catch (Exception $e) {
+            //Transação não concluida
+            DB::rollBack();
+            //Redireciona com msg de erro
+            return redirect()->back()->with('error', 'Consultor não alterado! Tente novamente.' . $e->getMessage());
         }
     }
 

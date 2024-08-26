@@ -68,6 +68,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/generate-pdf-produtos', [ProdutoController::class, 'generatePdf'])->name('produto.generate-pdf');
     Route::get('/alter-produtos/{produto}', [ProdutoController::class, 'alter'])->name('produto.alter');
     Route::put('/alter-produtos/{produto}', [ProdutoController::class, 'updateAlter'])->name('produto.updateAlter');
+    Route::get('/alter-produtos-consultor/{produto}', [ProdutoController::class, 'alterConsultor'])->name('produto.alterConsultor');
+    Route::put('/alter-produtos-consultor/{produto}', [ProdutoController::class, 'updateConsultor'])->name('produto.updateConsultor');
 
     //Papéis
     Route::get('/index-role', [RoleController::class, 'index'])->name('role.index');

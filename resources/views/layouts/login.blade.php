@@ -10,7 +10,7 @@
     <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 
-    <title>Curso Celke</title>
+    <title>S.G.K.M. - Sistema de Gestão KMartins</title>
 </head>
 
 <body class="bg-primary">

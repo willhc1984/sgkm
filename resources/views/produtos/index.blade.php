@@ -135,9 +135,9 @@
                                 @endif
                                 <td class="text-center">
                                     @if ($produto->situacao == 'Pago')
-                                    <a href="{{ route('produto.index') }}">
-                                        <span class="badge bg-success">Pago</span>
-                                    </a>
+                                        <a href="{{ route('produto.index') }}">
+                                            <span class="badge bg-success">Pago</span>
+                                        </a>
                                     @elseif ($produto->situacao == 'Vendido')
                                         <a href="{{ route('produto.index') }}">
                                             <span class="badge bg-primary">Vendido</span>
@@ -149,6 +149,11 @@
                                     @endif
 
                                 <td class="d-md-flex justify-content-center">
+                                    @can('alter-produtos-consultor')
+                                        <a href="{{ route('produto.alterConsultor', ['produto' => $produto->id]) }}"
+                                            class="btn btn-primary btn-sm me-1 mb-1" title="Alterar consultor">
+                                            <i class="fa-solid fa-right-left"></i></a>
+                                    @endcan
                                     <a href="{{ route('produto.alter', ['produto' => $produto->id]) }}"
                                         class="btn btn-warning btn-sm me-1 mb-1" title="Alterar status">
                                         <i class="fa-solid fa-rotate"></i></a>
