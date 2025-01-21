@@ -12,6 +12,7 @@
     <table style="border-collapse: collapse; width: 100%">
         <thead>
             <tr style="background-color: #adb5bd">
+                <th style="border: 1px solid #ccc;">Cod</th>
                 <th style="border: 1px solid #ccc;">Nome</th>
                 <th style="border: 1px solid #ccc;">Preço-Final</th>
                 <th style="border: 1px solid #ccc;">Consultor</th>
@@ -24,6 +25,7 @@
         <tbody>
             @forelse ($produtos as $produto)
                 <tr>
+                    <td style="border: 1px solid #ccc; text-align: center">{{ $produto->id }}</td>
                     <td style="border: 1px solid #ccc; text-align: center">{{ $produto->nome }}</td>
                     <td style="border: 1px solid #ccc; text-align: center">
                         {{ 'R$ ' . number_format($produto->preco_final, 2, ',', '.') }}</td>
