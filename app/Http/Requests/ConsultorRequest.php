@@ -22,13 +22,20 @@ class ConsultorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required'
+            'nome' => 'required',
+            'email' => 'required|email|unique:consultores,email',
+            'contato' => 'required'
         ];
     }
 
-    public function messages(): array{
+    public function messages(): array
+    {
         return [
-            'nome.required' => 'Nome do consultor(a) é obrigatório!'
+            'nome.required' => 'Nome do consultor(a) é obrigatório!',
+            'email.required' => 'O campo e-mail é obrigatório.',
+            'email.email' => 'Insira um e-mail válido.',
+            'email.unique' => 'Este e-mail já está cadastrado.',
+            'contato' => 'O campo contato é obrigatório!'
         ];
     }
 }

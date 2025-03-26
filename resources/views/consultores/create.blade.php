@@ -39,6 +39,11 @@
                             placeholder="Contato" pattern="^\([1-9]{2}\)[0-9]{4}\-[0-9]{4}$" />
                     </div>
                     <div class="col-12">
+                        <label  for="email">E-mail:</label>
+                        <input type="text" class="form-control" name="email" id="email" value="{{ old('email') }}"
+                            placeholder="E-mail" />
+                    </div>
+                    <div class="col-12">
                         <button type="submit" class="btn btn-primary bt-sm">Salvar</button>
                     </div>
                 </form>                

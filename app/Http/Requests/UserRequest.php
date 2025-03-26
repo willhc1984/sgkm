@@ -30,8 +30,9 @@ class UserRequest extends FormRequest
         ];
     }
 
-    public function messages() : array {
-        return[
+    public function messages(): array
+    {
+        return [
             'name.required' => 'Campo nome é obrigatório!',
             'email.required' => 'Campo e-mail é obrigatório!',
             'email.email' => 'Necessário enviar e-mail válido!',
@@ -42,5 +43,4 @@ class UserRequest extends FormRequest
 
         ];
     }
-
 }

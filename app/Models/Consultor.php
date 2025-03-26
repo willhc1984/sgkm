@@ -11,12 +11,13 @@ class Consultor extends Model
 
     protected $table = 'consultores';
 
-    protected $fillable = ['nome', 'contato'];
+    protected $fillable = ['nome', 'contato', 'email'];
 
     public $timestamps = false;
 
     //Criar relacionamento 1:N
-    public function produtos(){
+    public function produtos()
+    {
         return $this->hasMany(Produto::class);
     }
 }

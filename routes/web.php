@@ -91,7 +91,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/index-role-permission/{role}', [RolePermissionController::class, 'index'])->name('role-permission.index');
     Route::get('/update-role-permission/{role}/{permission}', [RolePermissionController::class, 'update'])->name('role-permission.update');
 
-
     //Logout 
     Route::get('/logout', [LoginController::class, 'destroy'])->name('login.destroy');
 });
