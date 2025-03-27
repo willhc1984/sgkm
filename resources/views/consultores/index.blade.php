@@ -28,6 +28,7 @@
                             <th scope="col">#ID</th>
                             <th scope="col">Nome</th>
                             <th scope="col">Contato</th>
+                            <th scope="col">E-mail</th>
                             <th scope="col">Ações</th>
                         </tr>
                     </thead>
@@ -37,6 +38,7 @@
                                 <th scope="row">{{ $consultor->id }}</th>
                                 <td>{{ $consultor->nome }}</td>
                                 <td>{{ $consultor->contato }}</td>
+                                <td>{{ $consultor->email }}</td>
                                 <td class="d-md-flex justify-content-center">
 
                                     <a href="{{ route('produto.create', ['consultor' => $consultor->id]) }}"

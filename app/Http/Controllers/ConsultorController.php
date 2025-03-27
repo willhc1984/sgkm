@@ -45,8 +45,6 @@ class ConsultorController extends Controller
         //Valida formulario de cadastro
         $request->validated();
 
-        // dd($request->email);
-
         //Inicio da transação
         DB::beginTransaction();
 
@@ -87,7 +85,8 @@ class ConsultorController extends Controller
             //Atualiza no banco de dados
             $consultor->update([
                 'nome' => $request->nome,
-                'contato' => $request->contato
+                'contato' => $request->contato,
+                'email' => $request->email
             ]);
 
             //Operação concluida com exito
@@ -113,7 +112,7 @@ class ConsultorController extends Controller
             return redirect()->route('consultor.index')->with('success', 'Consultor excluído!');
         } catch (Exception $e) {
             //Redireciona usuario com mensagem de erro
-            return redirect()->route('consultor.index')->with('error', 'Consultor não excluído!');
+            return redirect()->route('consultor.index')->with('error', 'Consultor não excluído! Talvez haja produtos alocados para este consultor(a).');
         }
     }
 }
