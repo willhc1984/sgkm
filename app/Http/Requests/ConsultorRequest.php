@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ConsultorRequest extends FormRequest
 {
@@ -23,7 +24,11 @@ class ConsultorRequest extends FormRequest
     {
         return [
             'nome' => 'required',
-            'email' => 'required|email|unique:consultores,email',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('consultores')->ignore($this->consultor)
+            ],
             'contato' => 'required'
         ];
     }

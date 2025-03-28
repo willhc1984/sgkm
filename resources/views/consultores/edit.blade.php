@@ -40,7 +40,7 @@
                     </div>
                     <div class="col-12">
                         <label  for="email">E-mail:</label>
-                        <input type="text" class="form-control" name="email" id="email" value="{{ old('email') }}"
+                        <input type="text" class="form-control" name="email" id="email" value="{{ old('email', $consultor->email) }}"
                             placeholder="E-mail" />
                     </div>
                     <div class="col-12">
