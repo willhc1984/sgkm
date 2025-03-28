@@ -29,6 +29,7 @@
                             <input type="text" name="nome" id="nome" class="form-control" value=""
                                 placeholder="Nome do produto">
                         </div>
+                        @if(auth()->user()->hasAnyRole(['Admin', 'Super Admin']))
                         <div class="col-md-3 col-sm-12">
                             <label class="form-label" for="name">Consultor:</label>
                             <select class="form-select" name="consultor" id="consultor" aria-label="Default select example">
@@ -39,6 +40,7 @@
                                 @endforelse
                             </select>
                         </div>
+                        @endif
                         <div class="col-md-3 col-sm-12">
                             <label class="form-label" for="name">Situação:</label>
                             <select class="form-select" name="situacao" id="situacao" aria-label="Default select example">
@@ -48,6 +50,9 @@
                                 <option value="Pago">Pago</option>
                             </select>
                         </div>
+                    </div>
+                    
+                    <div class="row">
                         <div class="col-md-3 col-sm-12">
                             <label class="form-label" for="data_inicio">Data início:</label>
                             <input type="date" name="data_inicio" id="data_inicio" class="form-control" value=""
@@ -64,6 +69,7 @@
                                 placeholder="Quantidade de registros exibidos">
                         </div>
                     </div>
+        
                     <div class="row">
                         <div class="col-md-4 col-sm-12 mt-2 pt-2">
                             <button type="submit" class="btn btn-info btn-sm"><i class="fa-solid fa-magnifying-glass">
@@ -72,6 +78,7 @@
                                     class="fa-solid fa-trash"></i>Limpar</a>
                         </div>
                     </div>
+
                 </form>
             </div>
         </div>

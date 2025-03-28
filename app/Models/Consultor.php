@@ -20,4 +20,9 @@ class Consultor extends Model
     {
         return $this->hasMany(Produto::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'email', 'email');
+    }
 }

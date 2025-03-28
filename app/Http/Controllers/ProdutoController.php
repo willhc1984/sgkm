@@ -9,11 +9,8 @@ use App\Models\Consultor;
 use App\Models\Produto;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
-use GuzzleHttp\Handler\Proxy;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Termwind\Components\Raw;
 
 class ProdutoController extends Controller
 {
@@ -36,6 +33,9 @@ class ProdutoController extends Controller
         //Recuperar os consultores
         $consultores = Consultor::orderBy('nome')->get();
 
+        //Recupera usuario logado
+        $user = auth()->user();
+
         //Recuperar os registros no banco de dados conforme parametros do formulario de pesquisa
         $produtos = Produto::when($request->has('nome'), function ($whenQuery) use ($request) {
             $whenQuery->where('nome', 'like', '%' . $request->nome . '%');
@@ -55,6 +55,13 @@ class ProdutoController extends Controller
             ->when($request->filled('data_fim'), function ($whenQuery) use ($request) {
                 $whenQuery->where('data_venda', '<=', \Carbon\Carbon::parse($request->data_fim)->format('Y-m-d'));
             })
+            ->when(!$user->hasRole(['Admin', 'Super Admin']), function ($query) use ($user) {
+                //Se usuario não for admin filtra os produtos do consultor correspondente
+                $query->whereHas('Consultor', function ($query) use ($user) {
+                    $query->where('email', $user->email);
+                });
+            })
+
             ->orderByDesc('nome')
             ->paginate($request->qtde)
             ->withQueryString();

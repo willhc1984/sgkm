@@ -26,7 +26,7 @@ class ConsultorController extends Controller
     public function index()
     {
         //Recuperar registros de consultores
-        $consultores = Consultor::orderBy('nome')->paginate(5);
+        $consultores = Consultor::orderBy('nome')->paginate(15);
         return view('consultores.index', [
             'consultores' => $consultores,
             'menu' => 'consultores'
@@ -44,7 +44,6 @@ class ConsultorController extends Controller
     {
         //Valida formulario de cadastro
         $request->validated();
-
         //Inicio da transação
         DB::beginTransaction();
 
@@ -77,7 +76,6 @@ class ConsultorController extends Controller
     {
         //Validação dos campos do formulario.
         $request->validated();
-
         //Marca ponto inicial da transação
         DB::beginTransaction();
 
