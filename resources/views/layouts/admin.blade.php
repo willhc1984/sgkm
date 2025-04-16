@@ -69,12 +69,17 @@
                         </a>
 
                         <a @class(['nav-link', 'active' => isset($menu) && $menu == 'produtos']) class="nav-link" href="{{ route('produto.index') }}">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-gem"></i></i></div>
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-gem"></i></div>
                             Produtos
                         </a>
 
+                        <a @class(['nav-link', 'active' => isset($menu) && $menu == 'categorias']) class="nav-link" href="{{ route('categoria.index') }}">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-list"></i></div>
+                            Categorias
+                        </a>
+
                         <a @class(['nav-link', 'active' => isset($menu) && $menu == 'usuarios']) class="nav-link" href="{{ route('user.index') }}">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-users"></i></i></div>
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-users"></i></div>
                             Usuários
                         </a>
 

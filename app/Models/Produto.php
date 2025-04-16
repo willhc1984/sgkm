@@ -11,13 +11,29 @@ class Produto extends Model
 
     protected $table = 'produtos';
 
-    protected $fillable = ['nome', 'preco_fornecedor', 'preco_final', 'comissao_consultor',
-        'situacao', 'data_venda', 'lucro_consultor', 'lucro_loja', 'consultor_id'];
+    protected $fillable = [
+        'nome',
+        'preco_fornecedor',
+        'preco_final',
+        'comissao_consultor',
+        'situacao',
+        'data_venda',
+        'lucro_consultor',
+        'lucro_loja',
+        'consultor_id'
+    ];
 
     public $timestamps = false;
 
-    //Criar relacionamento 1:N
-    public function consultor(){
+    //Criar relacionamento 1:N com consultor
+    public function consultor()
+    {
         return $this->belongsTo(Consultor::class);
+    }
+
+    //Criar relacionamento 1:N com categoria
+    public function categoria()
+    {
+        return $this->belongsTo(Categoria::class);
     }
 }

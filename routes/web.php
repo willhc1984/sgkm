@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ConsultorController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
@@ -90,6 +91,14 @@ Route::group(['middleware' => 'auth'], function () {
     //Permissões do papel
     Route::get('/index-role-permission/{role}', [RolePermissionController::class, 'index'])->name('role-permission.index');
     Route::get('/update-role-permission/{role}/{permission}', [RolePermissionController::class, 'update'])->name('role-permission.update');
+
+    //Categorias
+    Route::get('/index-categoria', [CategoriaController::class, 'index'])->name('categoria.index');
+    Route::get('/create-categoria', [CategoriaController::class, 'create'])->name('categoria.create');
+    Route::post('/store-categoria', [CategoriaController::class, 'store'])->name('categoria.store');
+    Route::get('/edit-categoria/{categoria}', [CategoriaController::class, 'edit'])->name('categoria.edit');
+    Route::put('/update-categoria/{categoria}', [CategoriaController::class, 'update'])->name('categoria.update');
+    Route::delete('/destroy-categoria/{categoria}', [CategoriaController::class, 'destroy'])->name('categoria.destroy');
 
     //Logout 
     Route::get('/logout', [LoginController::class, 'destroy'])->name('login.destroy');
