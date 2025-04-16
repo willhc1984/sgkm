@@ -25,32 +25,32 @@
                     @method('POST')
                     <input type="hidden" name="consultor_id" id="consultor_id" value="{{ $consultor->id }}">
                     <input type="hidden" name="consultor" id="consultor" value="{{ $consultor->nome }}">
-                    <div class="col-12">
+                    <div class="col-6">
                         <label for="name" class="form-label">Nome do produto:</label>
                         <input type="text" class="form-control" name="nome" id="nome" value="{{ old('nome') }}"
                             placeholder="Nome do produto">
                     </div>
-                    <div class="col-12">
+                    <div class="col-6">
                         <label for="preco_fornecedor">Preço do Fornecedor:</label>
                         <input type="text" class="form-control" name="preco_fornecedor" id="preco_fornecedor"
                             value="{{ old('preco_fornecedor') }}" placeholder="R$">
                     </div>
-                    <div class="col-12">
+                    <div class="col-6">
                         <label for="preco_final">Preço Final:</label>
                         <input type="text" class="form-control" name="preco_final" id="preco_final"
                             value="{{ old('preco_final') }}" placeholder="R$">
                     </div>
-                    <div class="col-12">
+                    <div class="col-6">
                         <label for="comissao_consultor">Comissão do consultor (%)</label>
                         <input type="number" class="form-control" name="comissao_consultor" id="comissao_consultor"
                             value="{{ old('comissao_consultor') }}" placeholder="Comissão do consultor (%)">
                     </div>
-                    <div class="col-12">
+                    <div class="col-6">
                         <label for="data_venda">Data da venda</label>
                         <input type="date" class="form-control" name="data_venda" id="data_venda"
                             value="{{ old('data_venda') }}" placeholder="Data">
                     </div>
-                    <div class="col-md-6 col-sm-12">
+                    <div class="col-6">
                         <label for="situacao" class="form-label">Situação</label>
                         <select class="form-select" name="situacao">
                             <option selected></option>
@@ -58,6 +58,29 @@
                             <option value="Vendido">Vendido</option>
                             <option value="Pago">Pago</option>
                         </select>
+                    </div>
+                    <div class="col-6">
+                        <label for="categoria" class="form-label">Categoria do produto</label>
+                        <select class="form-select" name="categoria">
+                            <option selected></option>
+                            @forelse($categorias as $categoria)
+                                <option value="{{ $categoria->id }}">{{ $categoria->nome }}</option>
+                            @empty 
+                            @endforelse
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <label for="descricao" class="form-label">Descrição</label>
+                        <textarea class="form-control" id="descricao" name="descricao" rows="3" value="{{ old('descricao') }}"></textarea>
+                    </div>
+                    <div class="col-12">
+                        <label for="descricao_curta" class="form-label">Descrição curta</label>
+                        <textarea class="form-control" id="descricao_curta" name="descricao_curta" rows="3" value="{{ old('descricao_curta') }}"></textarea>
+                    </div>
+                    <div class="col-6">
+                        <label for="images" class="form-label">Imagens:</label>
+                        <input type="text" class="form-control" name="images" id="images" value="{{ old('images') }}"
+                            placeholder="Imagens">
                     </div>
                     <div class="col-12">
                         <button type="submit" class="btn btn-primary bt-sm">Alocar</button>

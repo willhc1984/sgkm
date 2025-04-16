@@ -20,7 +20,12 @@ class Produto extends Model
         'data_venda',
         'lucro_consultor',
         'lucro_loja',
-        'consultor_id'
+        'consultor_id',
+
+        'categoria_id',
+        'descricao',
+        'descricao_curta',
+        'images'
     ];
 
     public $timestamps = false;

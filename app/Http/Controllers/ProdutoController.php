@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AlterProdutoRequest;
 use App\Http\Requests\ProdutoRequest;
 use App\Http\Requests\UpdateConsultorRequest;
+use App\Models\Categoria;
 use App\Models\Consultor;
 use App\Models\Produto;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -71,15 +72,21 @@ class ProdutoController extends Controller
             'menu' => 'produtos',
             'produtos' => $produtos,
             'nome' => $request->nome,
-            'consultores' => $consultores,
+            'consultores' => $consultores
         ]);
     }
 
     //Formulario para alocar produto ao consultor
     public function create(Consultor $consultor)
     {
+        //Recupera categoria de produtos
+        $categorias = Categoria::orderBy('nome')->get();
+
         //Carrega view
-        return view('produtos.create', ['consultor' => $consultor]);
+        return view('produtos.create', [
+            'consultor' => $consultor,
+            'categorias' => $categorias
+        ]);
     }
 
     //Cadastrar e alocar produto para consultor
@@ -100,7 +107,11 @@ class ProdutoController extends Controller
                 'comissao_consultor' => $request->comissao_consultor,
                 'data_venda' => $request->data_venda,
                 'situacao' => $request->situacao,
-                'consultor_id' => $request->consultor_id
+                'consultor_id' => $request->consultor_id,
+                'categoria_id' => $request->categoria,
+                'descricao' => $request->descricao,
+                'descricao_curta' => $request->descricao_curta,
+                'images' => $request->images
             ]);
 
             DB::commit();
@@ -122,7 +133,7 @@ class ProdutoController extends Controller
             //Transaçõ não concluida com exito
             DB::rollBack();
             //Redireciona com msg de erro
-            return redirect()->back()->with('error', 'Produto não foi alocado! Tente novamente.');
+            return redirect()->back()->with('error', 'Produto não foi alocado! Tente novamente.' . $e->getMessage());
         }
     }
 
