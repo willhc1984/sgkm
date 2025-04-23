@@ -53,7 +53,7 @@
                     <div class="col-6">
                         <label for="situacao" class="form-label">Situação</label>
                         <select class="form-select" name="situacao">
-                            <option selected></option>
+                            <option selected>{{ old('situacao') }}</option>
                             <option value="Em estoque">Em estoque</option>
                             <option value="Vendido">Vendido</option>
                             <option value="Pago">Pago</option>
@@ -62,7 +62,7 @@
                     <div class="col-6">
                         <label for="categoria" class="form-label">Categoria do produto</label>
                         <select class="form-select" name="categoria">
-                            <option selected></option>
+                            <option selected>{{ old('categoria') }}</option>
                             @forelse($categorias as $categoria)
                                 <option value="{{ $categoria->id }}">{{ $categoria->nome }}</option>
                             @empty 
@@ -71,11 +71,11 @@
                     </div>
                     <div class="col-12">
                         <label for="descricao" class="form-label">Descrição</label>
-                        <textarea class="form-control" id="descricao" name="descricao" rows="3" value="{{ old('descricao') }}"></textarea>
+                        <textarea class="form-control" id="descricao" name="descricao" rows="3">{{ old('descricao') }}</textarea>
                     </div>
                     <div class="col-12">
                         <label for="descricao_curta" class="form-label">Descrição curta</label>
-                        <textarea class="form-control" id="descricao_curta" name="descricao_curta" rows="3" value="{{ old('descricao_curta') }}"></textarea>
+                        <textarea class="form-control" id="descricao_curta" name="descricao_curta" rows="3">{{ old('descricao_curta') }}</textarea>
                     </div>
                     <div class="col-6">
                         <label for="images" class="form-label">Imagens:</label>

@@ -27,6 +27,7 @@ class ProdutoRequest extends FormRequest
             'preco_final' => 'required',
             'comissao_consultor' => 'required',
             'situacao' => 'required',
+            'categoria' => 'required',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg,webp'
         ];
     }
@@ -39,6 +40,7 @@ class ProdutoRequest extends FormRequest
             'preco_final.required' => 'Preço final é obrigatório!',
             'comissao_consultor.required' => 'Defina a comissão do consultor!',
             'situacao.required' => 'Defina a situação do produto!',
+            'categoria.required' => 'Escolha a categoria do produto',
             'images.image' => 'Formato de imagem inválido'
         ];
     }
