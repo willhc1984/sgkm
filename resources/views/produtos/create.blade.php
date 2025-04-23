@@ -20,7 +20,7 @@
 
                 <x-alert />
 
-                <form class="row g-3" action="{{ route('produto.store') }}" method="POST">
+                <form class="row g-3" action="{{ route('produto.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('POST')
                     <input type="hidden" name="consultor_id" id="consultor_id" value="{{ $consultor->id }}">
@@ -79,7 +79,7 @@
                     </div>
                     <div class="col-6">
                         <label for="images" class="form-label">Imagens:</label>
-                        <input type="text" class="form-control" name="images" id="images" value="{{ old('images') }}"
+                        <input type="file" class="form-control" name="images[]" multiple id="images" value="{{ old('images') }}"
                             placeholder="Imagens">
                     </div>
                     <div class="col-12">

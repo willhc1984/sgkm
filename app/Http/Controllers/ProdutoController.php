@@ -94,8 +94,19 @@ class ProdutoController extends Controller
     {
         //Validar o formulario 
         $request->validated();
-        //Marca ponto inicial da transação
 
+        $links = [];
+
+        // Verifica se request possui imagens e escreve caminho completo das url's.
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('imagens', 'public');
+                $urlCompleta = asset('storage/' . $path);
+                $links[] = $urlCompleta;
+            }
+        }
+
+        //Marca ponto inicial da transação
         DB::beginTransaction();
 
         try {
@@ -111,7 +122,7 @@ class ProdutoController extends Controller
                 'categoria_id' => $request->categoria,
                 'descricao' => $request->descricao,
                 'descricao_curta' => $request->descricao_curta,
-                'images' => $request->images
+                'images' => implode(',', $links)
             ]);
 
             DB::commit();

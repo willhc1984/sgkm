@@ -26,18 +26,20 @@ class ProdutoRequest extends FormRequest
             'preco_fornecedor' => 'required',
             'preco_final' => 'required',
             'comissao_consultor' => 'required',
-            'situacao' => 'required'
+            'situacao' => 'required',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg,webp'
         ];
     }
 
-    public function messages(): array{
+    public function messages(): array
+    {
         return [
             'nome.required' => 'Nome do produto é obrigatório!',
             'preco_fornecedor.required' => 'Preço do fornecedor é obrigatório!',
             'preco_final.required' => 'Preço final é obrigatório!',
             'comissao_consultor.required' => 'Defina a comissão do consultor!',
-            'situacao.required' => 'Defina a situação do produto!'
+            'situacao.required' => 'Defina a situação do produto!',
+            'images.image' => 'Formato de imagem inválido'
         ];
     }
-
 }
