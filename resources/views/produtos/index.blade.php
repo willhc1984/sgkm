@@ -156,6 +156,11 @@
                                     @endif
 
                                 <td class="d-md-flex justify-content-center">
+                                    <button type="button" class="btn btn-primary btn-sm me-1 mb-1" data-bs-toggle="modal" data-bs-target="#modalProduto{{ $produto->id }}" title="Exibir imagens">
+                                        <i class="fa-solid fa-camera"></i>
+                                    </button>  
+                                    <x-modal-produtos :produto="$produto" />                                    
+
                                     @can('alter-produtos-consultor')
                                         <a href="{{ route('produto.alterConsultor', ['produto' => $produto->id]) }}"
                                             class="btn btn-primary btn-sm me-1 mb-1" title="Alterar consultor">

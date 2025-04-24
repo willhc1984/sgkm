@@ -164,9 +164,6 @@ class ProdutoController extends Controller
     //Atualiza produto no banco de dados
     public function update(ProdutoRequest $request, Produto $produto)
     {
-
-        //dd($request->categoria);
-
         //Valida o formulario
         $request->validated();
 
@@ -196,7 +193,7 @@ class ProdutoController extends Controller
                 'categoria_id' => $request->categoria,
                 'descricao' => $request->descricao,
                 'descricao_curta' => $request->descricao_curta,
-                'images' => implode(',', $links)
+                'images' => count($links) > 0 ? implode(',', $links) : $produto->images
             ]);
 
             //Transação com sucesso
