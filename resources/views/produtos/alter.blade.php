@@ -23,7 +23,7 @@
                 <form class="row g-3" action="{{ route('produto.updateAlter', ['produto' => $produto->id]) }}" method="POST">
                     @csrf
                     @method('PUT')
-                    <div class="col-12">
+                    <div class="col-8">
                         <label for="data_venda">Data da venda</label>
                         @if ($produto->data_venda == null)
                             <input type="date" class="form-control" name="data_venda" id="data_venda" value=""
@@ -34,7 +34,7 @@
                                 placeholder="Data">
                         @endif
                     </div>
-                    <div class="col-md-6 col-sm-12">
+                    <div class="col-8">
                         <label for="situacao" class="form-label">Situação</label>
                         <select class="form-select" name="situacao">
                             <option selected>{{ $produto->situacao }}</option>

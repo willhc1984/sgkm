@@ -151,17 +151,35 @@ class ProdutoController extends Controller
     //Formulario editar produtos
     public function edit(Produto $produto)
     {
+        //Recupera categoria de produtos
+        $categorias = Categoria::orderBy('nome')->get();
+
         return view('produtos.edit', [
             'produto' => $produto,
-            'consultor' => $produto->consultor->nome
+            'consultor' => $produto->consultor->nome,
+            'categorias' => $categorias
         ]);
     }
 
     //Atualiza produto no banco de dados
     public function update(ProdutoRequest $request, Produto $produto)
     {
+
+        //dd($request->categoria);
+
         //Valida o formulario
         $request->validated();
+
+        $links = [];
+
+        // Verifica se request possui imagens e escreve caminho completo das url's.
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('imagens', 'public');
+                $urlCompleta = asset('storage/' . $path);
+                $links[] = $urlCompleta;
+            }
+        }
 
         //Inicio da transação
         DB::beginTransaction();
@@ -174,6 +192,11 @@ class ProdutoController extends Controller
                 'comissao_consultor' => $request->comissao_consultor,
                 'data_venda' => $request->data_venda,
                 'situacao' => $request->situacao,
+                'consultor_id' => $request->consultor_id,
+                'categoria_id' => $request->categoria,
+                'descricao' => $request->descricao,
+                'descricao_curta' => $request->descricao_curta,
+                'images' => implode(',', $links)
             ]);
 
             //Transação com sucesso
@@ -198,7 +221,7 @@ class ProdutoController extends Controller
             //Transação não concluida
             DB::rollBack();
             //Redireciona com msg de erro
-            return redirect()->back()->with('error', 'Produto não editado! Tenete novamente.' . $e->getMessage());
+            return redirect()->back()->with('error', 'Produto não editado! Tente novamente.' . $e->getMessage());
         }
     }
 
