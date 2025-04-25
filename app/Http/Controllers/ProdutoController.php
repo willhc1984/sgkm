@@ -12,6 +12,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ProdutoController extends Controller
 {
@@ -305,6 +306,14 @@ class ProdutoController extends Controller
     public function destroy(Produto $produto)
     {
         try {
+            //Deleta imagens do produto
+            if ($produto->images) {
+                $urls = explode(',', $produto->images);
+                foreach ($urls as $url) {
+                    $caminhoRelativo = str_replace(asset('storage') . '/', '', trim($url));
+                    Storage::disk('public')->delete($caminhoRelativo);
+                }
+            }
             //Excluir registro do banco de dados
             $produto->delete();
             //Redireciona o usuario
