@@ -354,4 +354,62 @@ class ProdutoController extends Controller
         //Fazer download do arquivo
         return $pdf->download('produtos.pdf');
     }
+
+    public function exportarCsv()
+    {
+        $produtos = Produto::with('categoria')->get();
+
+        // Cabeçalho
+        $csv = "name,description,short description,sku,regular price,categories,images,stock status\n";
+
+        foreach ($produtos as $produto) {
+
+            $urlBase = config('app.url');
+
+            if (is_array($produto->images)) {
+                $imagesArray = $produto->images;
+            } elseif (is_string($produto->images) && str_starts_with($produto->images, '[')) {
+                $decoded = json_decode($produto->images, true);
+                $imagesArray = is_array($decoded) ? $decoded : [];
+            } else {
+                $imagesArray = explode(',', $produto->images ?? '');
+            }
+
+            // Agora tratamos corretamente:
+            if (empty($imagesArray) || (count($imagesArray) === 1 && trim($imagesArray[0]) === '')) {
+                $images = '""'; // campo vazio
+            } else {
+                $fullImages = array_map(function ($img) use ($urlBase) {
+                    $img = trim($img);
+
+                    // Se já começa com http ou https, não adiciona o domínio novamente
+                    if (str_starts_with($img, 'http://') || str_starts_with($img, 'https://')) {
+                        return $img;
+                    }
+
+                    // Se for apenas o caminho relativo, adiciona o domínio
+                    return rtrim($urlBase, '/') . '/' . ltrim($img, '/');
+                }, $imagesArray);
+
+                $images = '"' . implode(',', $fullImages) . '"';
+            }
+
+            $linha = [
+                $produto->nome,
+                $produto->descricao ?? 'Sem descricao',
+                $produto->descricao_curta ?? 'Sem descricao',
+                $produto->id,
+                number_format($produto->preco_final, 2, '.', ','),
+                $produto->categoria->nome ?? 'Sem categoria',
+                $images,
+                'instock'
+            ];
+
+            $csv .= implode(',', $linha) . "\n";
+        }
+
+        return response($csv)
+            ->header('Content-Type', 'text/csv')
+            ->header('Content-Disposition', 'attachment; filename="produtos.csv"');
+    }
 }

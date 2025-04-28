@@ -71,6 +71,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/alter-produtos/{produto}', [ProdutoController::class, 'updateAlter'])->name('produto.updateAlter');
     Route::get('/alter-produtos-consultor/{produto}', [ProdutoController::class, 'alterConsultor'])->name('produto.alterConsultor');
     Route::put('/alter-produtos-consultor/{produto}', [ProdutoController::class, 'updateConsultor'])->name('produto.updateConsultor');
+    Route::get('/exportar-produtos', [ProdutoController::class, 'exportarCsv'])->name('produtos-exportar');
 
     //Papéis
     Route::get('/index-role', [RoleController::class, 'index'])->name('role.index');
