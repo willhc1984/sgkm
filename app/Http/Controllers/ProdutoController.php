@@ -355,9 +355,41 @@ class ProdutoController extends Controller
         return $pdf->download('produtos.pdf');
     }
 
-    public function exportarCsv()
+    //Formulario para exportar CSV
+    public function exportarProdutos()
     {
-        $produtos = Produto::with('categoria')->get();
+        return view('produtos.export');
+    }
+
+    public function exportarCsv(Request $request)
+    {
+
+        //Validação
+        $request->validate(
+            [
+                'inicio' => 'required|integer',
+                'fim' => 'required|integer',
+            ],
+            [
+                'inicio' => "Código inicial é obrigatório!",
+                'fim' => "Código final é obrigatório!",
+            ]
+        );
+
+        // Valores do intervalo
+        $inicio = $request->inicio;
+        $fim = $request->fim;
+
+        // Corrige caso o usuário inverta inicio/fim
+        if ($inicio > $fim) {
+            [$inicio, $fim] = [$fim, $inicio];
+        }
+
+        //Produtos dentro do intervalo digitado
+        $produtos = Produto::with('categoria')
+            ->whereBetween('id', [$inicio, $fim])
+            ->orderBy('id')
+            ->get();
 
         // Cabeçalho
         $csv = "name,description,short description,sku,regular price,categories,images,stock status\n";

@@ -78,6 +78,11 @@
                             Categorias
                         </a>
 
+                        <a @class(['nav-link', 'active' => isset($menu) && $menu == 'exportacao']) class="nav-link" href="{{ route('produto.exportar') }}">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-file-export"></i></div>
+                            Exportar
+                        </a>
+
                         <a @class(['nav-link', 'active' => isset($menu) && $menu == 'usuarios']) class="nav-link" href="{{ route('user.index') }}">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-users"></i></div>
                             Usuários
