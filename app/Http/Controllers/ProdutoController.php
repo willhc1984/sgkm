@@ -363,7 +363,6 @@ class ProdutoController extends Controller
 
     public function exportarCsv(Request $request)
     {
-
         //Validação
         $request->validate(
             [
@@ -426,10 +425,16 @@ class ProdutoController extends Controller
                 $images = '"' . implode(',', $fullImages) . '"';
             }
 
+            $descricao = str_replace(['"', "\n", "\r"], ['""', ' ', ' '], $produto->descricao);
+            $descricao = '"' . $descricao . '"';
+
+            $descricao_curta = str_replace(['"', "\n", "\r"], ['""', ' ', ' '], $produto->descricao_curta);
+            $descricao_curta = '"' . $descricao_curta . '"';
+
             $linha = [
                 $produto->nome,
-                $produto->descricao ?? 'Sem descricao',
-                $produto->descricao_curta ?? 'Sem descricao',
+                $descricao ?? 'Sem descricao',
+                $descricao_curta ?? 'Sem descricao',
                 $produto->id,
                 number_format($produto->preco_final, 2, '.', ','),
                 $produto->categoria->nome ?? 'Sem categoria',

@@ -70,12 +70,12 @@
                         </select>
                     </div>
                     <div class="col-12">
-                        <label for="descricao" class="form-label">Descrição</label>
-                        <textarea class="form-control" id="descricao" name="descricao" rows="3">{{ old('descricao') }}</textarea>
+                        <label for="descricao" class="form-label">1º Descrição</label>
+                        <textarea class="form-control" id="descricao" name="descricao" rows="6">{{ old('descricao') }}</textarea>
                     </div>
                     <div class="col-12">
-                        <label for="descricao_curta" class="form-label">Descrição curta</label>
-                        <textarea class="form-control" id="descricao_curta" name="descricao_curta" rows="3">{{ old('descricao_curta') }}</textarea>
+                        <label for="descricao_curta" class="form-label">2º Descrição</label>
+                        <textarea class="form-control" id="descricao_curta" name="descricao_curta" rows="6">{{ old('descricao_curta') }}</textarea>
                     </div>
                     <div class="col-6">
                         <label for="images" class="form-label">Imagens:</label>

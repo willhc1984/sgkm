@@ -71,21 +71,21 @@
                     <div class="col-6">
                         <label for="categoria" class="form-label">Categoria do produto</label>
                         <select class="form-select" name="categoria">
+                            <option selected></option>
                             @foreach($categorias as $categoria)
-                            <option value="{{ $categoria->id }}" 
-                                {{ old('categoria_id', $produto->categoria_id ?? '') == $categoria->id ? 'selected' : '' }}>
+                            <option value="{{ $categoria->id }}">
                                 {{ $categoria->nome }}
                              </option>
                             @endforeach                            
                         </select>
                     </div>
                     <div class="col-12">
-                        <label for="descricao" class="form-label">Descrição</label>
-                        <textarea class="form-control" id="descricao" name="descricao" rows="3">{{ old('descricao', $produto->descricao) }}</textarea>
+                        <label for="descricao" class="form-label">1º Descrição</label>
+                        <textarea class="form-control" id="descricao" name="descricao" rows="6">{{ old('descricao', $produto->descricao) }}</textarea>
                     </div>
                     <div class="col-12">
-                        <label for="descricao_curta" class="form-label">Descrição curta</label>
-                        <textarea class="form-control" id="descricao_curta" name="descricao_curta" rows="3">{{ old('descricao_curta', $produto->descricao_curta) }}</textarea>
+                        <label for="descricao_curta" class="form-label">2º Descrição</label>
+                        <textarea class="form-control" id="descricao_curta" name="descricao_curta" rows="6">{{ old('descricao_curta', $produto->descricao_curta) }}</textarea>
                     </div>
                     <div class="col-6">
                         <label for="images" class="form-label">Imagens:</label>
