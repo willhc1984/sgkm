@@ -12,8 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('produtos', function (Blueprint $table) {
-            $table->text('descricao')->change();
-            $table->text('descricao_curta')->change();
+            $table->text('descricao')->nullable()->change();
+        });
+
+        Schema::table('produtos', function (Blueprint $table) {
+            $table->text('descricao_curta')->nullable()->change();
         });
     }
 
@@ -23,8 +26,11 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('produtos', function (Blueprint $table) {
-            $table->string('descricao', 255)->change();
-            $table->string('descricao_curta', 255)->change();
+            $table->string('descricao', 255)->nullable()->change();
+        });
+
+        Schema::table('produtos', function (Blueprint $table) {
+            $table->string('descricao_curta', 255)->nullable()->change();
         });
     }
 };
