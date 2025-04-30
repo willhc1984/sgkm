@@ -168,21 +168,36 @@ class ProdutoController extends Controller
         //Valida o formulario
         $request->validated();
 
-        $links = [];
-
-        // Verifica se request possui imagens e escreve caminho completo das url's.
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $image) {
-                $path = $image->store('imagens', 'public');
-                $urlCompleta = asset('storage/' . $path);
-                $links[] = $urlCompleta;
-            }
-        }
-
         //Inicio da transação
         DB::beginTransaction();
 
         try {
+            $links = [];
+            // Só executa se usuario enviar novas imagens
+            if ($request->hasFile('images')) {
+                //Deleta imagens antigas
+                if ($produto->images) {
+                    $imagensAntigas = explode(',', $produto->images);
+
+                    foreach ($imagensAntigas as $imagemUrl) {
+                        $path = parse_url($imagemUrl, PHP_URL_PATH);  //storage/imagens/nome.jpg
+                        //Remove o /storage/ da url para pegar o caminho real em /storage/app/public
+                        $relativePath = str_replace('/storage/', '', $path);
+
+                        //Deleta o arquivo se existir
+                        if (Storage::disk('public')->exists($relativePath)) {
+                            Storage::disk('public')->delete($relativePath);
+                        }
+                    }
+                }
+                // 2. Salva as novas imagens
+                foreach ($request->file('images') as $file) {
+                    $path = $file->store('imagens', 'public');
+                    $links[] = asset('storage/' . $path);
+                }
+            }
+
+            //Atualiza o produto
             $produto->update([
                 'nome' => $request->nome,
                 'preco_fornecedor' => str_replace(',', '.', str_replace('.', '', $request->preco_fornecedor)),
