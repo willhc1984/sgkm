@@ -173,28 +173,46 @@ class ProdutoController extends Controller
 
         try {
             $links = [];
-            // Só executa se usuario enviar novas imagens
+
+            // Caso usuário envie novas imagens via <input type="file">
             if ($request->hasFile('images')) {
-                //Deleta imagens antigas
+                // Remove imagens antigas
                 if ($produto->images) {
                     $imagensAntigas = explode(',', $produto->images);
 
                     foreach ($imagensAntigas as $imagemUrl) {
-                        $path = parse_url($imagemUrl, PHP_URL_PATH);  //storage/imagens/nome.jpg
-                        //Remove o /storage/ da url para pegar o caminho real em /storage/app/public
+                        $path = parse_url($imagemUrl, PHP_URL_PATH);
                         $relativePath = str_replace('/storage/', '', $path);
 
-                        //Deleta o arquivo se existir
                         if (Storage::disk('public')->exists($relativePath)) {
                             Storage::disk('public')->delete($relativePath);
                         }
                     }
                 }
-                // 2. Salva as novas imagens
+
+                // Salva novas imagens
                 foreach ($request->file('images') as $file) {
                     $path = $file->store('imagens', 'public');
                     $links[] = asset('storage/' . $path);
                 }
+            }
+
+            // Caso não tenha novas imagens, mas existam caminhos já salvos via AJAX
+            elseif ($request->has('uploaded_images')) {
+                foreach ($request->input('uploaded_images') as $tempUrl) {
+                    $path = parse_url($tempUrl, PHP_URL_PATH); //storage/temp/arquivo.jpg
+                    $relativePath = str_replace('/storage/', '', $path); // temp/arquivo.jpg
+
+                    $filename = basename($relativePath);
+                    $newPath = 'imagens/' . $filename;
+
+                    //Move arquivos da pasta temp para imagens
+                    if (Storage::disk('public')->exists($relativePath)) {
+                        Storage::disk('public')->move($relativePath, $newPath);
+                        $links[] = asset('storage/' . $newPath);
+                    }
+                }
+                //$links = $request->input('uploaded_images'); // já são URLs completas
             }
 
             //Atualiza o produto
@@ -463,5 +481,19 @@ class ProdutoController extends Controller
         return response($csv)
             ->header('Content-Type', 'text/csv')
             ->header('Content-Disposition', 'attachment; filename="produtos.csv"');
+    }
+
+    public function uploadTemporario(Request $request)
+    {
+        $paths = [];
+
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('temp', 'public');
+                $paths[] = asset('storage/' . $path);
+            }
+        }
+
+        return response()->json(['paths' => $paths]);
     }
 }

@@ -73,6 +73,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/alter-produtos-consultor/{produto}', [ProdutoController::class, 'updateConsultor'])->name('produto.updateConsultor');
     Route::post('/gerar-csv', [ProdutoController::class, 'exportarCsv'])->name('produto.csv');
     Route::get('/exportar-produtos', [ProdutoController::class, 'exportarProdutos'])->name('produto.exportar');
+    //Rota para upload de imagens via ajax
+    Route::post('/upload-temporario', [ProdutoController::class, 'uploadTemporario'])->name('upload.temporario');
 
     //Papéis
     Route::get('/index-role', [RoleController::class, 'index'])->name('role.index');

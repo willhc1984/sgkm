@@ -91,6 +91,24 @@
                         <label for="images" class="form-label">Imagens:</label>
                         <input type="file" class="form-control" name="images[]" multiple id="images" placeholder="Imagens">
                     </div>
+                    <!-- Lista de previews -->
+                    <div id="preview"></div>
+                    
+                    <!-- Campos ocultos com links das imagens -->
+                    <div id="image-paths-container">
+                        @if(old('uploaded_images'))
+                            @foreach(old('uploaded_images') as $img)
+                                <input type="hidden" name="uploaded_images[]" value="{{ $img }}">
+                                <img src="{{ $img }}" width="100">
+                            @endforeach
+                        @else
+                            @foreach(explode(',', $produto->images) as $img)
+                                <input type="hidden" name="uploaded_images[]" value="{{ $img }}">
+                                <img src="{{ $img }}" width="100">
+                            @endforeach
+                        @endif
+                    </div>
+                    
                     <div class="col-12">
                         <button type="submit" class="btn btn-primary bt-sm">Salvar</button>
                     </div>
@@ -99,5 +117,9 @@
         </div>
     </div>
 
+    <script>
+        const uploadRoute = "{{ route('upload.temporario') }}";
+    </script>
+    <script src="{{ asset('js/script-upload-images.js') }}"></script>
     <script src="{{ asset('js/script.js') }}"></script>
 @endsection
