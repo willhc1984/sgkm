@@ -11,6 +11,7 @@
         </div>
 
         <x-alert />   
+        <x-modal-comissao-consultor />
 
         <div class="card mb-4 border-light shadow">
             <div class="card-header space-between-elements">
@@ -43,7 +44,11 @@
 
                                     <a href="{{ route('produto.create', ['consultor' => $consultor->id]) }}"
                                         class="btn btn-info btn-sm me-1 mb-1">
-                                        <i class="fa-solid fa-list-check"></i> Alocar produto </a>
+                                        <i class="fa-solid fa-gem"></i>Alocar produto </a>
+
+                                    <a href="#modalComissao" data-bs-toggle="modal" class="btn btn-success btn-sm me-1 mb-1"
+                                        data-consultor-id={{ $consultor->id }} data-consultor-nome="{{ $consultor->nome }}" >
+                                        <i class="fa-solid fa-coins"></i>Comissão</a>
 
                                     <a href="{{ route('consultor.edit', ['consultor' => $consultor->id]) }}"
                                         class="btn btn-secondary btn-sm me-1 mb-1">

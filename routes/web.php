@@ -58,6 +58,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/edit-consultores/{consultor}', [ConsultorController::class, 'edit'])->name('consultor.edit');
     Route::put('/update-consultores/{consultor}', [ConsultorController::class, 'update'])->name('consultor.update');
     Route::delete('/destroy-consultores/{consultor}', [ConsultorController::class, 'destroy'])->name('consultor.destroy');
+    // Rota para atualizar a comissão do consultor
+    Route::post('/atualizar-comissao', [ConsultorController::class, 'atualizarComissao'])->name('consultor.atualizarComissao');
 
     //Produtos
     Route::get('/index-produtos', [ProdutoController::class, 'index'])->name('produto.index');

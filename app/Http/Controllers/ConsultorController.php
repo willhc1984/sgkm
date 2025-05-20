@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ConsultorRequest;
 use App\Models\Consultor;
+use App\Models\Produto;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -112,5 +113,28 @@ class ConsultorController extends Controller
             //Redireciona usuario com mensagem de erro
             return redirect()->route('consultor.index')->with('error', 'Consultor não excluído! Talvez haja produtos alocados para este consultor(a).');
         }
+    }
+
+    //Altera a comissão do consultor
+    public function atualizarComissao(Request $request)
+    {
+        $request->validate([
+            'consultor_id' => 'required|exists:consultores,id',
+            'nova_comissao' => 'required|numeric|min:0|max:100',
+        ]);
+
+        $consultorId = $request->consultor_id;
+        $novaComissao = $request->nova_comissao;
+
+        $produtos = Produto::where('consultor_id', $consultorId)->get();
+
+        foreach ($produtos as $produto) {
+            $produto->comissao_consultor = $novaComissao;
+            $produto->lucro_consultor = $produto->preco_final * ($novaComissao / 100);
+            $produto->lucro_loja = $produto->preco_final - $produto->preco_fornecedor - $produto->lucro_consultor;
+            $produto->save();
+        }
+
+        return redirect()->back()->with('success', 'Comissão atualizada com sucesso para todos os produtos do consultor.');
     }
 }
