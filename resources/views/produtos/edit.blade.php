@@ -99,12 +99,12 @@
                         @if(old('uploaded_images'))
                             @foreach(old('uploaded_images') as $img)
                                 <input type="hidden" name="uploaded_images[]" value="{{ $img }}">
-                                <img src="{{ $img }}" width="150" />
+                                <img src="{{ $img }}" width="150"  style="padding: 10px;" />
                             @endforeach
                         @else
                             @foreach(explode(',', $produto->images) as $img)
                                 <input type="hidden" name="uploaded_images[]" value="{{ $img }}">
-                                <img src="{{ $img }}" width="150" />
+                                <img src="{{ $img }}" width="150" style="padding: 10px;" />
                             @endforeach
                         @endif
                     </div>

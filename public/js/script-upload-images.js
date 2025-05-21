@@ -31,7 +31,8 @@ document.getElementById('images').addEventListener('change', function(e){
              // Cria preview
              const img = document.createElement('img');
              img.src = path;
-             img.width = 100;
+             img.width = 150;
+             img.style.padding ='10px';
              preview.appendChild(img);
         });
     })
