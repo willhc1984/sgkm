@@ -21,6 +21,7 @@ class ConsultorController extends Controller
         $this->middleware('permission:create-consultores', ['only' => ['create', 'store']]);
         $this->middleware('permission:edit-consultores', ['only' => ['edit', 'update']]);
         $this->middleware('permission:destroy-consultores', ['only' => ['destroy']]);
+        $this->middleware('permission:atualizar-comissao', ['only' => ['atualizarComissao']]);
     }
 
     //Listar consultores
@@ -127,6 +128,7 @@ class ConsultorController extends Controller
         $novaComissao = $request->nova_comissao;
 
         $produtos = Produto::where('consultor_id', $consultorId)->get();
+        $consultor = Consultor::find($consultorId);
 
         foreach ($produtos as $produto) {
             $produto->comissao_consultor = $novaComissao;
@@ -135,6 +137,6 @@ class ConsultorController extends Controller
             $produto->save();
         }
 
-        return redirect()->back()->with('success', 'Comissão atualizada com sucesso para todos os produtos do consultor.');
+        return redirect()->route('consultor.index')->with('success', 'Comissão atualizada com sucesso para todos os produtos do consultor: <strong>' . $consultor->nome . '</strong>');
     }
 }

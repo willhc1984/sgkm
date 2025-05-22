@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class PermissionController extends Controller
 {
@@ -52,11 +53,14 @@ class PermissionController extends Controller
                 'name' => $request->name,
             ]);
 
+            //Já associa permissão a Super Admin
+            $role = Role::findByName('Super Admin');
+            $role->givePermissionTo($permission);
+
             //Operação concluida com exito
             DB::commit();
             //Redireciona com mensagem de sucesso
             return redirect()->route('permissions.index')->with('success', 'Permissão cadastrada com sucesso!');
-
         } catch (Exception $e) {
             //Operação não concluida
             DB::rollBack();
@@ -66,22 +70,24 @@ class PermissionController extends Controller
     }
 
     //Formulário para editar permissão
-    public function edit(Permission $permission){
+    public function edit(Permission $permission)
+    {
         return view('permissions.edit', ['permission' => $permission]);
     }
 
     //Salva alterações de permissão no banco de dados
-    public function update(PermissionRequest $request, Permission $permission){
+    public function update(PermissionRequest $request, Permission $permission)
+    {
         //Validação dos campos do formulario.
         $request->validated();
 
         //Marca ponto inicial da transação
         DB::beginTransaction();
 
-        try{
+        try {
             //Atualiza no banco de dados
             $permission->update([
-                'name' => $request->name, 
+                'name' => $request->name,
                 'title' => $request->title
             ]);
 
@@ -91,29 +97,29 @@ class PermissionController extends Controller
             //Redirecionar usuario
             return redirect()->route('permissions.index', ['menu' => 'permission'])
                 ->with('success', 'Permissão atualizada!');
-
-        }catch(Exception $e){
+        } catch (Exception $e) {
             //Operação não concluida
             DB::rollBack();
             //Retorno com mensagem de erro
-            return back()->withInput()->with('error','Permissão não atualizada! Tente novamente.' . $e->getMessage());
+            return back()->withInput()->with('error', 'Permissão não atualizada! Tente novamente.' . $e->getMessage());
         }
     }
 
-    public function destroy(Permission $permission){
+    public function destroy(Permission $permission)
+    {
         //Não permite excluir permissões com usuarios.
-        if($permission->users->isNotEmpty()){
-             //Redireciona usuario com msg de erro
-             return redirect()->route('permissions.index')->with('error','Permissão não pode ser excluída pois possui usuários associados.');
+        if ($permission->users->isNotEmpty()) {
+            //Redireciona usuario com msg de erro
+            return redirect()->route('permissions.index')->with('error', 'Permissão não pode ser excluída pois possui usuários associados.');
         }
         //Exclui regitro
-        try {       
+        try {
             $permission->delete();
             //Redireciona usuario com msg de successo
-            return redirect()->route('permissions.index')->with('success','Permissão deletada!');
-        }catch(Exception $e){
+            return redirect()->route('permissions.index')->with('success', 'Permissão deletada!');
+        } catch (Exception $e) {
             //Redireciona usuario com mensagem de erro
-            return redirect()->route('permissions.index')->with('error','Permissão não excluida! Possui usuários 
+            return redirect()->route('permissions.index')->with('error', 'Permissão não excluida! Possui usuários 
                 associados.' . $e->getMessage());
         }
     }

@@ -6,7 +6,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             Swal.fire({
                 title: 'Pronto!',
-                html: '{{ session('success') }}',
+                html: '{!! session('success') !!}',
                 icon: 'success'
             });
         });
@@ -21,7 +21,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             Swal.fire({
                 title: 'Erro:',
-                html: '{{ session('error') }}',
+                html: '{!! session('error') !!}',
                 icon: 'error'
             });
         });

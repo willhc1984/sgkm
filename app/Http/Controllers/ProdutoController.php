@@ -28,6 +28,7 @@ class ProdutoController extends Controller
         $this->middleware('permission:destroy-produtos', ['only' => ['destroy']]);
         $this->middleware('permission:alter-produtos', ['only' => ['alter, updateAlter']]);
         $this->middleware('permission:alter-produtos-consultor', ['only' => ['alterConsultor, updateConsultor']]);
+        $this->middleware('permission:upload-temporario', ['only' => ['uploadTemporario']]);
     }
 
     public function index(Request $request)
