@@ -29,6 +29,7 @@ class ProdutoController extends Controller
         $this->middleware('permission:alter-produtos', ['only' => ['alter, updateAlter']]);
         $this->middleware('permission:alter-produtos-consultor', ['only' => ['alterConsultor, updateConsultor']]);
         $this->middleware('permission:upload-temporario', ['only' => ['uploadTemporario']]);
+        $this->middleware('permission:exportar-produtos', ['only' => ['exportarProdutos']]);
     }
 
     public function index(Request $request)
