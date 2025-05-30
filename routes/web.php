@@ -77,6 +77,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/exportar-produtos', [ProdutoController::class, 'exportarProdutos'])->name('produto.exportar');
     //Rota para upload de imagens via ajax
     Route::post('/upload-temporario', [ProdutoController::class, 'uploadTemporario'])->name('upload.temporario');
+    //Altera o consultor dos produtos 
+    Route::post('/alterar-consultor', [ProdutoController::class, 'alterarConsultor'])->name('produtos.alterar.consultor');
+
 
     //Papéis
     Route::get('/index-role', [RoleController::class, 'index'])->name('role.index');

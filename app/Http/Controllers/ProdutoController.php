@@ -144,7 +144,7 @@ class ProdutoController extends Controller
             return redirect()->route('consultor.index')
                 ->with('success', 'Produto alocado para : ' . $request->consultor . '. Código: ' . $produto->id);
         } catch (Exception $e) {
-            //Transaçõ não concluida com exito
+            //Transação não concluida com exito
             DB::rollBack();
             //Redireciona com msg de erro
             return redirect()->back()->with('error', 'Produto não foi alocado! Tente novamente.' . $e->getMessage());
@@ -335,6 +335,13 @@ class ProdutoController extends Controller
             //Redireciona com msg de erro
             return redirect()->back()->with('error', 'Consultor não alterado! Tente novamente.' . $e->getMessage());
         }
+    }
+
+    //Altera o consultor dos produtos na paginação
+    public function alterarConsultor(Request $request)
+    {
+        $consultores = [];
+        return $consultores;
     }
 
     //Excluir produto no banco de dados

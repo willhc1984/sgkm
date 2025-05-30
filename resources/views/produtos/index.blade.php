@@ -11,6 +11,7 @@
         </div>
 
         <x-alert />
+        <x-modal-alterar-consultor :consultores="$consultores" :consultorAtual="request('consultor')" />
 
         <div class="card mb-4 border-light shadow">
             <div class="card-header space-between-elements">
@@ -88,7 +89,10 @@
                 <span>Listar</span>
                 <span><a href="{{ url('generate-pdf-produtos?' . request()->getQueryString()) }}"
                         class="btn btn-warning btn-sm">
-                        <i class="fa-regular fa-file-pdf"></i> Gerar PDF</a></span>
+                        <i class="fa-regular fa-file-pdf"></i> Gerar PDF</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#alterarConsultorModal"
+                        class="btn btn-primary btn-sm">
+                        <i class="fa-regular fa-handshake"></i>Alterar consultor</a></span>
             </div>
 
             <div class="card-body">
@@ -147,11 +151,11 @@
                                         </a>
                                     @elseif ($produto->situacao == 'Vendido')
                                         <a href="{{ route('produto.index') }}">
-                                            <span class="badge bg-primary">Vendido</span>
+                                            <span class="badge bg-success">Vendido</span>
                                         </a>
                                     @else
                                         <a href="{{ route('produto.index') }}">
-                                            <span class="badge bg-danger">Em estoque</span>
+                                            <span class="badge bg-primary">Em estoque</span>
                                         </a>
                                     @endif
 
