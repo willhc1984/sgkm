@@ -3,7 +3,14 @@
   <div class="modal-dialog">
     <form action="{{ route('produtos.alterar.consultor') }}" method="POST">
       @csrf
-      <input type="hidden" name="consultor_atual" value="{{ request('consultor') }}">
+      <input type="hidden" name="consultorAtual" value="{{ $consultorAtual }}">
+      <!-- Filtros atuais como campos ocultos -->
+      <input type="hidden" name="nome" value="{{ request('nome') }}">
+      <input type="hidden" name="codigo" value="{{ request('codigo') }}">
+      <input type="hidden" name="situacao" value="{{ request('situacao') }}">
+      <input type="hidden" name="data_inicio" value="{{ request('data_inicio') }}">
+      <input type="hidden" name="data_fim" value="{{ request('data_fim') }}">
+
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="alterarConsultorModalLabel">Alterar Consultor</h5>

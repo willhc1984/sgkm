@@ -30,6 +30,7 @@ class ProdutoController extends Controller
         $this->middleware('permission:alter-produtos-consultor', ['only' => ['alterConsultor, updateConsultor']]);
         $this->middleware('permission:upload-temporario', ['only' => ['uploadTemporario']]);
         $this->middleware('permission:exportar-produtos', ['only' => ['exportarProdutos']]);
+        $this->middleware('permission:alterar-consultor', ['only' => ['alterarConsultor']]);
     }
 
     public function index(Request $request)
@@ -70,12 +71,24 @@ class ProdutoController extends Controller
             ->paginate($request->qtde)
             ->withQueryString();
 
+        //Busca consultor_atual caso o código tenha sido informado.
+        $consultorAtual = null;
+        if ($request->filled('codigo') && !$request->filled('consultor')) {
+            $produto = Produto::find($request->codigo);
+            if ($produto) {
+                $consultorAtual = $produto->consultor_id;
+            }
+        } else {
+            $consultorAtual = $request->consultor;
+        }
+
         //Carregar view
         return view('produtos.index', [
             'menu' => 'produtos',
             'produtos' => $produtos,
             'nome' => $request->nome,
-            'consultores' => $consultores
+            'consultores' => $consultores,
+            'consultorAtual' => $consultorAtual
         ]);
     }
 
@@ -340,8 +353,50 @@ class ProdutoController extends Controller
     //Altera o consultor dos produtos na paginação
     public function alterarConsultor(Request $request)
     {
-        $consultores = [];
-        return $consultores;
+
+        $request->validate([
+            'consultorAtual' => 'required|integer|exists:consultores,id',
+            'novo_consultor' => 'required|integer|exists:consultores,id'
+        ]);
+
+        $user = auth()->user();
+
+        //Busca produtos com base nos filtros selecionados, MAS sempre restringe pelo consultor_atual
+        $produtos = Produto::query()
+            ->where('consultor_id', $request->consultorAtual)
+            ->when($request->filled('nome'), function ($q) use ($request) {
+                $q->where('nome', 'like', '%' . $request->nome . '%');
+            })
+            ->when($request->filled('codigo'), function ($q) use ($request) {
+                $q->where('id', $request->codigo);
+            })
+            ->when($request->filled('situacao'), function ($q) use ($request) {
+                $q->where('situacao', 'like', $request->situacao);
+            })
+            ->when($request->filled('consultor'), function ($q) use ($request) {
+                $q->where('consultor_id', $request->consultor);
+            })
+            ->when($request->filled('data_inicio'), function ($q) use ($request) {
+                $q->where('data_venda', '>=', \Carbon\Carbon::parse($request->data_inicio)->format('Y-m-d'));
+            })
+            ->when($request->filled('data_fim'), function ($q) use ($request) {
+                $q->where('data_venda', '<=', \Carbon\Carbon::parse($request->data_fim)->format('Y-m-d'));
+            })
+            ->when(!$user->hasRole(['Admin', 'Super Admin']), function ($query) use ($user) {
+                $query->whereHas('Consultor', function ($query) use ($user) {
+                    $query->where('email', $user->email);
+                });
+            });
+
+        // Atualiza todos os produtos filtrados
+        $totalAtualizados = $produtos->update([
+            'consultor_id' => $request->novo_consultor
+        ]);
+
+        $novoConsultor = Consultor::find($request->novo_consultor);
+
+        return redirect()->route('produto.index', $request->except('_token'))
+            ->with('success', "$totalAtualizados produto(s) alocados para o consultor selecionado: {$novoConsultor->nome}");
     }
 
     //Excluir produto no banco de dados

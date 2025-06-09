@@ -11,7 +11,13 @@
         </div>
 
         <x-alert />
-        <x-modal-alterar-consultor :consultores="$consultores" :consultorAtual="request('consultor')" />
+        <x-modal-alterar-consultor :consultores="$consultores" 
+            :consultorAtual="$consultorAtual" 
+            :nome="request('nome')" 
+            :codigo="request('codigo')" 
+            :situacao="request('situacao')" 
+            :dataInicio="request('data_inicio')" 
+            :dataFim="request('data_fim')" />
 
         <div class="card mb-4 border-light shadow">
             <div class="card-header space-between-elements">
