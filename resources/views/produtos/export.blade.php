@@ -16,9 +16,7 @@
             </div>
 
             <div class="card-body">
-
                 <x-alert />
-
                 <form class="row g-3" action="{{ route('produto.csv') }}" method="POST">
                     @csrf
                     @method('POST')
@@ -33,6 +31,24 @@
                         <input type="number" class="form-control" name="fim" id="fim"
                             value="{{ old('fim') }}" placeholder="Código final">
                     </div>                   
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary bt-sm">Exportar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card-body">
+                <x-alert />
+                <form class="row g-3" action="{{ route('produto.csv.selecionado') }}" method="POST">
+                    @csrf
+                    @method('POST')
+                   
+                    <div class="col-6">
+                        <label for="inicio" class="form-label">Digite os códigos dos produtos (separados por ponto e vírgula)</label>
+                        <input type="text" class="form-control" name="codigos" id="codigos" value="{{ old('codigos') }}"
+                            placeholder="Ex: 1;5;10;15">
+                    </div>
+                               
                     <div class="col-12">
                         <button type="submit" class="btn btn-primary bt-sm">Exportar</button>
                     </div>

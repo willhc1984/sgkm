@@ -547,6 +547,53 @@ class ProdutoController extends Controller
             ->header('Content-Disposition', 'attachment; filename="produtos.csv"');
     }
 
+    public function exportarCsvSelecionado(Request $request)
+    {
+        $request->validate([
+            'codigos' => 'required|string'
+        ]);
+
+        //Pega os codigos digitados e transforma em array
+        $ids = collect(explode(';', $request->codigos))
+            ->map(fn($item) => trim($item))
+            ->filter()
+            ->unique();
+
+        //Busca produtos correspondentes
+        $produtos = Produto::with('categoria')
+            ->whereIn('id', $ids)
+            ->get();
+
+        //Monta o conteudo do CSV
+        $csv = "name,description,short description,sku,regular price,categories,images,stock status\n";
+
+        foreach ($produtos as $produto) {
+            $linha = [
+                $this->limparCampo($produto->nome),
+                $this->limparCampo($produto->descricao),
+                $this->limparCampo($produto->descricao_curta),
+                $this->limparCampo($produto->id),
+                number_format($produto->preco_final, 2, '.', ''),
+                $produto->categoria ? $this->limparCampo($produto->categoria->nome) : '',
+                '"' . $produto->images . '"', // Aspas apenas no campo images, por conter vírgulas
+                'instock'
+            ];
+
+            $csv .= implode(',', $linha) . "\n";
+        }
+
+        // Retorna o CSV como download
+        return response($csv)
+            ->header('Content-Type', 'text/csv')
+            ->header('Content-Disposition', 'attachment; filename="produtos.csv"');
+    }
+
+    // Função auxiliar para limpar campo de quebra de linha e vírgulas
+    private function limparCampo($texto)
+    {
+        return '"' . str_replace(["\r", "\n", '"'], [' ', ' ', "'"], $texto) . '"';
+    }
+
     public function uploadTemporario(Request $request)
     {
         $paths = [];

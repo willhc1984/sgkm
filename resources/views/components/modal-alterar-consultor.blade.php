@@ -18,7 +18,7 @@
         </div>
         <div class="modal-body">
             <div class="alert alert-danger" role="alert">
-                <b>AVISO:</b> Será alterado o consultor de todos os produtos da exibição atual! 
+                <b>AVISO:</b> Será alterado o consultor de todos os produtos com base em sua pesquisa! 
             </div>
           <div class="mb-3">
             <label for="novo_consultor" class="form-label">Novo Consultor</label>
@@ -36,3 +36,5 @@
     </form>
   </div>
 </div>
+
+
