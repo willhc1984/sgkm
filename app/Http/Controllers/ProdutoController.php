@@ -551,6 +551,8 @@ class ProdutoController extends Controller
     {
         $request->validate([
             'codigos' => 'required|string'
+        ], [
+            'codigos' => 'Digite os códigos dos produtos separados por ponto e virgula (;).'
         ]);
 
         //Pega os codigos digitados e transforma em array

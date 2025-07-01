@@ -139,4 +139,44 @@ class ConsultorController extends Controller
 
         return redirect()->route('consultor.index')->with('success', 'Comissão atualizada com sucesso para todos os produtos do consultor: <strong>' . $consultor->nome . '</strong>');
     }
+
+    //Alocar produtos em massa para consultor
+    public function alocarEmMassa()
+    {
+        //Recupera consultores no banco de dados
+        $consultores = Consultor::orderBy('nome')->get();
+
+        return view('consultores.alocar-em-massa', [
+            'consultores' => $consultores
+        ]);
+    }
+
+    public function alocarEmMassaUpdate(Request $request)
+    {
+        //Valida formulario
+        $request->validate([
+            'codigos' => 'required|string',
+            'novo_consultor' => 'required'
+        ]);
+
+        $consultorId = $request->input('novo_consultor'); // ID do consultor selecionado
+
+        //Pega os id's digitados e transforma e array (collection)
+        $ids = collect(explode(';', $request->codigos))
+            ->map(fn($item) => trim($item))
+            ->filter()
+            ->unique();
+
+        //dd($consultorId, $ids);
+
+        if ($ids->isNotEmpty() && $consultorId) {
+            Produto::whereIn('id', $ids->toArray())->update([
+                'consultor_id' => $consultorId
+            ]);
+
+            return redirect()->back()->with('success', 'Produtos alocados!');
+        }
+
+        return redirect()->back()->with('error', 'Dados inválidos.');
+    }
 }

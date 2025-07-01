@@ -60,6 +60,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/destroy-consultores/{consultor}', [ConsultorController::class, 'destroy'])->name('consultor.destroy');
     // Rota para atualizar a comissão do consultor
     Route::post('/atualizar-comissao', [ConsultorController::class, 'atualizarComissao'])->name('consultor.atualizarComissao');
+    //Aloca produtos em massa para consultor
+    Route::get('/alocar-consultor-em-massa', [ConsultorController::class, 'alocarEmMassa'])->name('consultor.alocarEmMassa');
+    Route::post('/alocar-consultor-em-massa', [ConsultorController::class, 'alocarEmMassaUpdate'])->name('consultor.alocarEmMassaUpdate');
 
     //Produtos
     Route::get('/index-produtos', [ProdutoController::class, 'index'])->name('produto.index');

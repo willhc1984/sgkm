@@ -19,6 +19,8 @@
                 <span>
                     <a href="{{ route('consultor.create') }}" class="btn btn-success btn-sm">
                         <i class="fa-solid fa-square-plus"></i> Cadastrar</a>
+                    <a href="{{ route('consultor.alocarEmMassa') }}" class="btn btn-success btn-sm">
+                        <i class="fa-solid fa-gem"></i> Alocar produtos</a>
                 </span>
             </div>
 
