@@ -22,6 +22,7 @@ class ConsultorController extends Controller
         $this->middleware('permission:edit-consultores', ['only' => ['edit', 'update']]);
         $this->middleware('permission:destroy-consultores', ['only' => ['destroy']]);
         $this->middleware('permission:atualizar-comissao', ['only' => ['atualizarComissao']]);
+        $this->middleware('permission:alocar-consultor-em-massa', ['only' => ['alocarEmMassa']]);
     }
 
     //Listar consultores
@@ -140,7 +141,7 @@ class ConsultorController extends Controller
         return redirect()->route('consultor.index')->with('success', 'Comissão atualizada com sucesso para todos os produtos do consultor: <strong>' . $consultor->nome . '</strong>');
     }
 
-    //Alocar produtos em massa para consultor
+    //Alocar produtos diversos, separados por ponto e virgula
     public function alocarEmMassa()
     {
         //Recupera consultores no banco de dados
@@ -151,6 +152,7 @@ class ConsultorController extends Controller
         ]);
     }
 
+    //Atualizar produtos alocados
     public function alocarEmMassaUpdate(Request $request)
     {
         //Valida formulario
@@ -167,16 +169,23 @@ class ConsultorController extends Controller
             ->filter()
             ->unique();
 
-        //dd($consultorId, $ids);
+        //Busca ids que existem no banco de dados 
+        $idsExistentes = Produto::whereIn('id', $ids)->pluck('id');
 
-        if ($ids->isNotEmpty() && $consultorId) {
-            Produto::whereIn('id', $ids->toArray())->update([
-                'consultor_id' => $consultorId
-            ]);
+        //Compara para descobrir os inexistentes
+        $idsInexistentes = $ids->diff($idsExistentes);
 
-            return redirect()->back()->with('success', 'Produtos alocados!');
+        if ($idsInexistentes->isNotEmpty()) {
+            return redirect()->back()
+                ->with('error', 'Os seguintes códigos não existem no sistema: ' . $idsInexistentes->implode(', '))
+                ->withInput();
         }
 
-        return redirect()->back()->with('error', 'Dados inválidos.');
+        // Se todos os IDs existem, atualiza os produtos
+        Produto::whereIn('id', $ids)->update([
+            'consultor_id' => $consultorId
+        ]);
+
+        return redirect()->back()->with('success', 'Produtos alocados com sucesso!');
     }
 }
